@@ -6,6 +6,7 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 
 - use React & Sass
 - mobile-first responsive design
+- grid container for keypad
 
 ## To-do list
 
