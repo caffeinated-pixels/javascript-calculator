@@ -24,6 +24,10 @@ body {
   width: 100vw;
 }
 
+button {
+  cursor: pointer;
+}
+
 .display {
   // text-align: right;
   display: flex;
@@ -36,7 +40,7 @@ body {
   padding: 5px;
   background-color: lightgray;
   width: 90vw;
-  max-width: 400px;
+  max-width: 250px;
   min-height: 500px;
   // margin: auto;
   border: 1px solid black;
