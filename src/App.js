@@ -3,13 +3,20 @@ import React, { Component } from 'react'
 export default class App extends Component {
   state = {
     formulaDisplay: 'formula display',
-    mainDisplay: 0,
+    currVal: '0',
     inputLog: [],
     returnVal: 0
   }
 
   handleNum = input => {
-    console.log(input)
+    // console.log(input)
+    this.setState(prevState => {
+      if (prevState.currVal === '0') {
+        return { ...prevState, currVal: input }
+      } else {
+        return { ...prevState, currVal: (prevState.currVal += input) }
+      }
+    })
   }
 
   handleOperator = input => {
@@ -25,14 +32,20 @@ export default class App extends Component {
   }
 
   handleClear = () => {
-    console.log('AC clicked')
+    // console.log('AC clicked')
+    this.setState({
+      formulaDisplay: 'formula display',
+      currVal: '0',
+      inputLog: [],
+      returnVal: 0
+    })
   }
 
   render() {
     return (
       <main className="calculator-body">
         <FormulaDisplay formulaDisplay={this.state.formulaDisplay} />
-        <MainDisplay mainDisplay={this.state.mainDisplay} />
+        <MainDisplay currVal={this.state.currVal} />
         <KeyPad
           handleNum={this.handleNum}
           handleOperator={this.handleOperator}
@@ -52,7 +65,7 @@ const FormulaDisplay = props => {
 const MainDisplay = props => {
   return (
     <div id="display" className="main-display display">
-      {props.mainDisplay}
+      {props.currVal}
     </div>
   )
 }
@@ -60,35 +73,35 @@ const MainDisplay = props => {
 const KeyPad = props => {
   return (
     <div className="keypad">
-      <button id="seven" onClick={() => props.handleNum(7)}>
+      <button id="seven" onClick={() => props.handleNum('7')}>
         7
       </button>
-      <button id="eight" onClick={() => props.handleNum(8)}>
+      <button id="eight" onClick={() => props.handleNum('8')}>
         8
       </button>
-      <button id="nine" onClick={() => props.handleNum(9)}>
+      <button id="nine" onClick={() => props.handleNum('9')}>
         9
       </button>
-      <button id="four" onClick={() => props.handleNum(4)}>
+      <button id="four" onClick={() => props.handleNum('4')}>
         4
       </button>
-      <button id="five" onClick={() => props.handleNum(5)}>
+      <button id="five" onClick={() => props.handleNum('5')}>
         5
       </button>
-      <button id="six" onClick={() => props.handleNum(6)}>
+      <button id="six" onClick={() => props.handleNum('6')}>
         6
       </button>
-      <button id="one" onClick={() => props.handleNum(1)}>
+      <button id="one" onClick={() => props.handleNum('1')}>
         1
       </button>
-      <button id="two" onClick={() => props.handleNum(2)}>
+      <button id="two" onClick={() => props.handleNum('2')}>
         2
       </button>
-      <button id="three" onClick={() => props.handleNum(3)}>
+      <button id="three" onClick={() => props.handleNum('3')}>
         3
       </button>
       <button id="pos-neg">+/-</button>
-      <button id="zero" onClick={() => props.handleNum(0)}>
+      <button id="zero" onClick={() => props.handleNum('0')}>
         0
       </button>
       <button id="decimal" onClick={props.handleDecimal}>
