@@ -19,12 +19,19 @@ export default class App extends Component {
     })
   }
 
-  handleOperator = input => {
-    console.log('operator clicked')
-  }
-
   handleDecimal = () => {
     console.log('decimal clicked')
+    this.setState(prevState => {
+      const containsDecimal = /\./.test(prevState.currVal)
+
+      if (!containsDecimal) {
+        return { ...prevState, currVal: (prevState.currVal += '.') }
+      }
+    })
+  }
+
+  handleOperator = input => {
+    console.log('operator clicked')
   }
 
   handleEquals = () => {
@@ -48,8 +55,8 @@ export default class App extends Component {
         <MainDisplay currVal={this.state.currVal} />
         <KeyPad
           handleNum={this.handleNum}
-          handleOperator={this.handleOperator}
           handleDecimal={this.handleDecimal}
+          handleOperator={this.handleOperator}
           handleEquals={this.handleEquals}
           handleClear={this.handleClear}
         />
