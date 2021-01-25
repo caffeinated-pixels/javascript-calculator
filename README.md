@@ -11,8 +11,8 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 
 - set-up a basic calculator structure
 - decide on whether to use either:
-  -- immediate execution logic
-  -- formula/expression logic
+  - immediate execution logic
+  - formula/expression logic
 - simple styling of elements
 - make pretty
 
