@@ -25,3 +25,4 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 
 - keyboard input
 - del/backspace key
+- comma separation of digits
