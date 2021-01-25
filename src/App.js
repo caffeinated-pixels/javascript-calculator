@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 
 export default class App extends Component {
-  state = { formulaDisplay: 'formula display', mainDisplay: 0 }
-
-  handleNum = () => {
-    console.log('number clicked')
+  state = {
+    formulaDisplay: 'formula display',
+    mainDisplay: 0,
+    inputLog: [],
+    returnVal: 0
   }
 
-  handleOperator = () => {
+  handleNum = input => {
+    console.log(input)
+  }
+
+  handleOperator = input => {
     console.log('operator clicked')
   }
 
@@ -55,37 +60,35 @@ const MainDisplay = props => {
 const KeyPad = props => {
   return (
     <div className="keypad">
-      <button id="seven" onClick={props.handleNum}>
+      <button id="seven" onClick={() => props.handleNum(7)}>
         7
       </button>
-      <button id="eight" onClick={props.handleNum}>
+      <button id="eight" onClick={() => props.handleNum(8)}>
         8
       </button>
-      <button id="nine" onClick={props.handleNum}>
+      <button id="nine" onClick={() => props.handleNum(9)}>
         9
       </button>
-      <button id="four" onClick={props.handleNum}>
+      <button id="four" onClick={() => props.handleNum(4)}>
         4
       </button>
-      <button id="five" onClick={props.handleNum}>
+      <button id="five" onClick={() => props.handleNum(5)}>
         5
       </button>
-      <button id="six" onClick={props.handleNum}>
+      <button id="six" onClick={() => props.handleNum(6)}>
         6
       </button>
-      <button id="one" onClick={props.handleNum}>
+      <button id="one" onClick={() => props.handleNum(1)}>
         1
       </button>
-      <button id="two" onClick={props.handleNum}>
+      <button id="two" onClick={() => props.handleNum(2)}>
         2
       </button>
-      <button id="three" onClick={props.handleNum}>
+      <button id="three" onClick={() => props.handleNum(3)}>
         3
       </button>
-      <button id="pos-neg" onClick={props.handleNum}>
-        +/-
-      </button>
-      <button id="zero" onClick={props.handleNum}>
+      <button id="pos-neg">+/-</button>
+      <button id="zero" onClick={() => props.handleNum(0)}>
         0
       </button>
       <button id="decimal" onClick={props.handleDecimal}>
