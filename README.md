@@ -19,3 +19,4 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 ## Stretch goals
 
 - keyboard input
+- del/backspace key
