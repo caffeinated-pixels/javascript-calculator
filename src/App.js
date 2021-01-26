@@ -2,32 +2,30 @@ import React, { Component } from 'react'
 
 export default class App extends Component {
   state = {
-    formulaDisplay: 'formula display',
     currVal: '0',
-    formula: '',
-    returnVal: 0
+    formula: ''
   }
 
   handleNum = input => {
     // console.log(input)
     this.setState(prevState => {
-      // check if previous input was an operator
       const isOperator = /[+\-*/]/.test(prevState.currVal)
 
-      if (isOperator) {
-        // add operator to formula, new num input becomes display
+      if (prevState.currVal === '0') {
         return {
-          ...prevState,
-          formula: prevState.formula + prevState.currVal,
-          currVal: input
+          currVal: input,
+          formula: input
         }
-      } else if (prevState.currVal === '0') {
+      } else if (isOperator) {
         return {
-          ...prevState,
-          currVal: input
+          currVal: input,
+          formula: prevState.formula + input
         }
       } else {
-        return { ...prevState, currVal: (prevState.currVal += input) }
+        return {
+          currVal: prevState.currVal + input,
+          formula: prevState.formula + input
+        }
       }
     })
   }
@@ -38,7 +36,10 @@ export default class App extends Component {
       const containsDecimal = /\./.test(prevState.currVal)
 
       if (!containsDecimal) {
-        return { ...prevState, currVal: (prevState.currVal += '.') }
+        return {
+          currVal: prevState.currVal + '.',
+          formula: prevState.formula + '.'
+        }
       }
     })
   }
@@ -47,21 +48,19 @@ export default class App extends Component {
     // console.log(input)
 
     this.setState(prevState => {
-      // deal with incomplete decimals, eg "0.", "1.", etc
-      const isOperator = /[+\-*/]/.test(prevState.currVal)
-      if (isOperator) {
-        // replaces previous operator to prevent sequential operators
-        return {
-          ...prevState,
-          currVal: input
-        }
+      let newFormula // initialize variable
+      // test if formula end with operator or decimal point
+      const endsInOperatorOrDecimal = /[+\-*/.]$/.test(prevState.formula)
+
+      if (endsInOperatorOrDecimal) {
+        newFormula = prevState.formula.replace(/[+\-*/.]$/, input)
       } else {
-        const currVal = prevState.currVal.replace(/\.$/, '')
-        return {
-          ...prevState,
-          currVal: input,
-          formula: prevState.formula + currVal
-        }
+        newFormula = prevState.formula + input
+      }
+
+      return {
+        currVal: input,
+        formula: newFormula
       }
     })
   }
@@ -73,17 +72,15 @@ export default class App extends Component {
   handleClear = () => {
     // console.log('AC clicked')
     this.setState({
-      formulaDisplay: 'formula display',
       currVal: '0',
-      formula: '',
-      returnVal: 0
+      formula: ''
     })
   }
 
   render() {
     return (
       <main className="calculator-body">
-        <FormulaDisplay formulaDisplay={this.state.formulaDisplay} />
+        <FormulaDisplay formulaDisplay={this.state.formula} />
         <MainDisplay currVal={this.state.currVal} />
         <KeyPad
           handleNum={this.handleNum}
