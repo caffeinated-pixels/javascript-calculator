@@ -4,15 +4,28 @@ export default class App extends Component {
   state = {
     formulaDisplay: 'formula display',
     currVal: '0',
-    inputLog: [],
+    formula: '',
     returnVal: 0
   }
 
   handleNum = input => {
     // console.log(input)
     this.setState(prevState => {
-      if (prevState.currVal === '0') {
-        return { ...prevState, currVal: input }
+      // check if previous input was an operator
+      const isOperator = /[+\-*/]/.test(prevState.currVal)
+
+      if (isOperator) {
+        // add operator to formula, new num input becomes display
+        return {
+          ...prevState,
+          formula: prevState.formula + prevState.currVal,
+          currVal: input
+        }
+      } else if (prevState.currVal === '0') {
+        return {
+          ...prevState,
+          currVal: input
+        }
       } else {
         return { ...prevState, currVal: (prevState.currVal += input) }
       }
@@ -20,7 +33,7 @@ export default class App extends Component {
   }
 
   handleDecimal = () => {
-    console.log('decimal clicked')
+    // console.log('decimal clicked')
     this.setState(prevState => {
       const containsDecimal = /\./.test(prevState.currVal)
 
@@ -31,7 +44,18 @@ export default class App extends Component {
   }
 
   handleOperator = input => {
-    console.log('operator clicked')
+    // console.log(input)
+
+    this.setState(prevState => {
+      // deal with incomplete decimals, eg "0.", "1.", etc
+      const currVal = prevState.currVal.replace(/\.$/, '')
+
+      return {
+        ...prevState,
+        currVal: input,
+        formula: prevState.formula + currVal
+      }
+    })
   }
 
   handleEquals = () => {
@@ -43,7 +67,7 @@ export default class App extends Component {
     this.setState({
       formulaDisplay: 'formula display',
       currVal: '0',
-      inputLog: [],
+      formula: '',
       returnVal: 0
     })
   }
@@ -114,16 +138,16 @@ const KeyPad = props => {
       <button id="decimal" onClick={props.handleDecimal}>
         .
       </button>
-      <button id="add" onClick={props.handleOperator}>
+      <button id="add" onClick={() => props.handleOperator('+')}>
         +
       </button>
-      <button id="subtract" onClick={props.handleOperator}>
+      <button id="subtract" onClick={() => props.handleOperator('-')}>
         -
       </button>
-      <button id="multiply" onClick={props.handleOperator}>
+      <button id="multiply" onClick={() => props.handleOperator('*')}>
         X
       </button>
-      <button id="divide" onClick={props.handleOperator}>
+      <button id="divide" onClick={() => props.handleOperator('/')}>
         /
       </button>
       <button id="clear" onClick={props.handleClear}>
