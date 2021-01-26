@@ -11,6 +11,7 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 
 ## To-do list
 
+- deal with incomplete formula, eg "1+2+3+"
 - perform calculation based on formula string
 - formula display
 - digit limit
