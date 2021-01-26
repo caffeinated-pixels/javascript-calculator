@@ -15,10 +15,11 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
   - immediate execution logic
   - formula/expression logic (probably this!!!)
 - handle & display number input
-- store operands and operators in array (state)
-- perform calculation based on input array
+- store operands and operators in string (state)
+- perform calculation based on formula string
 - formula display
 - digit limit
+- math symbols for operators on display
 - simple styling of elements
 - make pretty
 
