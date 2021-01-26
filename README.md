@@ -18,6 +18,7 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 - store operands and operators in array (state)
 - perform calculation based on input array
 - formula display
+- digit limit
 - simple styling of elements
 - make pretty
 
@@ -26,3 +27,4 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 - keyboard input
 - del/backspace key
 - comma separation of digits
+- without using eval
