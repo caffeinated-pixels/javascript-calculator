@@ -7,21 +7,14 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 - use React & Sass
 - mobile-first responsive design
 - grid container for keypad
+- formula/expression logic (probably this!!!)
 
 ## To-do list
 
-- set-up a basic calculator structure
-- decide on whether to use either:
-  - immediate execution logic
-  - formula/expression logic (probably this!!!)
-- handle & display number input
-- store operands and operators in string (state)
-- deal with incomplete decimals, eg "0.", "1.", etc
-- deal with sequential operators
 - perform calculation based on formula string
 - formula display
 - digit limit
-- math symbols for operators on display
+- proper math symbols for operators on display
 - simple styling of elements
 - make pretty
 
