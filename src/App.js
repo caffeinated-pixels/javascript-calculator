@@ -48,12 +48,20 @@ export default class App extends Component {
 
     this.setState(prevState => {
       // deal with incomplete decimals, eg "0.", "1.", etc
-      const currVal = prevState.currVal.replace(/\.$/, '')
-
-      return {
-        ...prevState,
-        currVal: input,
-        formula: prevState.formula + currVal
+      const isOperator = /[+\-*/]/.test(prevState.currVal)
+      if (isOperator) {
+        // replaces previous operator to prevent sequential operators
+        return {
+          ...prevState,
+          currVal: input
+        }
+      } else {
+        const currVal = prevState.currVal.replace(/\.$/, '')
+        return {
+          ...prevState,
+          currVal: input,
+          formula: prevState.formula + currVal
+        }
       }
     })
   }
