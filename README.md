@@ -16,6 +16,8 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
   - formula/expression logic (probably this!!!)
 - handle & display number input
 - store operands and operators in string (state)
+- deal with incomplete decimals, eg "0.", "1.", etc
+- deal with sequential operators
 - perform calculation based on formula string
 - formula display
 - digit limit
