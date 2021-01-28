@@ -110,6 +110,16 @@ export default class App extends Component {
 
     if (this.state.currVal === '0') return
 
+    if (this.state.calcDone) {
+      this.setState(prevState => {
+        return {
+          currVal: prevState.currVal,
+          formula: '' + prevState.prevAns,
+          calcDone: false
+        }
+      })
+    }
+
     this.setState(prevState => {
       let re // for storing regex
       let newCurrVal // for storing postive value
@@ -140,13 +150,15 @@ export default class App extends Component {
 
   handleEquals = () => {
     this.setState(prevState => {
-      const answer = eval(prevState.formula)
+      const answer = String(eval(prevState.formula))
+      const isAnsNeg = /-/.test(answer) // check if result is positive num
       const newFormula = prevState.formula + '=' + answer
       return {
         currVal: answer,
         prevAns: answer,
         formula: newFormula,
-        calcDone: true
+        calcDone: true,
+        negNum: isAnsNeg
       }
     })
   }
@@ -155,7 +167,10 @@ export default class App extends Component {
     // console.log('AC clicked')
     this.setState({
       currVal: '0',
-      formula: ''
+      formula: '',
+      prevAns: '',
+      calcDone: false,
+      negNum: false
     })
   }
 
