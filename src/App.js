@@ -103,6 +103,10 @@ export default class App extends Component {
     })
   }
 
+  handlePosNeg = () => {
+    console.log('PosNeg clicked')
+  }
+
   handleEquals = () => {
     this.setState(prevState => {
       const answer = eval(prevState.formula)
@@ -133,6 +137,7 @@ export default class App extends Component {
           handleNum={this.handleNum}
           handleDecimal={this.handleDecimal}
           handleOperator={this.handleOperator}
+          handlePosNeg={this.handlePosNeg}
           handleEquals={this.handleEquals}
           handleClear={this.handleClear}
         />
@@ -183,7 +188,9 @@ const KeyPad = props => {
       <button id="three" onClick={() => props.handleNum('3')}>
         3
       </button>
-      <button id="pos-neg">+/-</button>
+      <button id="pos-neg" onClick={props.handlePosNeg}>
+        +/-
+      </button>
       <button id="zero" onClick={() => props.handleNum('0')}>
         0
       </button>
