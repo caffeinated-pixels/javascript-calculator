@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 export default class App extends Component {
+  // NOTE: Do we need a prevVal property in state?
   state = {
     currVal: '0',
     formula: ''
@@ -67,6 +68,13 @@ export default class App extends Component {
 
   handleEquals = () => {
     console.log('equals clicked')
+    this.setState(prevState => {
+      const answer = eval(prevState.formula)
+      return {
+        currVal: answer,
+        formula: prevState.formula + '=' + answer
+      }
+    })
   }
 
   handleClear = () => {
