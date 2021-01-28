@@ -1,15 +1,29 @@
 import React, { Component } from 'react'
 
 export default class App extends Component {
-  // NOTE: Do we need a prevVal property in state?
+  // NOTE: Do we need a prevVal or prevAnswer property in state?
   state = {
     currVal: '0',
-    formula: ''
+    formula: '',
+    prevAns: '',
+    calcDone: false // ie has user clicked equals key
   }
 
+  // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
-    // console.log(input)
+    // need to check if previous calculation has been performed
+    if (this.state.calcDone) {
+      this.setState(prevState => {
+        return {
+          currVal: '0',
+          formula: '',
+          calcDone: false
+        }
+      })
+    }
+
     this.setState(prevState => {
+      // test whether previous input was operator
       const isOperator = /[+\-*/]/.test(prevState.currVal)
 
       if (prevState.currVal === '0') {
@@ -33,6 +47,18 @@ export default class App extends Component {
 
   handleDecimal = () => {
     // console.log('decimal clicked')
+
+    // need to check if previous calculation has been performed
+    if (this.state.calcDone) {
+      this.setState(prevState => {
+        return {
+          currVal: '0',
+          formula: '0',
+          calcDone: false
+        }
+      })
+    }
+
     this.setState(prevState => {
       const containsDecimal = /\./.test(prevState.currVal)
 
@@ -47,6 +73,17 @@ export default class App extends Component {
 
   handleOperator = input => {
     // console.log(input)
+
+    // need to check if previous calculation has been performed
+    if (this.state.calcDone) {
+      this.setState(prevState => {
+        return {
+          currVal: '0',
+          formula: '' + prevState.prevAns,
+          calcDone: false
+        }
+      })
+    }
 
     this.setState(prevState => {
       let newFormula // initialize variable
@@ -67,12 +104,14 @@ export default class App extends Component {
   }
 
   handleEquals = () => {
-    console.log('equals clicked')
     this.setState(prevState => {
       const answer = eval(prevState.formula)
+      const newFormula = prevState.formula + '=' + answer
       return {
         currVal: answer,
-        formula: prevState.formula + '=' + answer
+        prevAns: answer,
+        formula: newFormula,
+        calcDone: true
       }
     })
   }
