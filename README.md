@@ -12,6 +12,7 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 ## To-do list
 
 - perform calculation based on formula string
+- positive/negative btn functionality
 - digit limit
 - proper math symbols for operators on display
 - simple styling of elements
