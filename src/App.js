@@ -6,7 +6,8 @@ export default class App extends Component {
     currVal: '0',
     formula: '',
     prevAns: '',
-    calcDone: false // ie has user clicked equals key
+    calcDone: false, // has user clicked equals key?
+    negNum: false // is currVal pos or neg?
   }
 
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
@@ -104,7 +105,37 @@ export default class App extends Component {
   }
 
   handlePosNeg = () => {
+    // TODO: deal with minus 0
     console.log('PosNeg clicked')
+
+    if (this.state.currVal === '0') return
+
+    this.setState(prevState => {
+      let re // for storing regex
+      let newCurrVal // for storing postive value
+      let newFormula // for storing updated formula
+
+      if (!prevState.negNum) {
+        re = new RegExp(prevState.currVal + '$')
+        newFormula = prevState.formula.replace(re, '-' + prevState.currVal)
+        return {
+          ...prevState,
+          currVal: '-' + prevState.currVal,
+          formula: newFormula,
+          negNum: true
+        }
+      } else {
+        re = new RegExp(prevState.currVal + '$')
+        newCurrVal = prevState.currVal.replace('-', '')
+        newFormula = prevState.formula.replace(re, newCurrVal)
+        return {
+          ...prevState,
+          currVal: newCurrVal,
+          formula: newFormula,
+          negNum: false
+        }
+      }
+    })
   }
 
   handleEquals = () => {
