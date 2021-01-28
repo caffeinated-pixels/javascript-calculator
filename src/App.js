@@ -105,7 +105,7 @@ export default class App extends Component {
   }
 
   handlePosNeg = () => {
-    // TODO: deal with minus 0
+    // TODO: deal with negative answer!!!
     console.log('PosNeg clicked')
 
     if (this.state.currVal === '0') return
@@ -235,10 +235,10 @@ const KeyPad = props => {
         -
       </button>
       <button id="multiply" onClick={() => props.handleOperator('*')}>
-        X
+        ×
       </button>
       <button id="divide" onClick={() => props.handleOperator('/')}>
-        /
+        ÷
       </button>
       <button id="clear" onClick={props.handleClear}>
         AC
