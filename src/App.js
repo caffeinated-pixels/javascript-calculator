@@ -95,6 +95,7 @@ export default class App extends Component {
       const newFormula = prevState.formula.replace(
         /((?<=\d+)$)|([+*/.]$)/,
         input
+        // checks for previous operator & replaces with new one; else it appends formula with current operator
       )
 
       // if (endsInOperatorOrDecimal) {
