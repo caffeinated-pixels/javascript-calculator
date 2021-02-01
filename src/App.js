@@ -87,15 +87,21 @@ export default class App extends Component {
     }
 
     this.setState(prevState => {
-      let newFormula // initialize variable
+      // let newFormula // initialize variable
       // test if formula end with operator or decimal point
-      const endsInOperatorOrDecimal = /[+\-*/.]$/.test(prevState.formula)
+      // formula.replace(/((?<=\d+)$)|([+*/.]$)/, input)
 
-      if (endsInOperatorOrDecimal) {
-        newFormula = prevState.formula.replace(/[+\-*/.]$/, input)
-      } else {
-        newFormula = prevState.formula + input
-      }
+      // const endsInOperatorOrDecimal = /[+\-*/.]$/.test(prevState.formula)
+      const newFormula = prevState.formula.replace(
+        /((?<=\d+)$)|([+*/.]$)/,
+        input
+      )
+
+      // if (endsInOperatorOrDecimal) {
+      //   newFormula = prevState.formula.replace(/[+\-*/.]$/, input)
+      // } else {
+      //   newFormula = prevState.formula + input
+      // }
 
       return {
         currVal: input,
@@ -149,8 +155,10 @@ export default class App extends Component {
   }
 
   handleEquals = () => {
+    // TODO: deal with incomplete decimal
+
     this.setState(prevState => {
-      const answer = String(eval(prevState.formula))
+      const answer = String(eval(prevState.formula)) // need convert back to string
       const isAnsNeg = /-/.test(answer) // check if result is positive num
       const newFormula = prevState.formula + '=' + answer
       return {
