@@ -12,6 +12,7 @@ export default class App extends Component {
 
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
+    // TODO: Limit to 12 or 16 digits
     // need to check if previous calculation has been performed
     if (this.state.calcDone) {
       this.setState(prevState => {
@@ -113,6 +114,7 @@ export default class App extends Component {
 
   handlePosNeg = () => {
     // TODO: deal with negative answer!!!
+    // TODO: requires 2 clicks when previous operatd also neg
     console.log('PosNeg clicked')
 
     if (this.state.currVal === '0') return
