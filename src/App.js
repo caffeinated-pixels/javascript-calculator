@@ -113,8 +113,8 @@ export default class App extends Component {
   }
 
   handlePosNeg = () => {
-    // TODO: deal with negative answer!!!
-    // TODO: requires 2 clicks when previous operatd also neg
+    // FIXME: : deal with negative answer!!!
+    // FIXME: requires 2 clicks if formula contains other neg num
     console.log('PosNeg clicked')
 
     if (this.state.currVal === '0') return
@@ -158,7 +158,7 @@ export default class App extends Component {
   }
 
   handleEquals = () => {
-    // TODO: deal with incomplete decimal
+    // FIXME: deal with incomplete decimal
 
     this.setState(prevState => {
       const answer = String(eval(prevState.formula)) // need convert back to string
