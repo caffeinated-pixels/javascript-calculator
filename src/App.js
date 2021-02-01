@@ -113,6 +113,7 @@ export default class App extends Component {
   }
 
   handlePosNeg = () => {
+    // TODO: Re-enable posNeg functionality
     // FIXME: deal with negative answer!!!
     // FIXME: requires 2 clicks if formula contains other neg num
     console.log('posNeg is temporary disabled!!!')
