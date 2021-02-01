@@ -113,52 +113,54 @@ export default class App extends Component {
   }
 
   handlePosNeg = () => {
-    // FIXME: : deal with negative answer!!!
+    // FIXME: deal with negative answer!!!
     // FIXME: requires 2 clicks if formula contains other neg num
-    console.log('PosNeg clicked')
+    console.log('posNeg is temporary disabled!!!')
 
-    if (this.state.currVal === '0') return
-
-    if (this.state.calcDone) {
-      this.setState(prevState => {
-        return {
-          currVal: prevState.currVal,
-          formula: '' + prevState.prevAns,
-          calcDone: false
-        }
-      })
-    }
-
-    this.setState(prevState => {
-      let re // for storing regex
-      let newCurrVal // for storing postive value
-      let newFormula // for storing updated formula
-
-      if (!prevState.negNum) {
-        re = new RegExp(prevState.currVal + '$')
-        newFormula = prevState.formula.replace(re, '-' + prevState.currVal)
-        return {
-          ...prevState,
-          currVal: '-' + prevState.currVal,
-          formula: newFormula,
-          negNum: true
-        }
-      } else {
-        re = new RegExp(prevState.currVal + '$')
-        newCurrVal = prevState.currVal.replace('-', '')
-        newFormula = prevState.formula.replace(re, newCurrVal)
-        return {
-          ...prevState,
-          currVal: newCurrVal,
-          formula: newFormula,
-          negNum: false
-        }
-      }
-    })
+    // if (this.state.currVal === '0') return
+    //
+    // if (this.state.calcDone) {
+    //   // check if currVal is ans from prev evaluation
+    //   this.setState(prevState => {
+    //     return {
+    //       currVal: prevState.currVal,
+    //       formula: '' + prevState.prevAns,
+    //       calcDone: false
+    //     }
+    //   })
+    // }
+    //
+    // this.setState(prevState => {
+    //   let re // for storing regex
+    //   let newCurrVal // for storing postive value
+    //   let newFormula // for storing updated formula
+    //
+    //   if (!prevState.negNum) {
+    //     re = new RegExp(prevState.currVal + '$')
+    //     newFormula = prevState.formula.replace(re, '-' + prevState.currVal)
+    //     return {
+    //       ...prevState,
+    //       currVal: '-' + prevState.currVal,
+    //       formula: newFormula,
+    //       negNum: true
+    //     }
+    //   } else {
+    //     re = new RegExp(prevState.currVal + '$')
+    //     newCurrVal = prevState.currVal.replace('-', '')
+    //     newFormula = prevState.formula.replace(re, newCurrVal)
+    //     return {
+    //       ...prevState,
+    //       currVal: newCurrVal,
+    //       formula: newFormula,
+    //       negNum: false
+    //     }
+    //   }
+    // })
   }
 
   handleEquals = () => {
     // FIXME: deal with incomplete decimal
+    // FIXME: deal with incomplete formula, eg 2+, 2+2*, etc
 
     this.setState(prevState => {
       const answer = String(eval(prevState.formula)) // need convert back to string
