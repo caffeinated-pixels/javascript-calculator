@@ -48,6 +48,7 @@ export default class App extends Component {
   }
 
   handleDecimal = () => {
+    // FIXME: decimal after operator
     // console.log('decimal clicked')
 
     // need to check if previous calculation has been performed
@@ -94,7 +95,7 @@ export default class App extends Component {
 
       // const endsInOperatorOrDecimal = /[+\-*/.]$/.test(prevState.formula)
       const newFormula = prevState.formula.replace(
-        /((?<=\d+)$)|([+\-*/.]$)/,
+        /((?<=\d+)$)|(-?[+\-*/.]$)/,
         input
         // checks for previous operator & replaces with new one; else it appends formula with current operator
       )
@@ -160,6 +161,7 @@ export default class App extends Component {
   }
 
   handleEquals = () => {
+    // TODO: convert double neg into pos (ie 2--2 to 2+4)
     this.setState(prevState => {
       const evaluateMe = prevState.formula.replace(/\D$/, '')
 
