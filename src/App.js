@@ -4,6 +4,7 @@ export default class App extends Component {
   // NOTE: Do we need a prevVal or prevAnswer property in state?
   state = {
     currVal: '0',
+    storeVal: '', // store currVal for max digit warning
     formula: '',
     prevAns: '',
     calcDone: false, // has user clicked equals key?
@@ -26,12 +27,19 @@ export default class App extends Component {
       })
     }
 
+    // get number of digits (remove decimal point for counting); limit to 16
+    // const checkLength = this.state.currVal.replace('.', '').length > 15
+    //
+    // if (checkLength) {
+    //   return this.maxDigitLimit()
+    // }
+
+    // check if num of digits > 15; maxDigitLimit returns boolean
+    if (this.maxDigitLimit()) return
+
     this.setState(prevState => {
       // test whether previous input was operator
       const isOperator = /[+\-*/]/.test(prevState.currVal)
-
-      // get number of digits (remove decimal point for counting)
-      const checkLength = prevState.currVal.replace('.', '').length
 
       if (prevState.currVal === '0') {
         // for very first input when key press is 0
@@ -45,8 +53,6 @@ export default class App extends Component {
           currVal: input,
           formula: prevState.formula + input
         }
-      } else if (checkLength > 15) {
-        console.log('Max digits limit reached')
       } else {
         // for adding to previous digit (expand num)
         return {
@@ -71,6 +77,9 @@ export default class App extends Component {
         }
       })
     }
+
+    // check if num of digits > 15; maxDigitLimit returns boolean
+    if (this.maxDigitLimit()) return
 
     this.setState(prevState => {
       const containsDecimal = /\./.test(prevState.currVal)
@@ -199,6 +208,65 @@ export default class App extends Component {
       calcDone: false,
       negNum: false
     })
+  }
+
+  maxDigitLimit = () => {
+    console.log('Max digits limit reached')
+    const checkLength = this.state.currVal.replace('.', '').length > 15
+
+    if (!checkLength) {
+      return false
+    }
+
+    if (this.state.currVal !== 'Max Digits Reached!') {
+      this.setState(prevState => {
+        const storeMe = prevState.currVal.slice()
+        console.log('store me:' + storeMe)
+
+        return {
+          ...prevState,
+          currVal: 'Max Digits Reached!',
+          storeVal: prevState.currVal
+        }
+      })
+
+      setTimeout(
+        () =>
+          this.setState(prevState => {
+            console.log('bob')
+            const restoreMe = prevState.storeVal.slice()
+
+            return { ...prevState, currVal: restoreMe }
+          }),
+        800
+      )
+    }
+
+    // this.setState(prevState => {
+    //   const storeMe = prevState.currVal.slice()
+    //   console.log('store me:' + storeMe)
+    //
+    //   if (prevState.currVal !== 'Max Digits Reached!') {
+    //     return {
+    //       ...prevState,
+    //       currVal: 'Max Digits Reached!',
+    //       storeVal: prevState.currVal
+    //     }
+    //   }
+    // })
+    //
+    // setTimeout(
+    //   () =>
+    //     this.setState(prevState => {
+    //       console.log('bob')
+    //       const restoreMe = prevState.storeVal.slice()
+    //
+    //       return { ...prevState, currVal: restoreMe }
+    //     }),
+    //   800
+    // )
+
+    return true
   }
 
   render() {
