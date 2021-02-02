@@ -10,6 +10,8 @@ export default class App extends Component {
     negNum: false // is currVal pos or neg?
   }
 
+  // TODO: add keyboard event listeners through componentDidMount
+
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
     // TODO: Limit to 12 or 16 digits
@@ -28,17 +30,25 @@ export default class App extends Component {
       // test whether previous input was operator
       const isOperator = /[+\-*/]/.test(prevState.currVal)
 
+      // get number of digits (remove decimal point for counting)
+      const checkLength = prevState.currVal.replace('.', '').length
+
       if (prevState.currVal === '0') {
+        // for very first input when key press is 0
         return {
           currVal: input,
           formula: input
         }
       } else if (isOperator) {
+        // for creating new num following operator
         return {
           currVal: input,
           formula: prevState.formula + input
         }
+      } else if (checkLength > 15) {
+        console.log('Max digits limit reached')
       } else {
+        // for adding to previous digit (expand num)
         return {
           currVal: prevState.currVal + input,
           formula: prevState.formula + input
