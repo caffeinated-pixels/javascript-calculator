@@ -64,7 +64,6 @@ export default class App extends Component {
   }
 
   handleDecimal = () => {
-    // FIXME: decimal after operator
     // console.log('decimal clicked')
 
     // need to check if previous calculation has been performed
@@ -82,10 +81,23 @@ export default class App extends Component {
     if (this.maxDigitLimit()) return
 
     this.setState(prevState => {
-      const containsDecimal = /\./.test(prevState.currVal)
+      // check to prevent sequential decimal points, ie 2..
+      const endsInDecimal = /\.$/.test(prevState.formula)
 
-      if (!containsDecimal) {
+      // check to prevent operator followed by decimal point, eg 2+.
+      const endsInOperator = /[+\-*/]$/.test(prevState.formula)
+
+      if (endsInOperator) {
         return {
+          ...prevState,
+          currVal: '0.',
+          formula: prevState.formula + '0.'
+        }
+      }
+
+      if (!endsInDecimal) {
+        return {
+          ...prevState,
           currVal: prevState.currVal + '.',
           formula: prevState.formula + '.'
         }
