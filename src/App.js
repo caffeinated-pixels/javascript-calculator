@@ -15,7 +15,7 @@ export default class App extends Component {
 
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
-    // TODO: Limit to 12 or 16 digits
+    // FIXME: bug if entering new number after max digit limit
     // need to check if previous calculation has been performed
     if (this.state.calcDone) {
       this.setState(prevState => {
@@ -211,8 +211,9 @@ export default class App extends Component {
   }
 
   maxDigitLimit = () => {
+    // FIXME: logic doesn't cope with spamming if max digit set to 21!
     console.log('Max digits limit reached')
-    const checkLength = this.state.currVal.replace('.', '').length > 15
+    const checkLength = this.state.currVal.replace('.', '').length >= 16
 
     if (!checkLength) {
       return false
