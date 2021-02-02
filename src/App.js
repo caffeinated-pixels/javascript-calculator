@@ -94,7 +94,7 @@ export default class App extends Component {
 
       // const endsInOperatorOrDecimal = /[+\-*/.]$/.test(prevState.formula)
       const newFormula = prevState.formula.replace(
-        /((?<=\d+)$)|([+*/.]$)/,
+        /((?<=\d+)$)|([+\-*/.]$)/,
         input
         // checks for previous operator & replaces with new one; else it appends formula with current operator
       )
@@ -160,13 +160,12 @@ export default class App extends Component {
   }
 
   handleEquals = () => {
-    // FIXME: deal with incomplete decimal
-    // FIXME: deal with incomplete formula, eg 2+, 2+2*, etc
-
     this.setState(prevState => {
-      const answer = String(eval(prevState.formula)) // need convert back to string
+      const evaluateMe = prevState.formula.replace(/\D$/, '')
+
+      const answer = String(eval(evaluateMe)) // need convert back to string
       const isAnsNeg = /-/.test(answer) // check if result is positive num
-      const newFormula = prevState.formula + '=' + answer
+      const newFormula = evaluateMe + '=' + answer
       return {
         currVal: answer,
         prevAns: answer,
