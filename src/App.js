@@ -75,6 +75,7 @@ export default class App extends Component {
   }
 
   handleOperator = input => {
+    // FIXME: deal with infinity!!!
     // console.log(input)
 
     // need to check if previous calculation has been performed
@@ -110,10 +111,13 @@ export default class App extends Component {
         newFormula = prevState.formula.replace(
           /((?<=\d+)$)|([+\-*/.]+$)/,
           input
+          // appends last digit with curr operator (input); or, if ends in operator or decpoint, replace with input
         )
       } else {
+        // ie if(input === '-')
         newFormula = prevState.formula.replace(
           /((?<=\d+)$)|(?<=\d[+\-*/.]?$)/,
+          // appends last digit with minus (input); or, appends prev operator (max of 1) with minus
           input
         )
       }
