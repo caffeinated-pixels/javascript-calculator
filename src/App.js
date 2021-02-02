@@ -89,22 +89,34 @@ export default class App extends Component {
     }
 
     this.setState(prevState => {
-      // let newFormula // initialize variable
+      let newFormula // initialize variable
       // test if formula end with operator or decimal point
       // formula.replace(/((?<=\d+)$)|([+*/.]$)/, input)
 
       // const endsInOperatorOrDecimal = /[+\-*/.]$/.test(prevState.formula)
-      const newFormula = prevState.formula.replace(
-        /((?<=\d+)$)|(-?[+\-*/.]$)/,
-        input
-        // checks for previous operator & replaces with new one; else it appends formula with current operator
-      )
+      // const newFormula = prevState.formula.replace(
+      //   /((?<=\d+)$)|(-?[+\-*/.]$)/,
+      //   input
+      //   // checks for previous operator & replaces with new one; else it appends formula with current operator
+      // )
 
       // if (endsInOperatorOrDecimal) {
       //   newFormula = prevState.formula.replace(/[+\-*/.]$/, input)
       // } else {
       //   newFormula = prevState.formula + input
       // }
+
+      if (input !== '-') {
+        newFormula = prevState.formula.replace(
+          /((?<=\d+)$)|([+\-*/.]+$)/,
+          input
+        )
+      } else {
+        newFormula = prevState.formula.replace(
+          /((?<=\d+)$)|(?<=\d[+\-*/.]?$)/,
+          input
+        )
+      }
 
       return {
         currVal: input,
