@@ -11,7 +11,6 @@ export default class App extends Component {
     negNum: false // is currVal pos or neg?
   }
 
-  // TODO: add keyboard event listeners through componentDidMount
   componentDidMount = () => {
     // add event listener for keypresses
     document.addEventListener('keydown', this.handleKeyPress)
@@ -169,11 +168,13 @@ export default class App extends Component {
   }
 
   handleEquals = () => {
+    // FIXME: pressing equals twice crashes app
     this.setState(prevState => {
       const evaluateMe = prevState.formula
         .replace(/\D$/, '')
         .replace(/--/g, '+')
 
+      // TODO: stop using eval!!
       const answer = String(eval(evaluateMe)) // need convert back to string
       const isAnsNeg = /-/.test(answer) // check if result is positive num
       const newFormula = evaluateMe + '=' + answer
