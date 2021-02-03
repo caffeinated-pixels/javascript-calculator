@@ -16,7 +16,7 @@ export default class App extends Component {
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
     // check if num of digits >= 21; maxDigitLimit returns boolean
-    // pass in empty string for reseting formula if entering new num when currVal is an answer
+    // pass in empty string to reset formula if entering new num when currVal is answer
     if (this.maxDigitLimit('')) return
 
     this.setState(prevState => {
@@ -46,20 +46,8 @@ export default class App extends Component {
   }
 
   handleDecimal = () => {
-    // console.log('decimal clicked')
-
-    // need to check if previous calculation has been performed
-    // if (this.state.calcDone) {
-    //   this.setState(prevState => {
-    //     return {
-    //       currVal: '0',
-    //       formula: '0',
-    //       calcDone: false
-    //     }
-    //   })
-    // }
-
     // check if num of digits >= 21; maxDigitLimit returns boolean
+    // pass in '0' to reset formula if entering new float when currVal is answer
     if (this.maxDigitLimit('0')) return
 
     this.setState(prevState => {
@@ -269,13 +257,17 @@ export default class App extends Component {
 }
 
 const FormulaDisplay = props => {
-  return <div className="formula-display display">{props.formulaDisplay}</div>
+  return (
+    <div className="formula-display display">
+      <p>{props.formulaDisplay}</p>
+    </div>
+  )
 }
 
 const MainDisplay = props => {
   return (
     <div id="display" className="main-display display">
-      {props.currVal}
+      <p>{props.currVal}</p>
     </div>
   )
 }
