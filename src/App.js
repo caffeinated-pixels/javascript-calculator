@@ -118,18 +118,32 @@ export default class App extends Component {
 
       if (input !== '-') {
         newFormula = prevState.formula.replace(
-          /((?<=\d+)$)|([+\-*/.]+$)/,
+          /((?<=[^+\-*/.])$)|([+\-*/.]+$)/,
           input
           // appends last digit with curr operator (input); or, if ends in operator or decpoint, replace with input
         )
       } else {
         // ie if(input === '-')
         newFormula = prevState.formula.replace(
-          /((?<=\d+)$)|(?<=\d[+\-*/.]?$)/,
+          /((?<=[^+\-*/.])$)|(?<=\d[+\-*/.]?$)/,
           // appends last digit with minus (input); or, appends prev operator (max of 1) with minus
           input
         )
       }
+      // if (input !== '-') {
+      //   newFormula = prevState.formula.replace(
+      //     /((?<=\d+)$)|([+\-*/.]+$)/,
+      //     input
+      //     // appends last digit with curr operator (input); or, if ends in operator or decpoint, replace with input
+      //   )
+      // } else {
+      //   // ie if(input === '-')
+      //   newFormula = prevState.formula.replace(
+      //     /((?<=\d+)$)|(?<=\d[+\-*/.]?$)/,
+      //     // appends last digit with minus (input); or, appends prev operator (max of 1) with minus
+      //     input
+      //   )
+      // }
 
       return {
         currVal: input,
