@@ -27,14 +27,7 @@ export default class App extends Component {
       })
     }
 
-    // get number of digits (remove decimal point for counting); limit to 16
-    // const checkLength = this.state.currVal.replace('.', '').length > 15
-    //
-    // if (checkLength) {
-    //   return this.maxDigitLimit()
-    // }
-
-    // check if num of digits > 15; maxDigitLimit returns boolean
+    // check if num of digits >= 21; maxDigitLimit returns boolean
     if (this.maxDigitLimit()) return
 
     this.setState(prevState => {
@@ -77,7 +70,7 @@ export default class App extends Component {
       })
     }
 
-    // check if num of digits > 15; maxDigitLimit returns boolean
+    // check if num of digits >= 21; maxDigitLimit returns boolean
     if (this.maxDigitLimit()) return
 
     this.setState(prevState => {
@@ -223,57 +216,37 @@ export default class App extends Component {
   }
 
   maxDigitLimit = () => {
-    // FIXME: logic doesn't cope with spamming if max digit set to 21!
-    console.log('Max digits limit reached')
+    /* get number of digits (remove decimal point for counting);
+    JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
     const checkLength = this.state.currVal.replace('.', '').length >= 21
 
-    return checkLength ? true : false
+    // if warning alread display we can return true
+    if (this.state.currVal === 'Max Digits Reached!') return true
 
-    // if (this.state.currVal !== 'Max Digits Reached!') {
-    //   this.setState(prevState => {
-    //     const storeMe = prevState.currVal.slice()
-    //     return {
-    //       ...prevState,
-    //       currVal: 'Max Digits Reached!',
-    //       storeVal: storeMe
-    //     }
-    //   })
-    //
-    //   setTimeout(
-    //     () =>
-    //       this.setState(prevState => {
-    //         console.log('bob')
-    //         const restoreMe = prevState.storeVal.slice()
-    //
-    //         return { ...prevState, currVal: restoreMe, storeVal: '' }
-    //       }),
-    //     1000
-    //   )
-    // }
+    // if < 21 we can return false and continue adding digits
+    if (!checkLength) return false
 
-    // this.setState(prevState => {
-    //   const storeMe = prevState.currVal.slice()
-    //   console.log('store me:' + storeMe)
-    //
-    //   if (prevState.currVal !== 'Max Digits Reached!') {
-    //     return {
-    //       ...prevState,
-    //       currVal: 'Max Digits Reached!',
-    //       storeVal: prevState.currVal
-    //     }
-    //   }
-    // })
-    //
-    // setTimeout(
-    //   () =>
-    //     this.setState(prevState => {
-    //       console.log('bob')
-    //       const restoreMe = prevState.storeVal.slice()
-    //
-    //       return { ...prevState, currVal: restoreMe }
-    //     }),
-    //   800
-    // )
+    this.setState(prevState => {
+      // make a copy of currVal to be restored after limit message
+      const storeMe = prevState.currVal.slice()
+      return {
+        ...prevState,
+        currVal: 'Max Digits Reached!',
+        storeVal: storeMe
+      }
+    })
+
+    // restore stored value to currVal after timeout
+    setTimeout(
+      () =>
+        this.setState(prevState => {
+          console.log('bob')
+          const restoreMe = prevState.storeVal.slice()
+
+          return { ...prevState, currVal: restoreMe, storeVal: '' }
+        }),
+      600
+    )
 
     return true
   }
