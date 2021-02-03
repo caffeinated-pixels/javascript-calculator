@@ -17,18 +17,19 @@ export default class App extends Component {
   handleNum = input => {
     // FIXME: bug if entering new number after max digit limit
     // need to check if previous calculation has been performed
-    if (this.state.calcDone) {
-      this.setState(prevState => {
-        return {
-          currVal: '0',
-          formula: '',
-          calcDone: false
-        }
-      })
-    }
+    // if (this.state.calcDone) {
+    //   this.setState(prevState => {
+    //     return {
+    //       ...prevState,
+    //       currVal: '0',
+    //       formula: '',
+    //       calcDone: false
+    //     }
+    //   })
+    // }
 
     // check if num of digits >= 21; maxDigitLimit returns boolean
-    if (this.maxDigitLimit()) return
+    if (this.maxDigitLimit('')) return
 
     this.setState(prevState => {
       // test whether previous input was operator
@@ -60,18 +61,18 @@ export default class App extends Component {
     // console.log('decimal clicked')
 
     // need to check if previous calculation has been performed
-    if (this.state.calcDone) {
-      this.setState(prevState => {
-        return {
-          currVal: '0',
-          formula: '0',
-          calcDone: false
-        }
-      })
-    }
+    // if (this.state.calcDone) {
+    //   this.setState(prevState => {
+    //     return {
+    //       currVal: '0',
+    //       formula: '0',
+    //       calcDone: false
+    //     }
+    //   })
+    // }
 
     // check if num of digits >= 21; maxDigitLimit returns boolean
-    if (this.maxDigitLimit()) return
+    if (this.maxDigitLimit('0')) return
 
     this.setState(prevState => {
       // check to prevent sequential decimal points, ie 2..
@@ -99,9 +100,6 @@ export default class App extends Component {
   }
 
   handleOperator = input => {
-    // FIXME: deal with infinity!!!
-    // console.log(input)
-
     // need to check if previous calculation has been performed
     if (this.state.calcDone) {
       this.setState(prevState => {
@@ -130,20 +128,6 @@ export default class App extends Component {
           input
         )
       }
-      // if (input !== '-') {
-      //   newFormula = prevState.formula.replace(
-      //     /((?<=\d+)$)|([+\-*/.]+$)/,
-      //     input
-      //     // appends last digit with curr operator (input); or, if ends in operator or decpoint, replace with input
-      //   )
-      // } else {
-      //   // ie if(input === '-')
-      //   newFormula = prevState.formula.replace(
-      //     /((?<=\d+)$)|(?<=\d[+\-*/.]?$)/,
-      //     // appends last digit with minus (input); or, appends prev operator (max of 1) with minus
-      //     input
-      //   )
-      // }
 
       return {
         currVal: input,
@@ -229,10 +213,23 @@ export default class App extends Component {
     })
   }
 
-  maxDigitLimit = () => {
+  maxDigitLimit = input => {
     /* get number of digits (remove decimal point for counting);
     JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
     const checkLength = this.state.currVal.replace('.', '').length >= 21
+
+    // need to reset state if creating new num after answer
+    if (this.state.calcDone) {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          currVal: '0',
+          formula: input,
+          calcDone: false
+        }
+      })
+      return false
+    }
 
     // if warning alread display we can return true
     if (this.state.currVal === 'Max Digits Reached!') return true
