@@ -248,6 +248,20 @@ export default class App extends Component {
 
   handleKeyPress = event => {
     console.log(event.key)
+    const testIfNum = /\d/.test(event.key)
+    const testIfDec = /\./.test(event.key)
+    const testIfOp = /[+\-*/]/.test(event.key)
+    const testIfEqOrEntr = /enter|=/i.test(event.key)
+
+    if (testIfNum) {
+      return this.handleNum(event.key)
+    } else if (testIfDec) {
+      return this.handleDecimal()
+    } else if (testIfOp) {
+      return this.handleOperator(event.key)
+    } else if (testIfEqOrEntr) {
+      return this.handleEquals()
+    }
   }
 
   render() {
