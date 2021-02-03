@@ -12,6 +12,15 @@ export default class App extends Component {
   }
 
   // TODO: add keyboard event listeners through componentDidMount
+  componentDidMount = () => {
+    // add event listener for keypresses
+    document.addEventListener('keydown', this.handleKeyPress)
+  }
+
+  componentWillUnmount = () => {
+    // clean-up/remove event listeners
+    document.removeEventListener('keydown', this.handleKeyPress)
+  }
 
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
@@ -227,7 +236,6 @@ export default class App extends Component {
     setTimeout(
       () =>
         this.setState(prevState => {
-          console.log('bob')
           const restoreMe = prevState.storeVal.slice()
 
           return { ...prevState, currVal: restoreMe, storeVal: '' }
@@ -236,6 +244,10 @@ export default class App extends Component {
     )
 
     return true
+  }
+
+  handleKeyPress = event => {
+    console.log(event.key)
   }
 
   render() {
