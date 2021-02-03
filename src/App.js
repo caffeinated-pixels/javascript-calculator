@@ -15,20 +15,8 @@ export default class App extends Component {
 
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
-    // FIXME: bug if entering new number after max digit limit
-    // need to check if previous calculation has been performed
-    // if (this.state.calcDone) {
-    //   this.setState(prevState => {
-    //     return {
-    //       ...prevState,
-    //       currVal: '0',
-    //       formula: '',
-    //       calcDone: false
-    //     }
-    //   })
-    // }
-
     // check if num of digits >= 21; maxDigitLimit returns boolean
+    // pass in empty string for reseting formula if entering new num when currVal is an answer
     if (this.maxDigitLimit('')) return
 
     this.setState(prevState => {
