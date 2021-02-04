@@ -32,6 +32,8 @@ export default class App extends Component {
       // test whether previous input was operator
       const isOperator = /[+\-*/]/.test(prevState.currVal)
       const removeCommas = (prevState.currVal + input).replace(/,/g, '')
+
+      // toLocalString will remove any decimal zeros from the end if we don't specifiy the minimumFractionDigits; so we need to test if the number contains a decimal and if so how many decimal places it uses
       const grabDecimals = removeCommas.match(/(?<=\.)\d+/)
       let minDigits
 
