@@ -32,10 +32,10 @@ I originally used several regex Lookbehinds. However, these are still not suppor
 
 ### Comma separated numbers
 
-I fell down a bit of a rabbit hole trying to implement comma separated numbers on the display. There's not a straight-foward way to do this for numbers containing multiple decimal places using just a regex and replace().
+I fell down a bit of a rabbit hole trying to implement comma-separated numbers on the display. There's not a straight-forward way to do this for numbers containing multiple decimal places using just a regex and replace(). The only solution I could think of would be to remove the decimal section, add in the commas with regex/replace() and then add the decimal section back.
 
-So I opeted for using toLocalString(). By default, this method will remove any decimal zeros from the end (eg "2000.100" is converted to "2,000.1"), which is no good for processing inputs.
+In the end, I opted for using toLocalString(). However, by default, this method will remove any decimal zeros from the end (eg "2000.100" is converted to "2,000.1"), which is no good for processing calculator inputs!
 
-To get round this, we can use the minimumFractionDigits options. Obivously, this correct value for this option changes as we add extra digits to the number. So, before using toLocalString(), we need to test if the number contains a decimal point and if so how many decimal places it uses. We can then pass this value into the method eg:
+To get around this, we can use the minimumFractionDigits option. Obviously, the correct value for this option changes as we add extra decimal places to the number. So, before using toLocalString(), we need to test if the number contains a decimal point and if so how many decimal places it uses. We can then pass this value into the method eg:
 
 `const newCurrVal = Number(removeCommas).toLocaleString('en-US', { minimumFractionDigits: minDigits })`
