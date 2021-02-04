@@ -33,12 +33,13 @@ export default class App extends Component {
       const isOperator = /[+\-*/]/.test(prevState.currVal)
       const removeCommas = (prevState.currVal + input).replace(/,/g, '')
 
-      // toLocalString will remove any decimal zeros from the end if we don't specifiy the minimumFractionDigits; so we need to test if the number contains a decimal and if so how many decimal places it uses
-      const grabDecimals = removeCommas.match(/(?<=\.)\d+/)
+      // we can create a comma separated number using toLocalString(); however, this method will remove any decimal zeros from the end if we don't specifiy the correct minimumFractionDigits (eg 2000.100 becomes 2,000.1), which changes as we add extra digits; so we need to test if the number contains a decimal and if so how many decimal places it uses
+      // const grabDecimals = removeCommas.match(/(?<=\.)\d+/)
+      const grabDecimals = removeCommas.match(/\.(\d+)/)
       let minDigits
 
       if (grabDecimals) {
-        minDigits = grabDecimals[0].length
+        minDigits = grabDecimals[1].length
       } else {
         minDigits = 0
       }
