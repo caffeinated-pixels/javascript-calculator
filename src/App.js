@@ -4,9 +4,10 @@ export default class App extends Component {
   // NOTE: Do we need a prevVal or prevAnswer property in state?
   state = {
     currVal: '0',
-    storeVal: '', // store currVal for max digit warning
-    formula: '',
-    prevAns: '',
+    storeVal: '', // store currVal for displaying max digit warning
+    formula: '', // display formula; intFormula + currVal
+    intFormula: '', // only updated after operator or equals
+    prevAns: '', // store answer for starting new calculation
     calcDone: false, // has user clicked equals key?
     negNum: false // is currVal pos or neg?
   }
@@ -30,24 +31,35 @@ export default class App extends Component {
     this.setState(prevState => {
       // test whether previous input was operator
       const isOperator = /[+\-*/]/.test(prevState.currVal)
-      const newCurrVal = prevState.currVal + input
-      const newFormula = prevState.formula.replace(/\d+\.?\d*$/, newCurrVal)
+      const removeCommas = (prevState.currVal + input).replace(/,/g, '')
+
+      const newCurrVal = Number(removeCommas).toLocaleString('en-US', {
+        maximumSignificantDigits: 21
+      })
+
+      // const newCurrVal = prevState.currVal + input
+      // const newFormula = prevState.formula.replace(/\d+\.?\d*$/, newCurrVal)
+      const newFormula = prevState.intFormula + newCurrVal
 
       if (prevState.currVal === '0') {
         // for very first input when key press is 0
         return {
+          ...prevState,
           currVal: input,
-          formula: input
+          formula: input,
+          intFormula: ''
         }
       } else if (isOperator) {
         // for creating new num following operator
         return {
+          ...prevState,
           currVal: input,
-          formula: prevState.formula + input
+          formula: prevState.intFormula + input
         }
       } else {
         // for adding to previous digit (expand num)
         return {
+          ...prevState,
           currVal: newCurrVal,
           formula: newFormula
         }
@@ -92,6 +104,7 @@ export default class App extends Component {
         return {
           currVal: '0',
           formula: '' + prevState.prevAns,
+          intFormula: '' + prevState.prevAns,
           calcDone: false
         }
       })
@@ -117,7 +130,8 @@ export default class App extends Component {
 
       return {
         currVal: input,
-        formula: newFormula
+        formula: newFormula,
+        intFormula: newFormula
       }
     })
   }
@@ -173,16 +187,27 @@ export default class App extends Component {
     // FIXME: pressing equals twice crashes app
     this.setState(prevState => {
       const evaluateMe = prevState.formula
-        .replace(/\D$/, '')
+        .replace(/\D$|,/g, '')
         .replace(/--/g, '+')
 
       // TODO: stop using eval!!
       const answer = String(eval(evaluateMe)) // need convert back to string
+      let answerCommas
+
+      // Number() will convert Infinity to ∞ which causes issue for new calculation
+      if (answer !== 'Infinity') {
+        answerCommas = Number(answer).toLocaleString('en-US', {
+          maximumSignificantDigits: 21
+        })
+      } else {
+        answerCommas = 'Infinity'
+      }
+
       const isAnsNeg = /-/.test(answer) // check if result is positive num
-      const newFormula = evaluateMe + '=' + answer
+      const newFormula = prevState.formula + '=' + answerCommas
       return {
-        currVal: answer,
-        prevAns: answer,
+        currVal: answerCommas,
+        prevAns: answerCommas,
         formula: newFormula,
         calcDone: true,
         negNum: isAnsNeg
