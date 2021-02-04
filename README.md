@@ -7,7 +7,7 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 - use React & Sass
 - mobile-first responsive design
 - grid container for keypad
-- formula/expression logic (probably this!!!)
+- formula/expression logic)
 
 ## To-do list
 
