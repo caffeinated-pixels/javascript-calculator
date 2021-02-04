@@ -32,9 +32,17 @@ export default class App extends Component {
       // test whether previous input was operator
       const isOperator = /[+\-*/]/.test(prevState.currVal)
       const removeCommas = (prevState.currVal + input).replace(/,/g, '')
+      const grabDecimals = removeCommas.match(/(?<=\.)\d+/)
+      let minDigits
+
+      if (grabDecimals) {
+        minDigits = grabDecimals[0].length
+      } else {
+        minDigits = 0
+      }
 
       const newCurrVal = Number(removeCommas).toLocaleString('en-US', {
-        maximumSignificantDigits: 21
+        minimumFractionDigits: minDigits
       })
 
       // const newCurrVal = prevState.currVal + input
