@@ -12,16 +12,13 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 ## To-do list
 
 - positive/negative btn functionality
-- digit limit
 - proper math symbols for operators on display
 - simple styling of elements
 - make pretty
 
 ## Stretch goals
 
-- keyboard input
 - del/backspace key
-- comma separation of digits
 - without using eval
 
 ## Notes
