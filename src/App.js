@@ -30,6 +30,8 @@ export default class App extends Component {
     this.setState(prevState => {
       // test whether previous input was operator
       const isOperator = /[+\-*/]/.test(prevState.currVal)
+      const newCurrVal = prevState.currVal + input
+      const newFormula = prevState.formula.replace(/\d+\.?\d*$/, newCurrVal)
 
       if (prevState.currVal === '0') {
         // for very first input when key press is 0
@@ -46,8 +48,8 @@ export default class App extends Component {
       } else {
         // for adding to previous digit (expand num)
         return {
-          currVal: prevState.currVal + input,
-          formula: prevState.formula + input
+          currVal: newCurrVal,
+          formula: newFormula
         }
       }
     })
@@ -202,7 +204,7 @@ export default class App extends Component {
   maxDigitLimit = input => {
     /* get number of digits (remove decimal point for counting);
     JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
-    const checkLength = this.state.currVal.replace('.', '').length >= 21
+    const checkLength = this.state.currVal.replace(/\.|,/g, '').length >= 21
 
     // need to reset state if creating new num after answer
     if (this.state.calcDone) {
