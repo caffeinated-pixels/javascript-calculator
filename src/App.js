@@ -30,22 +30,24 @@ export default class App extends Component {
     this.setState(prevState => {
       // test whether previous input was operator
       const isOperator = /[+\-*/]/.test(prevState.currVal)
-      const removeCommas = (prevState.currVal + input).replace(/,/g, '')
+      // const removeCommas = (prevState.currVal + input).replace(/,/g, '')
+      //
+      // // we can create a comma separated number using toLocalString(); however, this method will remove any decimal zeros from the end if we don't specifiy the correct minimumFractionDigits (eg 2000.100 becomes 2,000.1), which changes as we add extra digits; so we need to test if the number contains a decimal and if so how many decimal places it uses
+      // // const grabDecimals = removeCommas.match(/(?<=\.)\d+/)
+      // const grabDecimals = removeCommas.match(/\.(\d+)/)
+      // let minDigits
+      //
+      // if (grabDecimals) {
+      //   minDigits = grabDecimals[1].length
+      // } else {
+      //   minDigits = 0
+      // }
+      //
+      // const newCurrVal = Number(removeCommas).toLocaleString('en-US', {
+      //   minimumFractionDigits: minDigits
+      // })
 
-      // we can create a comma separated number using toLocalString(); however, this method will remove any decimal zeros from the end if we don't specifiy the correct minimumFractionDigits (eg 2000.100 becomes 2,000.1), which changes as we add extra digits; so we need to test if the number contains a decimal and if so how many decimal places it uses
-      // const grabDecimals = removeCommas.match(/(?<=\.)\d+/)
-      const grabDecimals = removeCommas.match(/\.(\d+)/)
-      let minDigits
-
-      if (grabDecimals) {
-        minDigits = grabDecimals[1].length
-      } else {
-        minDigits = 0
-      }
-
-      const newCurrVal = Number(removeCommas).toLocaleString('en-US', {
-        minimumFractionDigits: minDigits
-      })
+      const newCurrVal = this.commaSeparation(prevState.currVal, input)
 
       // const newCurrVal = prevState.currVal + input
       // const newFormula = prevState.formula.replace(/\d+\.?\d*$/, newCurrVal)
@@ -262,6 +264,25 @@ export default class App extends Component {
     console.log('del clicked')
   }
 
+  handleKeyPress = event => {
+    console.log(event.key)
+    const testIfNum = /\d/.test(event.key)
+    const testIfDec = /\./.test(event.key)
+    const testIfOp = /[+\-*/]/.test(event.key)
+    const testIfEqOrEntr = /enter|=/i.test(event.key)
+
+    if (testIfNum) {
+      return this.handleNum(event.key)
+    } else if (testIfDec) {
+      return this.handleDecimal()
+    } else if (testIfOp) {
+      return this.handleOperator(event.key)
+    } else if (testIfEqOrEntr) {
+      return this.handleEquals()
+    }
+  }
+
+  // HELPER FUNCTIONS
   maxDigitLimit = input => {
     /* get number of digits (remove decimal point for counting);
     JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
@@ -310,22 +331,23 @@ export default class App extends Component {
     return true
   }
 
-  handleKeyPress = event => {
-    console.log(event.key)
-    const testIfNum = /\d/.test(event.key)
-    const testIfDec = /\./.test(event.key)
-    const testIfOp = /[+\-*/]/.test(event.key)
-    const testIfEqOrEntr = /enter|=/i.test(event.key)
+  commaSeparation = (currVal, input) => {
+    const removeCommas = (currVal + input).replace(/,/g, '')
 
-    if (testIfNum) {
-      return this.handleNum(event.key)
-    } else if (testIfDec) {
-      return this.handleDecimal()
-    } else if (testIfOp) {
-      return this.handleOperator(event.key)
-    } else if (testIfEqOrEntr) {
-      return this.handleEquals()
+    // we can create a comma separated number using toLocalString(); however, this method will remove any decimal zeros from the end if we don't specifiy the correct minimumFractionDigits (eg 2000.100 becomes 2,000.1), which changes as we add extra digits; so we need to test if the number contains a decimal and if so how many decimal places it uses
+    // const grabDecimals = removeCommas.match(/(?<=\.)\d+/)
+    const grabDecimals = removeCommas.match(/\.(\d+)/)
+    let minDigits
+
+    if (grabDecimals) {
+      minDigits = grabDecimals[1].length
+    } else {
+      minDigits = 0
     }
+
+    return Number(removeCommas).toLocaleString('en-US', {
+      minimumFractionDigits: minDigits
+    })
   }
 
   render() {
