@@ -198,7 +198,6 @@ export default class App extends Component {
   }
 
   handleEquals = () => {
-    // FIXME: pressing equals after two operators causes crash
     if (this.state.calcDone) {
       // deal with spamming equals button
       this.setState(prevState => {
@@ -213,12 +212,16 @@ export default class App extends Component {
     }
 
     this.setState(prevState => {
-      const evaluateMe = prevState.formula
-        .replace(/\D+$|,/g, '')
-        .replace(/--/g, '+')
+      const evaluateMe = prevState.formula.replace(
+        /(\D+$)|(,)|(--)/g,
+        (match, p1, p2, p3) => {
+          if (p1 || p2 === match) return ''
+          if (p3 === match) return '+'
+        }
+      )
 
       // tidy up incomplete formulas for displaying after evaluation
-      const tidyFormualEnd = prevState.formula.replace(/\D+$/, '')
+      const tidyFormulaEnd = prevState.formula.replace(/\D+$/, '')
 
       // TODO: stop using eval!!
       const answer = String(eval(evaluateMe)) // need convert back to string
@@ -234,7 +237,7 @@ export default class App extends Component {
       }
 
       const isAnsNeg = /-/.test(answer) // check if result is positive num
-      const newFormula = tidyFormualEnd + '=' + answerCommas
+      const newFormula = tidyFormulaEnd + '=' + answerCommas
       return {
         currVal: answerCommas,
         prevAns: answerCommas,
