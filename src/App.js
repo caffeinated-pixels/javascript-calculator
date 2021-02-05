@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+// TODO: save regex to variables?
 export default class App extends Component {
   state = {
     currVal: '0', // display value; appended to formula
@@ -30,24 +31,10 @@ export default class App extends Component {
     this.setState(prevState => {
       // test whether previous input was operator
       const isOperator = /[+\-*/]/.test(prevState.currVal)
-      // const removeCommas = (prevState.currVal + input).replace(/,/g, '')
-      //
-      // // we can create a comma separated number using toLocalString(); however, this method will remove any decimal zeros from the end if we don't specifiy the correct minimumFractionDigits (eg 2000.100 becomes 2,000.1), which changes as we add extra digits; so we need to test if the number contains a decimal and if so how many decimal places it uses
-      // // const grabDecimals = removeCommas.match(/(?<=\.)\d+/)
-      // const grabDecimals = removeCommas.match(/\.(\d+)/)
-      // let minDigits
-      //
-      // if (grabDecimals) {
-      //   minDigits = grabDecimals[1].length
-      // } else {
-      //   minDigits = 0
-      // }
-      //
-      // const newCurrVal = Number(removeCommas).toLocaleString('en-US', {
-      //   minimumFractionDigits: minDigits
-      // })
 
-      const newCurrVal = this.commaSeparation(prevState.currVal, input)
+      // format number with commas
+      // const commaInput = (currVal + input).replace(/,/g, '')
+      const newCurrVal = this.commaSeparation(prevState.currVal + input)
 
       // const newCurrVal = prevState.currVal + input
       // const newFormula = prevState.formula.replace(/\d+\.?\d*$/, newCurrVal)
@@ -261,11 +248,23 @@ export default class App extends Component {
   }
 
   handleDel = () => {
-    console.log('del clicked')
+    // console.log('del clicked')
+    this.setState(prevState => {
+      const endsInOperator = /[+\-*/]$/.test(prevState.formula)
+      // do nothing if last input operator or currVal is answer
+      if (endsInOperator || prevState.calcDone) return { ...prevState }
+
+      const trimCurrVal = prevState.currVal.replace(/\.$|\d$/, '')
+      const trimCurrValCommas = this.commaSeparation(trimCurrVal)
+      return {
+        ...prevState,
+        currVal: trimCurrValCommas,
+        formula: prevState.intFormula + trimCurrValCommas
+      }
+    })
   }
 
   handleKeyPress = event => {
-    console.log(event.key)
     const testIfNum = /\d/.test(event.key)
     const testIfDec = /\./.test(event.key)
     const testIfOp = /[+\-*/]/.test(event.key)
@@ -331,8 +330,8 @@ export default class App extends Component {
     return true
   }
 
-  commaSeparation = (currVal, input) => {
-    const removeCommas = (currVal + input).replace(/,/g, '')
+  commaSeparation = input => {
+    const removeCommas = input.replace(/,/g, '')
 
     // we can create a comma separated number using toLocalString(); however, this method will remove any decimal zeros from the end if we don't specifiy the correct minimumFractionDigits (eg 2000.100 becomes 2,000.1), which changes as we add extra digits; so we need to test if the number contains a decimal and if so how many decimal places it uses
     // const grabDecimals = removeCommas.match(/(?<=\.)\d+/)
@@ -350,6 +349,7 @@ export default class App extends Component {
     })
   }
 
+  // RENDER TIME
   render() {
     return (
       <main className="calculator-body">
