@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 
 export default class App extends Component {
-  // NOTE: Do we need a prevVal or prevAnswer property in state?
   state = {
-    currVal: '0',
+    currVal: '0', // display value; appended to formula
     storeVal: '', // store currVal for displaying max digit warning
     formula: '', // display formula; intFormula + currVal
     intFormula: '', // only updated after operator or equals
