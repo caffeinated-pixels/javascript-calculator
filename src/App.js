@@ -258,6 +258,10 @@ export default class App extends Component {
     })
   }
 
+  handleDel = () => {
+    console.log('del clicked')
+  }
+
   maxDigitLimit = input => {
     /* get number of digits (remove decimal point for counting);
     JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
@@ -336,6 +340,7 @@ export default class App extends Component {
           handlePosNeg={this.handlePosNeg}
           handleEquals={this.handleEquals}
           handleClear={this.handleClear}
+          handleDel={this.handleDel}
         />
       </main>
     )
@@ -414,6 +419,9 @@ const KeyPad = props => {
       </button>
       <button id="equals" onClick={props.handleEquals}>
         =
+      </button>
+      <button id="del" onClick={props.handleDel}>
+        DEL
       </button>
     </div>
   )
