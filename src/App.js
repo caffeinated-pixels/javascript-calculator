@@ -200,6 +200,19 @@ export default class App extends Component {
   handleEquals = () => {
     // FIXME: pressing equals twice crashes app
     // FIXME: pressing equals after two operators causes crash
+    if (this.state.calcDone) {
+      // deal with pressing equals button sequentially
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          currVal: '' + prevState.currVal,
+          formula: '' + prevState.currVal,
+          calcDone: true
+        }
+      })
+      return
+    }
+
     this.setState(prevState => {
       const evaluateMe = prevState.formula
         .replace(/\D$|,/g, '')
