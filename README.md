@@ -18,7 +18,7 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 
 ## Stretch goals
 
-- del/backspace key
+- pos/neg btn
 - without using eval
 
 ## Notes
