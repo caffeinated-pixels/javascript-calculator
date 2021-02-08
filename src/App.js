@@ -29,7 +29,7 @@ export default class App extends Component {
 
     this.setState(prevState => {
       // test whether previous input was operator
-      const isOperator = /[+\-*/]$/.test(prevState.currVal)
+      const isOperator = /[+\-*/]$/.test(prevState.formula)
 
       // format number with commas
       // const commaInput = (currVal + input).replace(/,/g, '')
@@ -39,7 +39,7 @@ export default class App extends Component {
       // const newFormula = prevState.formula.replace(/\d+\.?\d*$/, newCurrVal)
       const newFormula = prevState.intFormula + newCurrVal
 
-      if (prevState.currVal === '0' && !prevState.intFormula) {
+      if (prevState.currVal === '0' && !prevState.formula) {
         // for very first input when key press is 0 and intFormula empty
         return {
           ...prevState,
@@ -241,20 +241,19 @@ export default class App extends Component {
   }
 
   handleDel = () => {
-    // FIXME: deleting all digits resets formula when entering new digit
     // console.log('del clicked')
     this.setState(prevState => {
       const endsInOperator = /[+\-*/]$/.test(prevState.formula)
       // do nothing if last input operator or currVal is answer
       if (endsInOperator || prevState.calcDone) return { ...prevState }
 
-      const singleNegDigit = /-\d$/.test(prevState.currVal)
+      const singleNegDigit = /-\d$|^\d$/.test(prevState.currVal)
       // return '0' if currVal single negative digit eg -2
       if (singleNegDigit)
         return {
           ...prevState,
           currVal: '0',
-          formula: prevState.intFormula + '0'
+          formula: prevState.intFormula
         }
 
       const trimCurrVal = prevState.currVal.replace(/\.$|\d$/, '')
