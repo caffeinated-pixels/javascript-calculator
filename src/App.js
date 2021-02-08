@@ -8,8 +8,7 @@ export default class App extends Component {
     formula: '', // display formula; intFormula + currVal
     intFormula: '', // only updated after operator or equals
     prevAns: '', // store answer for starting new calculation
-    calcDone: false, // has user clicked equals key?
-    negNum: false // is currVal pos or neg?
+    calcDone: false // has user clicked equals key?
   }
 
   componentDidMount = () => {
@@ -123,10 +122,9 @@ export default class App extends Component {
         // ie if(input === '-')
         newFormula = prevState.formula.replace(
           // /((?<=[^+\-*/.])$)|(?<=\d[+\-*/.]?$)/,
-
-          // appends last digit with minus (input); or, appends prev operator (max of 1) with minus
           /(\d)$|([+\-*/.]?$)/,
           '$1$2' + input
+          // appends last digit with minus (input); or, appends prev operator (max of 1) with minus
         )
       }
 
@@ -139,13 +137,14 @@ export default class App extends Component {
   }
 
   handlePosNeg = () => {
-    // TODO: Re-enable posNeg functionality
-    // FIXME: deal with negative answer!!!
-    // FIXME: requires 2 clicks if formula contains other neg num
+    // FIXME: deal with mutliple operators, eg 2+--2
     // console.log('posNeg clciked!!!')
 
     this.setState(prevState => {
-      const isOperator = /[+\-*/]\B/.test(prevState.currVal)
+      const isOperator = /[+\-*/]$/.test(prevState.currVal)
+      const multipleOp = /[+\-*/]-$/.test(prevState.intFormula)
+      let newFormula
+
       if (isOperator || prevState.currVal === '0') return
 
       const posNegVal = prevState.currVal.replace(
@@ -157,7 +156,6 @@ export default class App extends Component {
       )
 
       if (prevState.calcDone) {
-        console.log('bob')
         return {
           ...prevState,
           currVal: posNegVal,
@@ -165,8 +163,15 @@ export default class App extends Component {
           intFormula: '',
           calcDone: false
         }
+      } else if (multipleOp) {
+        newFormula = prevState.intFormula.replace(/([+\-*/])-$/, '$1')
+
+        return {
+          ...prevState,
+          intFormula: newFormula,
+          formula: newFormula + prevState.currVal
+        }
       } else {
-        console.log('dave')
         return {
           ...prevState,
           currVal: posNegVal,
@@ -174,45 +179,6 @@ export default class App extends Component {
         }
       }
     })
-    // if (this.state.currVal === '0') return
-    //
-    // if (this.state.calcDone) {
-    //   // check if currVal is ans from prev evaluation
-    //   this.setState(prevState => {
-    //     return {
-    //       currVal: prevState.currVal,
-    //       formula: '' + prevState.prevAns,
-    //       calcDone: false
-    //     }
-    //   })
-    // }
-    //
-    // this.setState(prevState => {
-    //   let re // for storing regex
-    //   let newCurrVal // for storing postive value
-    //   let newFormula // for storing updated formula
-    //
-    //   if (!prevState.negNum) {
-    //     re = new RegExp(prevState.currVal + '$')
-    //     newFormula = prevState.formula.replace(re, '-' + prevState.currVal)
-    //     return {
-    //       ...prevState,
-    //       currVal: '-' + prevState.currVal,
-    //       formula: newFormula,
-    //       negNum: true
-    //     }
-    //   } else {
-    //     re = new RegExp(prevState.currVal + '$')
-    //     newCurrVal = prevState.currVal.replace('-', '')
-    //     newFormula = prevState.formula.replace(re, newCurrVal)
-    //     return {
-    //       ...prevState,
-    //       currVal: newCurrVal,
-    //       formula: newFormula,
-    //       negNum: false
-    //     }
-    //   }
-    // })
   }
 
   handleEquals = () => {
