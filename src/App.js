@@ -29,7 +29,8 @@ export default class App extends Component {
 
     this.setState(prevState => {
       // test whether previous input was operator
-      const isOperator = /[+\-*/]/.test(prevState.currVal)
+      // const isOperator = /[+\-*/]/.test(prevState.currVal)
+      const isOperator = /[+\-*/]$/.test(prevState.currVal)
 
       // format number with commas
       // const commaInput = (currVal + input).replace(/,/g, '')
