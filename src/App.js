@@ -32,12 +32,7 @@ export default class App extends Component {
       const isOperator = /[+\-*/]$/.test(prevState.formula)
 
       // format number with commas
-      // const commaInput = (currVal + input).replace(/,/g, '')
       const newCurrVal = this.commaSeparation(prevState.currVal + input)
-
-      // const newCurrVal = prevState.currVal + input
-      // const newFormula = prevState.formula.replace(/\d+\.?\d*$/, newCurrVal)
-      const newFormula = prevState.intFormula + newCurrVal
 
       if (prevState.currVal === '0' && !prevState.formula) {
         // for very first input when key press is 0 and intFormula empty
@@ -59,7 +54,7 @@ export default class App extends Component {
         return {
           ...prevState,
           currVal: newCurrVal,
-          formula: newFormula
+          formula: prevState.intFormula + newCurrVal
         }
       }
     })
@@ -248,7 +243,7 @@ export default class App extends Component {
       if (endsInOperator || prevState.calcDone) return { ...prevState }
 
       const singleNegDigit = /-\d$|^\d$/.test(prevState.currVal)
-      // return '0' if currVal single negative digit eg -2
+      // return '0' if currVal single digit eg -2 or 2
       if (singleNegDigit)
         return {
           ...prevState,
