@@ -137,7 +137,6 @@ export default class App extends Component {
   }
 
   handlePosNeg = () => {
-    // FIXME: deal with mutliple operators, eg 2+--2
     // console.log('posNeg clciked!!!')
 
     this.setState(prevState => {
@@ -226,8 +225,7 @@ export default class App extends Component {
         currVal: answerCommas,
         prevAns: answerCommas,
         formula: newFormula,
-        calcDone: true,
-        negNum: isAnsNeg
+        calcDone: true
       }
     })
   }
@@ -238,17 +236,26 @@ export default class App extends Component {
       currVal: '0',
       formula: '',
       prevAns: '',
-      calcDone: false,
-      negNum: false
+      calcDone: false
     })
   }
 
   handleDel = () => {
+    // FIXME: deleting all digits resets formula when entering new digit
     // console.log('del clicked')
     this.setState(prevState => {
       const endsInOperator = /[+\-*/]$/.test(prevState.formula)
       // do nothing if last input operator or currVal is answer
       if (endsInOperator || prevState.calcDone) return { ...prevState }
+
+      const singleNegDigit = /-\d$/.test(prevState.currVal)
+      // return '0' if currVal single negative digit eg -2
+      if (singleNegDigit)
+        return {
+          ...prevState,
+          currVal: '0',
+          formula: prevState.intFormula + '0'
+        }
 
       const trimCurrVal = prevState.currVal.replace(/\.$|\d$/, '')
       const trimCurrValCommas = this.commaSeparation(trimCurrVal)
