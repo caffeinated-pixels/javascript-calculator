@@ -29,7 +29,6 @@ export default class App extends Component {
 
     this.setState(prevState => {
       // test whether previous input was operator
-      // const isOperator = /[+\-*/]/.test(prevState.currVal)
       const isOperator = /[+\-*/]$/.test(prevState.currVal)
 
       // format number with commas
@@ -40,8 +39,8 @@ export default class App extends Component {
       // const newFormula = prevState.formula.replace(/\d+\.?\d*$/, newCurrVal)
       const newFormula = prevState.intFormula + newCurrVal
 
-      if (prevState.currVal === '0') {
-        // for very first input when key press is 0
+      if (prevState.currVal === '0' && !prevState.intFormula) {
+        // for very first input when key press is 0 and intFormula empty
         return {
           ...prevState,
           currVal: input,
