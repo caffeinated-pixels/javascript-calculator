@@ -142,8 +142,38 @@ export default class App extends Component {
     // TODO: Re-enable posNeg functionality
     // FIXME: deal with negative answer!!!
     // FIXME: requires 2 clicks if formula contains other neg num
-    console.log('posNeg is temporary disabled!!!')
+    // console.log('posNeg clciked!!!')
 
+    this.setState(prevState => {
+      const isOperator = /[+\-*/]\B/.test(prevState.currVal)
+      if (isOperator || prevState.currVal === '0') return
+
+      const posNegVal = prevState.currVal.replace(
+        /(^\b)|(^-)/,
+        (match, p1, p2) => {
+          if (match === p1) return '-'
+          if (match === p2) return ''
+        }
+      )
+
+      if (prevState.calcDone) {
+        console.log('bob')
+        return {
+          ...prevState,
+          currVal: posNegVal,
+          formula: posNegVal,
+          intFormula: '',
+          calcDone: false
+        }
+      } else {
+        console.log('dave')
+        return {
+          ...prevState,
+          currVal: posNegVal,
+          formula: prevState.intFormula + posNegVal
+        }
+      }
+    })
     // if (this.state.currVal === '0') return
     //
     // if (this.state.calcDone) {
