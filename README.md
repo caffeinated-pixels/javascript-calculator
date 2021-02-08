@@ -2,6 +2,16 @@
 
 My React-based app for the [Build a JavaScript Calculator](https://www.freecodecamp.org/learn/front-end-libraries/front-end-libraries-projects/build-a-javascript-calculator) freeCodeCamp project. I setup this version using create-react-app.
 
+I found this project quite challenging, as there are many permutations when it comes to processing the inputs and outputs. Particularly as I decided to add in functionality beyond what the FCC brief required. So, I spent a lot of time fixing various bugs and I'm sure they're still some I've missed. However, I did get to brush up on my regex and .replace() skills.
+
+Extra features I added include:
+
+- formula display
+- comma separation of numbers
+- del/backspace button
+- pos/neg button
+- limited max digits to 21 (JS switches to scientific notation at 22)
+
 ## Goals
 
 - use React & Sass
@@ -11,14 +21,12 @@ My React-based app for the [Build a JavaScript Calculator](https://www.freecodec
 
 ## To-do list
 
-- positive/negative btn functionality
 - proper math symbols for operators on display
 - simple styling of elements
 - make pretty
 
 ## Stretch goals
 
-- pos/neg btn
 - without using eval
 
 ## Notes
