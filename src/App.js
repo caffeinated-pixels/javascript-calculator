@@ -206,9 +206,9 @@ export default class App extends Component {
       const answer = this.evaluateFormula(evaluateMe)
       let answerCommas
 
-      // Number() will convert Infinity to ∞ which causes issue for new calculation
-      if (answer !== 'Infinity') {
-        answerCommas = Number(answer).toLocaleString('en-US', {
+      // toLocalString() will convert Infinity to ∞ which causes issue for new calculation
+      if (isFinite(answer)) {
+        answerCommas = answer.toLocaleString('en-US', {
           maximumSignificantDigits: 21
         })
       } else {
@@ -347,6 +347,7 @@ export default class App extends Component {
   }
 
   evaluateFormula = input => {
+    // FIXME: convent infinity symbol to keyword
     // return String(eval(input))
     const regArr = ['*/', '+-'] // for building regexes below
 
@@ -360,14 +361,9 @@ export default class App extends Component {
       // Regular Expression to look for operators between floating numbers or integers
       // Blackslashes are the escape character in strings so we need to escape them with a double blackslash (\\)!
 
-      re.lastIndex = 0 // take precautions and reset re starting pos (lastIndex sets the
-
       while (input.match(re)) {
         const match = input.match(re)
-        // input matches from RegExp object capture groups, which are created when using .test()
-        console.log(match[1], match[2], match[3])
-        output = calculate(match[1], match[2], match[3]) // send matches to function below
-        // console.log(output)
+        output = calculate(Number(match[1]), match[2], Number(match[3])) // send matches to function below
 
         if (isNaN(output) || !isFinite(output)) return output // exit early if not a number
         input = input.replace(re, output) // replace matched operation for output result
@@ -377,8 +373,6 @@ export default class App extends Component {
     return output
 
     function calculate(a, op, b) {
-      a = a * 1 // converts string to number, alt a = Number(a)
-      b = b * 1
       switch (op) {
         case '+':
           return a + b
@@ -389,7 +383,7 @@ export default class App extends Component {
         case '*':
           return a * b
         default:
-          return null
+          return
       }
     }
   }
