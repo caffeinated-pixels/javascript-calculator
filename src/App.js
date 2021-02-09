@@ -425,6 +425,7 @@ const MainDisplay = props => {
 const KeyPad = props => {
   return (
     <div className="keypad">
+      {/* FIRST ROW */}
       <button id="seven" onClick={() => props.handleNum('7')}>
         7
       </button>
@@ -434,6 +435,14 @@ const KeyPad = props => {
       <button id="nine" onClick={() => props.handleNum('9')}>
         9
       </button>
+      <button id="del" onClick={props.handleDel}>
+        DEL
+      </button>
+      <button id="clear" onClick={props.handleClear}>
+        AC
+      </button>
+
+      {/* SECOND ROW */}
       <button id="four" onClick={() => props.handleNum('4')}>
         4
       </button>
@@ -443,6 +452,14 @@ const KeyPad = props => {
       <button id="six" onClick={() => props.handleNum('6')}>
         6
       </button>
+      <button id="multiply" onClick={() => props.handleOperator('*')}>
+        ×
+      </button>
+      <button id="divide" onClick={() => props.handleOperator('/')}>
+        ÷
+      </button>
+
+      {/* THIRD ROW */}
       <button id="one" onClick={() => props.handleNum('1')}>
         1
       </button>
@@ -452,35 +469,26 @@ const KeyPad = props => {
       <button id="three" onClick={() => props.handleNum('3')}>
         3
       </button>
-      <button id="pos-neg" onClick={props.handlePosNeg}>
-        +/-
-      </button>
-      <button id="zero" onClick={() => props.handleNum('0')}>
-        0
-      </button>
-      <button id="decimal" onClick={props.handleDecimal}>
-        .
-      </button>
       <button id="add" onClick={() => props.handleOperator('+')}>
         +
       </button>
       <button id="subtract" onClick={() => props.handleOperator('-')}>
         -
       </button>
-      <button id="multiply" onClick={() => props.handleOperator('*')}>
-        ×
+
+      {/* THIRD ROW */}
+      <button id="zero" onClick={() => props.handleNum('0')}>
+        0
       </button>
-      <button id="divide" onClick={() => props.handleOperator('/')}>
-        ÷
+      <button id="pos-neg" onClick={props.handlePosNeg}>
+        +/-
       </button>
-      <button id="clear" onClick={props.handleClear}>
-        AC
+      <button id="decimal" onClick={props.handleDecimal}>
+        .
       </button>
+
       <button id="equals" onClick={props.handleEquals}>
         =
-      </button>
-      <button id="del" onClick={props.handleDel}>
-        DEL
       </button>
     </div>
   )
