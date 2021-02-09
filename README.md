@@ -51,7 +51,7 @@ Because the formula that gets built up from the inputs has to be stored as a str
 
 The reasons for this is two-fold:
 
-- eval() is a serious security risk because of its potential for code injection
+- eval() is a serious security risk because of its potential for malicious code injection
 - eval() can slow down your app because it invokes the JS interpreter
 
 If my understanding is correct, eval() is not really a security risk in this context because the input is strictly limited to digits and math operators and is not stored or shared anywhere.
