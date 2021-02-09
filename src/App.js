@@ -202,7 +202,8 @@ export default class App extends Component {
       const tidyFormulaEnd = prevState.formula.replace(/\D+$/, '')
 
       // TODO: stop using eval!!
-      const answer = String(eval(evaluateMe)) // need convert back to string
+      // const answer = String(eval(evaluateMe)) // need convert back to string
+      const answer = this.evaluateFormula(evaluateMe)
       let answerCommas
 
       // Number() will convert Infinity to ∞ which causes issue for new calculation
@@ -344,6 +345,10 @@ export default class App extends Component {
     return Number(removeCommas).toLocaleString('en-US', {
       minimumFractionDigits: minDigits
     })
+  }
+
+  evaluateFormula = formula => {
+    return String(eval(formula))
   }
 
   // RENDER TIME
