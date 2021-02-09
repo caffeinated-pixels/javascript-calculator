@@ -201,8 +201,6 @@ export default class App extends Component {
       // tidy up incomplete formulas for displaying after evaluation
       const tidyFormulaEnd = prevState.formula.replace(/\D+$/, '')
 
-      // TODO: stop using eval!!
-      // const answer = String(eval(evaluateMe)) // need convert back to string
       const answer = this.evaluateFormula(evaluateMe)
       let answerCommas
 
