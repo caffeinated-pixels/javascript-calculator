@@ -390,8 +390,10 @@ export default class App extends Component {
   render() {
     return (
       <main className="calculator-body">
-        <FormulaDisplay formulaDisplay={this.state.formula} />
-        <MainDisplay currVal={this.state.currVal} />
+        <DisplayContainer
+          currVal={this.state.currVal}
+          formulaDisplay={this.state.formula}
+        />
         <KeyPad
           handleNum={this.handleNum}
           handleDecimal={this.handleDecimal}
@@ -406,19 +408,15 @@ export default class App extends Component {
   }
 }
 
-const FormulaDisplay = props => {
+const DisplayContainer = props => {
   return (
-    <div className="formula-display display">
-      <p>{props.formulaDisplay}</p>
-    </div>
-  )
-}
-
-const MainDisplay = props => {
-  return (
-    <div id="display" className="main-display display">
-      <p>{props.currVal}</p>
-    </div>
+    <section className="display-container">
+      <p id="display" className="main-display display">
+        {props.currVal}
+      </p>
+      <hr />
+      <p className="formula-display display">{props.formulaDisplay}</p>
+    </section>
   )
 }
 
@@ -487,7 +485,7 @@ const KeyPad = props => {
         .
       </button>
 
-      <button id="equals" onClick={props.handleEquals}>
+      <button id="equals" className="equals" onClick={props.handleEquals}>
         =
       </button>
     </div>

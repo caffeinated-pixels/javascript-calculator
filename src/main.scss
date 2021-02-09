@@ -29,11 +29,13 @@ button {
 }
 
 .display {
-  // text-align: right;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  text-align: right;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: flex-end;
+  // align-items: flex-end;
   padding: 4px;
+  // background-color: lightyellow;
 }
 // End of SHARED CLASSES
 .calculator-body {
@@ -49,22 +51,45 @@ button {
 
 
 // TODO: add scroll to formula display to prevent overflow
+.display-container {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 8px;
+  border: solid;
+  background-color: lightyellow;
+
+  hr {
+    margin: auto;
+    width: 90%;
+  }
+}
+
 .formula-display {
   background-color: lightgreen;
   height: 40px;
+  font-size: 0.8rem;
 }
 
 .main-display {
-  background-color: lightyellow;
+  background-color: lightblue;
   height: 50px;
+  // font-size: 1.2rem;
 }
 
 .keypad {
   background-color: lightblue;
+  width: 250px;
+  margin: auto;
 }
 
 button {
   width: 50px;
   height: 50px;
   // border-radius: 5px;
+}
+
+.equals {
+  width: 100px
 }
