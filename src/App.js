@@ -215,7 +215,6 @@ export default class App extends Component {
         answerCommas = 'Infinity'
       }
 
-      const isAnsNeg = /-/.test(answer) // check if result is positive num
       const newFormula = tidyFormulaEnd + '=' + answerCommas
       return {
         currVal: answerCommas,
