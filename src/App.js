@@ -346,8 +346,52 @@ export default class App extends Component {
     })
   }
 
-  evaluateFormula = formula => {
-    return String(eval(formula))
+  evaluateFormula = input => {
+    // return String(eval(input))
+    const regArr = ['*/', '+-'] // for building regexes below
+
+    let output // for storing output of iterations
+    for (let i = 0; i < regArr.length; i++) {
+      // loop through regexes: 1st iteration = mult/div; 2nd iteration = add/sub
+
+      const re = new RegExp(
+        '(-?\\d+\\.?\\d*)([\\' + regArr[i] + '])(-?\\d+\\.?\\d*)'
+      )
+      // Regular Expression to look for operators between floating numbers or integers
+      // Blackslashes are the escape character in strings so we need to escape them with a double blackslash (\\)!
+
+      re.lastIndex = 0 // take precautions and reset re starting pos (lastIndex sets the
+
+      while (input.match(re)) {
+        const match = input.match(re)
+        // input matches from RegExp object capture groups, which are created when using .test()
+        console.log(match[1], match[2], match[3])
+        output = calculate(match[1], match[2], match[3]) // send matches to function below
+        // console.log(output)
+
+        if (isNaN(output) || !isFinite(output)) return output // exit early if not a number
+        input = input.replace(re, output) // replace matched operation for output result
+      }
+    }
+
+    return output
+
+    function calculate(a, op, b) {
+      a = a * 1 // converts string to number, alt a = Number(a)
+      b = b * 1
+      switch (op) {
+        case '+':
+          return a + b
+        case '-':
+          return a - b
+        case '/':
+          return a / b
+        case '*':
+          return a * b
+        default:
+          return null
+      }
+    }
   }
 
   // RENDER TIME
