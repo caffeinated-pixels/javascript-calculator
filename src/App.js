@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import SimpleBar from 'simplebar-react'
 
 // TODO: save regex to variables?
 export default class App extends Component {

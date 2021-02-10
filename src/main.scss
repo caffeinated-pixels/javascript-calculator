@@ -30,9 +30,9 @@ button {
 
 .display {
   text-align: right;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   // align-items: flex-end;
   padding: 4px;
   // background-color: lightyellow;
@@ -53,9 +53,6 @@ button {
 // TODO: add scroll to formula display to prevent overflow
 .display-container {
   text-align: right;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   border-radius: 8px;
   border: solid;
   background-color: lightyellow;
@@ -69,13 +66,13 @@ button {
 .formula-display {
   background-color: lightgreen;
   height: 40px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 .main-display {
   background-color: lightblue;
   height: 50px;
-  // font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .keypad {
