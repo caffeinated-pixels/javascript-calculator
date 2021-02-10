@@ -413,6 +413,7 @@ class DisplayContainer extends Component {
     if (prevProps.formulaDisplay !== this.props.formulaDisplay) {
       // only fires if formulaDisplay updates!!!
       const { scrollbars } = this.refs
+      // scrolls formula display to right so that we can see the previous input
       scrollbars.scrollToRight()
     }
   }
@@ -425,7 +426,7 @@ class DisplayContainer extends Component {
         </p>
         <hr />
         <div className="formula-container">
-          <Scrollbars autoHeight ref="scrollbars" onUpdate={this.handleUpdate}>
+          <Scrollbars autoHeight ref="scrollbars">
             <p id="formula-display" className="formula-display">
               {this.props.formulaDisplay}
             </p>
