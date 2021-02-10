@@ -207,7 +207,6 @@ export default class App extends Component {
       const tidyFormulaEnd = prevState.formula.replace(/\D+$/, '')
 
       const answer = this.evaluateFormula(evaluateMe)
-      console.log(answer)
       let answerCommas
 
       // toLocalString() will convert Infinity to ∞ which causes issue for new calculation
@@ -287,7 +286,7 @@ export default class App extends Component {
   maxDigitLimit = input => {
     /* get number of digits (remove decimal point for counting);
     JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
-    const checkLength = this.state.currVal.replace(/\.|,/g, '').length >= 16
+    const checkLength = this.state.currVal.replace(/\.|,/g, '').length >= 21
 
     // need to reset state if creating new num after answer
     if (this.state.calcDone) {
@@ -410,10 +409,12 @@ export default class App extends Component {
 }
 
 class DisplayContainer extends Component {
-  // FIXME: can't scroll back left!
-  handleUpdate = () => {
-    const { scrollbars } = this.refs
-    scrollbars.scrollToRight()
+  componentDidUpdate(prevProps) {
+    if (prevProps.formulaDisplay !== this.props.formulaDisplay) {
+      // only fires if formulaDisplay updates!!!
+      const { scrollbars } = this.refs
+      scrollbars.scrollToRight()
+    }
   }
 
   render() {
