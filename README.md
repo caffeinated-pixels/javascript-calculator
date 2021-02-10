@@ -10,7 +10,7 @@ Extra features I added include:
 - comma separation of numbers
 - del/backspace button
 - pos/neg button
-- limited max digits to 21 (JS switches to scientific notation at 22)
+- limited max digits to 16
 - keyboard controls
 
 ## Goals
@@ -38,13 +38,13 @@ I originally used several regex Lookbehinds. However, these are still not suppor
 
 ### Comma separated numbers
 
-I fell down a bit of a rabbit hole trying to implement comma-separated numbers on the display. There's not a straight-forward way to do this for numbers containing a variable number of decimal places using just a regex and replace(). The only solution I could think of would be to remove the decimal section, add in the commas with regex/replace() and then add the decimal section back.
+I fell down a bit of a rabbit hole trying to implement comma-separated numbers on the display. I originally opted for toLocalString() but this was rounding very large numbers (16+ digits), so I borrowed a regex from a [Stack Overflow post](https://stackoverflow.com/a/2901298/8958062).
 
-In the end (for better or worse!), I opted for using toLocalString(). However, by default, this method will remove any decimal zeros from the end (eg "2000.100" is converted to "2,000.1"), which is no good for processing calculator inputs!
+To deal with the decimals, we need to remove them first using .split(".") and then add then back later using .join(".")
 
-To get around this, we can use the minimumFractionDigits option. Obviously, the correct value for this option changes as we add extra decimal places to the number. So, before using toLocalString(), we need to test if the number contains a decimal point and if so how many decimal places it uses. We can then pass this value into the method eg:
+### Digit limit
 
-`const newCurrVal = Number(removeCommas).toLocaleString('en-US', { minimumFractionDigits: minDigits })`
+I originally opted for a digit limit of 21 as after this JS switches to scientific notation (ie 1e+22). However, I realised that when converting a number to a string, numbers starting getting rounded after 16 digits! So there's not really much point going beyond 16.
 
 ### eval() alternative
 
