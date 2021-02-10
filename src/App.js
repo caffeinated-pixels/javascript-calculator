@@ -37,7 +37,7 @@ export default class App extends Component {
       // format number with commas
       const newCurrVal = this.commaSeparation(prevState.currVal + input)
 
-      if (prevState.currVal === '0' && !prevState.formula) {
+      if (prevState.currVal === '0') {
         // for very first input when key press is 0 and intFormula empty
         return {
           ...prevState,
@@ -179,20 +179,24 @@ export default class App extends Component {
   }
 
   handleEquals = () => {
-    if (this.state.calcDone) {
-      // deal with spamming equals button
-      this.setState(prevState => {
+    // FIXME: pressing equals without operator
+
+    this.setState(prevState => {
+      if (prevState.calcDone) {
+        // deal with spamming equals button
         return {
           ...prevState,
           currVal: '' + prevState.currVal,
           formula: '' + prevState.currVal,
           calcDone: true
         }
-      })
-      return
-    }
+      }
 
-    this.setState(prevState => {
+      if (!prevState.intFormula) {
+        // deal pressing equals if formula consists of single number
+        return
+      }
+
       const evaluateMe = prevState.formula.replace(
         /(\D+$)|(,)|(--)/g,
         (match, p1, p2, p3) => {
@@ -210,9 +214,10 @@ export default class App extends Component {
 
       // toLocalString() will convert Infinity to ∞ which causes issue for new calculation
       if (isFinite(answer)) {
-        answerCommas = answer.toLocaleString('en-US', {
-          maximumSignificantDigits: 21
-        })
+        // answerCommas = answer.toLocaleString('en-US', {
+        //   maximumSignificantDigits: 21
+        // })
+        answerCommas = this.commaSeparation(answer.toString())
       } else {
         answerCommas = 'Infinity'
       }
@@ -284,7 +289,7 @@ export default class App extends Component {
   maxDigitLimit = input => {
     /* get number of digits (remove decimal point for counting);
     JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
-    const checkLength = this.state.currVal.replace(/\.|,/g, '').length >= 21
+    const checkLength = this.state.currVal.replace(/\.|,/g, '').length >= 16
 
     // need to reset state if creating new num after answer
     if (this.state.calcDone) {
@@ -330,25 +335,18 @@ export default class App extends Component {
   }
 
   commaSeparation = input => {
-    const removeCommas = input.replace(/,/g, '')
-
-    // we can create a comma separated number using toLocalString(); however, this method will remove any decimal zeros from the end if we don't specifiy the correct minimumFractionDigits (eg 2000.100 becomes 2,000.1), which changes as we add extra digits; so we need to test if the number contains a decimal and if so how many decimal places it uses
-    // const grabDecimals = removeCommas.match(/(?<=\.)\d+/)
-    const grabDecimals = removeCommas.match(/\.(\d+)/)
-    let minDigits
-
-    if (grabDecimals) {
-      minDigits = grabDecimals[1].length
-    } else {
-      minDigits = 0
-    }
-
-    return Number(removeCommas).toLocaleString('en-US', {
-      minimumFractionDigits: minDigits
-    })
+    // see https://stackoverflow.com/a/2901298/8958062 for explanation of the regex
+    // we remove the decimal places and stick back on at the end
+    const parts = input
+      .replace(/,/g, '')
+      .toString()
+      .split('.')
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    return parts.join('.')
   }
 
   evaluateFormula = input => {
+    // FIXME: can't handle scientific notation, eg 1e+14+2
     // return String(eval(input))
     const regArr = ['*/', '+-'] // for building regexes below
 
@@ -357,9 +355,12 @@ export default class App extends Component {
       // loop through regexes: 1st iteration = mult/div; 2nd iteration = add/sub
 
       const re = new RegExp(
-        '(-?\\d+\\.?\\d*)([\\' + regArr[i] + '])(-?\\d+\\.?\\d*)'
+        // '(-?\\d+\\.?\\d*)([\\' + regArr[i] + '])(-?\\d+\\.?\\d*)'
+        '(-?\\d+\\.*\\d*e\\+\\d+|-?\\d+\\.?\\d*)([\\' +
+          regArr[i] +
+          '])(-?\\d+\\.?\\d*)'
       )
-      // Regular Expression to look for operators between floating numbers or integers
+      // Regular Expression to look for operators between floating numbers, integers or exponentials (1e+24)
       // Blackslashes are the escape character in strings so we need to escape them with a double blackslash (\\)!
 
       while (input.match(re)) {
