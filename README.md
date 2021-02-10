@@ -11,6 +11,7 @@ Extra features I added include:
 - del/backspace button
 - pos/neg button
 - limited max digits to 21 (JS switches to scientific notation at 22)
+- keyboard controls
 
 ## Goals
 
