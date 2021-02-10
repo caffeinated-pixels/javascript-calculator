@@ -24,6 +24,8 @@ export default class App extends Component {
 
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
+    // FIXME: bug when entering more than 15 digits; seems that toLocaleString is rounding large numbers!!!
+
     // check if num of digits >= 21; maxDigitLimit returns boolean
     // pass in empty string to reset formula if entering new num when currVal is answer
     if (this.maxDigitLimit('')) return
@@ -346,7 +348,6 @@ export default class App extends Component {
   }
 
   evaluateFormula = input => {
-    // FIXME: convent infinity symbol to keyword
     // return String(eval(input))
     const regArr = ['*/', '+-'] // for building regexes below
 
@@ -416,7 +417,9 @@ const DisplayContainer = props => {
         {props.currVal}
       </p>
       <hr />
-      <p className="formula-display display">{props.formulaDisplay}</p>
+      <SimpleBar autoHide={false}>
+        <p className="formula-display">{props.formulaDisplay}</p>
+      </SimpleBar>
     </section>
   )
 }

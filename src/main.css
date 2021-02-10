@@ -42,24 +42,26 @@ button {
   text-align: right;
   border-radius: 8px;
   border: solid;
-  background-color: lightyellow;
+  background-color: white;
+  margin-bottom: 10px;
 }
 
 .display-container hr {
   margin: auto;
-  width: 90%;
-}
-
-.formula-display {
-  background-color: lightgreen;
-  height: 40px;
-  font-size: 0.75rem;
+  width: 95%;
+  color: lightgray;
 }
 
 .main-display {
-  background-color: lightblue;
   height: 50px;
   font-size: 1.1rem;
+}
+
+.formula-display {
+  height: 40px;
+  font-size: 0.75rem;
+  padding: 5px;
+  overflow: hidden;
 }
 
 .keypad {
