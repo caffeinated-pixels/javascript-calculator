@@ -205,6 +205,7 @@ export default class App extends Component {
       const tidyFormulaEnd = prevState.formula.replace(/\D+$/, '')
 
       const answer = this.evaluateFormula(evaluateMe)
+      console.log(answer)
       let answerCommas
 
       // toLocalString() will convert Infinity to ∞ which causes issue for new calculation
@@ -411,6 +412,7 @@ export default class App extends Component {
 }
 
 class DisplayContainer extends Component {
+  // FIXME: can't scroll back left!
   handleUpdate = () => {
     const { scrollbars } = this.refs
     scrollbars.scrollToRight()
