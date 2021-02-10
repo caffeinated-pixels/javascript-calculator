@@ -49,7 +49,7 @@ button {
   border-radius: 8px;
 }
 
-// TODO: add scroll to formula display to prevent overflow
+// TODO: choose fonts for display
 .display-container {
   text-align: right;
   border-radius: 8px;
@@ -66,18 +66,21 @@ button {
 
 .main-display {
   // background-color: lightblue;
-  height: 50px;
+  height: 40px;
   font-size: 1.1rem;
+}
+
+.formula-container {
+  margin: 0 5px;
 }
 
 .formula-display {
   // background-color: lightgreen;
-  height: 40px;
+  height: 35px;
   font-size: 0.75rem;
-  padding: 5px;
-  overflow: hidden;
-
+  padding: 5px 0;
 }
+
 
 .keypad {
   background-color: lightblue;

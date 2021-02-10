@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SimpleBar from 'simplebar-react'
+import { Scrollbars } from 'react-custom-scrollbars'
 
 // TODO: save regex to variables?
 export default class App extends Component {
@@ -20,6 +20,11 @@ export default class App extends Component {
   componentWillUnmount = () => {
     // clean-up/remove event listeners
     document.removeEventListener('keydown', this.handleKeyPress)
+  }
+
+  componentDidUpdate = () => {
+    var el = document.getElementById('formula-display')
+    el.scrollLeft = 1000
   }
 
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
@@ -410,18 +415,47 @@ export default class App extends Component {
   }
 }
 
-const DisplayContainer = props => {
-  return (
-    <section className="display-container">
-      <p id="display" className="main-display display">
-        {props.currVal}
-      </p>
-      <hr />
-      <SimpleBar autoHide={false}>
-        <p className="formula-display">{props.formulaDisplay}</p>
-      </SimpleBar>
-    </section>
-  )
+// const DisplayContainer = props => {
+//   return (
+//     <section className="display-container">
+//       <p id="display" className="main-display display">
+//         {props.currVal}
+//       </p>
+//       <hr />
+//       <div className="formula-container">
+//         <Scrollbars autoHeight>
+//           <p id="formula-display" className="formula-display">
+//             {props.formulaDisplay}
+//           </p>
+//         </Scrollbars>
+//       </div>
+//     </section>
+//   )
+// }
+
+class DisplayContainer extends Component {
+  handleUpdate = () => {
+    const { scrollbars } = this.refs
+    scrollbars.scrollToRight()
+  }
+
+  render() {
+    return (
+      <section className="display-container">
+        <p id="display" className="main-display display">
+          {this.props.currVal}
+        </p>
+        <hr />
+        <div className="formula-container">
+          <Scrollbars autoHeight ref="scrollbars" onUpdate={this.handleUpdate}>
+            <p id="formula-display" className="formula-display">
+              {this.props.formulaDisplay}
+            </p>
+          </Scrollbars>
+        </div>
+      </section>
+    )
+  }
 }
 
 const KeyPad = props => {

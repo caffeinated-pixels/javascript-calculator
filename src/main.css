@@ -53,15 +53,18 @@ button {
 }
 
 .main-display {
-  height: 50px;
+  height: 40px;
   font-size: 1.1rem;
 }
 
+.formula-container {
+  margin: 0 5px;
+}
+
 .formula-display {
-  height: 40px;
+  height: 35px;
   font-size: 0.75rem;
-  padding: 5px;
-  overflow: hidden;
+  padding: 5px 0;
 }
 
 .keypad {
