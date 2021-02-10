@@ -22,11 +22,6 @@ export default class App extends Component {
     document.removeEventListener('keydown', this.handleKeyPress)
   }
 
-  componentDidUpdate = () => {
-    var el = document.getElementById('formula-display')
-    el.scrollLeft = 1000
-  }
-
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
     // FIXME: bug when entering more than 15 digits; seems that toLocaleString is rounding large numbers!!!
@@ -414,24 +409,6 @@ export default class App extends Component {
     )
   }
 }
-
-// const DisplayContainer = props => {
-//   return (
-//     <section className="display-container">
-//       <p id="display" className="main-display display">
-//         {props.currVal}
-//       </p>
-//       <hr />
-//       <div className="formula-container">
-//         <Scrollbars autoHeight>
-//           <p id="formula-display" className="formula-display">
-//             {props.formulaDisplay}
-//           </p>
-//         </Scrollbars>
-//       </div>
-//     </section>
-//   )
-// }
 
 class DisplayContainer extends Component {
   handleUpdate = () => {
