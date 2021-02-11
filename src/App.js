@@ -427,7 +427,12 @@ class DisplayContainer extends Component {
         </p>
         <hr />
         <div className="formula-container">
-          <Scrollbars autoHeight ref="scrollbars">
+          <Scrollbars
+            autoHeight
+            autoHeightMin={35}
+            autoHeightMax={35}
+            ref="scrollbars"
+          >
             <p id="formula-display" className="formula-display">
               {this.props.formulaDisplay}
             </p>

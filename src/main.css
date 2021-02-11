@@ -54,7 +54,8 @@ button {
 
 .main-display {
   height: 40px;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
+  font-family: 'Lexend Deca', sans-serif;
 }
 
 .formula-container {
@@ -62,7 +63,7 @@ button {
 }
 
 .formula-display {
-  height: 35px;
+  min-height: 35px;
   font-size: 0.75rem;
   padding: 5px 0;
 }

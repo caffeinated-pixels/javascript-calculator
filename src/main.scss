@@ -67,7 +67,8 @@ button {
 .main-display {
   // background-color: lightblue;
   height: 40px;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
+  font-family: 'Lexend Deca', sans-serif;
 }
 
 .formula-container {
@@ -76,11 +77,10 @@ button {
 
 .formula-display {
   // background-color: lightgreen;
-  height: 35px;
+  min-height: 35px;
   font-size: 0.75rem;
   padding: 5px 0;
 }
-
 
 .keypad {
   background-color: lightblue;
