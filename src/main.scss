@@ -1,7 +1,6 @@
 // SCSS VARIABLES
 $dark-grey: #262525;
 $box-shadow: 1px 1px 3px $dark-grey;
-$text-background: #f0fbdb;
 $border-default: 1px solid black;
 
 // MIXINS
@@ -9,10 +8,6 @@ $border-default: 1px solid black;
   @media only screen and (min-width: $size) {
     @content; /* lets us pass content block into mixin */
   }
-}
-
-@mixin text-shadow($x: 1px, $y: 1px, $blur: 2px, $color: black) {
-  text-shadow: $x $y $blur $color;
 }
 
 // Start of SHARED CLASSES
@@ -27,6 +22,7 @@ html {
 }
 
 body {
+  font-family: 'Lexend Deca', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,29 +30,28 @@ body {
   width: 100vw;
 }
 
-button {
-  cursor: pointer;
+.header {
+  text-align: right;
+  font-size: 0.9rem;
+  margin: 8px 0;
+  text-shadow: 1px 1px 1px gray;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.display {
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  // align-items: flex-end;
-  padding: 4px;
-  // background-color: lightyellow;
-}
 // End of SHARED CLASSES
 .calculator-body {
   padding: 5px;
   background-color: lightgray;
-  width: 90vw;
+
   max-width: 300px;
   height: auto;
   // margin: auto;
   border: 1px solid black;
   border-radius: 8px;
+  box-shadow: 2px 2px 6px $dark-grey;
 }
 
 // TODO: choose fonts for display
@@ -65,8 +60,7 @@ button {
   border-radius: 8px;
   border: solid;
   background-color: white;
-  margin-bottom: 10px;
-  font-family: 'Lexend Deca', sans-serif;
+  margin: 0 2px 10px;
 
   hr {
     margin: auto;
@@ -79,6 +73,10 @@ button {
   // background-color: lightblue;
   height: 40px;
   font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 4px;
 }
 
 .formula-container {
@@ -104,31 +102,29 @@ button {
 
 button {
   /* general buttons styling to provide consistency between browsers */
+
   width: 48px;
   height: 48px;
   display: inline-block;
   // margin: 3px;
   margin-bottom: 25px;
-  padding: calculateEm(4px);
-
+  padding: 5px;
   border: none;
   border-radius: 4px;
   box-shadow: $box-shadow;
   background: $dark-grey;
-
+  cursor: pointer;
   color: #ffffff;
   font-family: inherit;
-  // font-size: calculateRem(15px);
-  font-size: calc(15 / 16 * 1rem);
+  font-size: 1rem;
   line-height: 1;
-  text-align: center;
   text-decoration: none;
-  @include text-shadow();
+  vertical-align: top;
+  padding: 5px;
 
-  cursor: pointer;
-  &:focus, &:hover {
+  &:focus,
+  &:hover {
     outline-style: none;
-
   }
   &:hover {
     // background-color: #fada54;
@@ -144,8 +140,15 @@ button {
   }
 }
 
+.operator,
+.equals {
+  font-size: 1.8rem;
+  line-height: 0.9;
+  padding-bottom: 15px;
+}
+
 .red-btn {
-  background-color: #FF0000;
+  background-color: #ff0000;
 }
 
 .green-btn {
