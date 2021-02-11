@@ -22,7 +22,6 @@ export default class App extends Component {
     document.removeEventListener('keydown', this.handleKeyPress)
   }
 
-  // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
     // check if num of digits >= 21; maxDigitLimit returns boolean
     // pass in empty string to reset formula if entering new num when currVal is answer
@@ -193,8 +192,6 @@ export default class App extends Component {
   }
 
   handleEquals = () => {
-    // FIXME: pressing equals when last input was operator
-
     this.setState(prevState => {
       if (prevState.calcDone) {
         // deal with spamming equals button
