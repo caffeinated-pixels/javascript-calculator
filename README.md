@@ -57,4 +57,4 @@ The reasons for this is two-fold:
 
 If my understanding is correct, eval() is not really a security risk in this context because the input is strictly limited to digits and math operators and is not stored or shared anywhere.
 
-However, I still wanted to see if I could up with a solution that didn't involve using eval(). Admittedly, I didn't get very far by myself and my solution is heavily based on one posted on [Stack Overflow](https://stackoverflow.com/a/6482814/8958062).
+However, I still wanted to see if I could up with a solution that didn't involve using eval(). Admittedly, I didn't get very far by myself and my solution is heavily based on one posted on [Stack Overflow](https://stackoverflow.com/a/6482814/8958062). But I still had to modify their regex to account for negative numbers and exponentials (eg 1e+24). I also switched to using .match() instead relying on the RegExp.$1, RegExp.$2, etc properties, which are now deprecated and may be removed from JS in the future.
