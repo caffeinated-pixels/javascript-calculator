@@ -94,6 +94,7 @@ export default class App extends Component {
 
   handleOperator = input => {
     // need to check if previous calculation has been performed
+    // FIXME: pressing operator after no initial input
     if (this.state.calcDone) {
       this.setState(prevState => {
         return {
@@ -456,10 +457,10 @@ const KeyPad = props => {
       <button id="nine" onClick={() => props.handleNum('9')}>
         9
       </button>
-      <button id="del" onClick={props.handleDel}>
+      <button id="del" className="red-btn" onClick={props.handleDel}>
         DEL
       </button>
-      <button id="clear" onClick={props.handleClear}>
+      <button id="clear" className="red-btn" onClick={props.handleClear}>
         AC
       </button>
 
@@ -508,7 +509,11 @@ const KeyPad = props => {
         .
       </button>
 
-      <button id="equals" className="equals" onClick={props.handleEquals}>
+      <button
+        id="equals"
+        className="equals green-btn"
+        onClick={props.handleEquals}
+      >
         =
       </button>
     </div>
