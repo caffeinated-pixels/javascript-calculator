@@ -24,7 +24,6 @@ export default class App extends Component {
 
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
-    // FIXME: deleting back to 0 resets formula
     // check if num of digits >= 21; maxDigitLimit returns boolean
     // pass in empty string to reset formula if entering new num when currVal is answer
     if (this.maxDigitLimit('')) return
@@ -36,7 +35,15 @@ export default class App extends Component {
       // format number with commas
       const newCurrVal = this.commaSeparation(prevState.currVal + input)
 
-      if (prevState.currVal === '0') {
+      if ((prevState.currVal === '0' && prevState.formula) || isOperator) {
+        // for input following deletion of all digits
+        // or for creating new num following operator
+        return {
+          ...prevState,
+          currVal: input,
+          formula: prevState.intFormula + input
+        }
+      } else if (prevState.currVal === '0') {
         // for very first input when key press is 0 and intFormula empty
         return {
           ...prevState,
@@ -44,14 +51,16 @@ export default class App extends Component {
           formula: input,
           intFormula: ''
         }
-      } else if (isOperator) {
-        // for creating new num following operator
-        return {
-          ...prevState,
-          currVal: input,
-          formula: prevState.intFormula + input
-        }
-      } else {
+      }
+      // else if (isOperator) {
+      //   // for creating new num following operator
+      //   return {
+      //     ...prevState,
+      //     currVal: input,
+      //     formula: prevState.intFormula + input
+      //   }
+      // }
+      else {
         // for adding to previous digit (expand num)
         return {
           ...prevState,
@@ -184,7 +193,7 @@ export default class App extends Component {
   }
 
   handleEquals = () => {
-    // FIXME: pressing equals without operator
+    // FIXME: pressing equals when last input was operator
 
     this.setState(prevState => {
       if (prevState.calcDone) {
@@ -203,6 +212,7 @@ export default class App extends Component {
       }
 
       const evaluateMe = prevState.formula.replace(
+        // remove commas, convert (--) to (+)
         /(\D+$)|(,)|(--)/g,
         (match, p1, p2, p3) => {
           if (p1 || p2 === match) return ''
@@ -375,7 +385,8 @@ export default class App extends Component {
       }
     }
 
-    return output
+    // if output falsy, return the input (covers incomplete formula, eg 2+)
+    return output ? output : input
 
     function calculate(a, op, b) {
       switch (op) {
