@@ -24,6 +24,7 @@ export default class App extends Component {
 
   // NOTE: Combine handleNum, handleDecimal & handleOperator into single function???
   handleNum = input => {
+    // FIXME: deleting back to 0 resets formula
     // check if num of digits >= 21; maxDigitLimit returns boolean
     // pass in empty string to reset formula if entering new num when currVal is answer
     if (this.maxDigitLimit('')) return
