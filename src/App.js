@@ -248,6 +248,7 @@ export default class App extends Component {
     this.setState({
       currVal: '0',
       formula: '',
+      intFormula: '',
       prevAns: '',
       calcDone: false
     })
@@ -309,6 +310,7 @@ export default class App extends Component {
           ...prevState,
           currVal: '0',
           formula: input,
+          intFormula: '',
           calcDone: false
         }
       })
