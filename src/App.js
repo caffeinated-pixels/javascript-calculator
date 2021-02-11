@@ -94,7 +94,6 @@ export default class App extends Component {
 
   handleOperator = input => {
     // need to check if previous calculation has been performed
-    // FIXME: pressing operator after no initial input
     if (this.state.calcDone) {
       this.setState(prevState => {
         return {
@@ -102,6 +101,12 @@ export default class App extends Component {
           formula: '' + prevState.prevAns,
           intFormula: '' + prevState.prevAns,
           calcDone: false
+        }
+      })
+    } else if (!this.state.formula) {
+      this.setState(prevState => {
+        return {
+          formula: '0'
         }
       })
     }
