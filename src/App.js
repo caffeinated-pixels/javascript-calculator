@@ -128,7 +128,7 @@ export default class App extends Component {
           // /((?<=[^+\-*/.])$)|(?<=\d[+\-*/.]?$)/,
           /(\d)$|([+\-*/.]?$)/,
           '$1$2' + input
-          // appends last digit with minus (input); or, appends prev operator (max of 1) with minus
+          // appends last digit with minus (input); or, appends prev operator (max of 1) with minus eg "2+-" or "2*-"
         )
       }
 
@@ -141,20 +141,21 @@ export default class App extends Component {
   }
 
   handlePosNeg = () => {
-    // console.log('posNeg clciked!!!')
-
     this.setState(prevState => {
+      // is currVal an operator?
       const isOperator = /[+\-*/]$/.test(prevState.currVal)
+      // is last value in intFormula an operator followed by minus eg "2+-"
       const multipleOp = /[+\-*/]-$/.test(prevState.intFormula)
-      let newFormula
 
-      if (isOperator || prevState.currVal === '0') return
+      let newFormula // initialize for below
+
+      if (isOperator || prevState.currVal === '0') return // do nothing
 
       const posNegVal = prevState.currVal.replace(
         /(^\b)|(^-)/,
         (match, p1, p2) => {
-          if (match === p1) return '-'
-          if (match === p2) return ''
+          if (match === p1) return '-' // prefix with minus
+          if (match === p2) return '' // remove prefix
         }
       )
 
@@ -167,6 +168,7 @@ export default class App extends Component {
           calcDone: false
         }
       } else if (multipleOp) {
+        // remove minus symbol at end of formula so we don't end up with "2+--"
         newFormula = prevState.intFormula.replace(/([+\-*/])-$/, '$1')
 
         return {
@@ -216,11 +218,8 @@ export default class App extends Component {
       const answer = this.evaluateFormula(evaluateMe)
       let answerCommas
 
-      // toLocalString() will convert Infinity to ∞ which causes issue for new calculation
+      // deal with answer = Infinity
       if (isFinite(answer)) {
-        // answerCommas = answer.toLocaleString('en-US', {
-        //   maximumSignificantDigits: 21
-        // })
         answerCommas = this.commaSeparation(answer.toString())
       } else {
         answerCommas = 'Infinity'
@@ -237,7 +236,7 @@ export default class App extends Component {
   }
 
   handleClear = () => {
-    // console.log('AC clicked')
+    // reset state to original values
     this.setState({
       currVal: '0',
       formula: '',
