@@ -19,6 +19,9 @@ $border-default: 1px solid black;
 
 html {
   font-size: 120%;
+  @include mq(768px) {
+    font-size: 150%;
+  }
 }
 
 body {
@@ -29,7 +32,11 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: lightblue;
-  background: linear-gradient(180deg, rgba(223,254,255,1) 0%, rgba(173,228,230,1) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(223, 254, 255, 1) 0%,
+    rgba(173, 228, 230, 1) 100%
+  );
 }
 
 .header {
@@ -54,6 +61,11 @@ body {
   border: 1px solid black;
   border-radius: 8px;
   box-shadow: 2px 2px 6px $dark-grey;
+
+  @include mq(768px) {
+    max-width: 400px;
+    padding: 10px;
+  }
 }
 
 .display-container {
@@ -89,6 +101,10 @@ body {
   min-height: 35px;
   font-size: 0.7rem;
   padding: 5px 0;
+
+  @include mq(768px) {
+    min-height: 40px;
+  }
 }
 
 .keypad {
@@ -106,6 +122,11 @@ button {
 
   width: 48px;
   height: 48px;
+  @include mq(768px) {
+    width: 65px;
+    height: 65px;
+  }
+
   display: inline-block;
   // margin: 3px;
   margin-bottom: 25px;
@@ -158,4 +179,7 @@ button {
 
 .equals {
   width: 105.5px;
+  @include mq(768px){
+    width: 142.9px;
+  }
 }

@@ -8,6 +8,13 @@ html {
   font-size: 120%;
 }
 
+@media only screen and (min-width: 768px) {
+  html {
+    font-size: 150%;
+    /* lets us pass content block into mixin */
+  }
+}
+
 body {
   font-family: 'Lexend Deca', sans-serif;
   display: flex;
@@ -38,6 +45,14 @@ body {
   border: 1px solid black;
   border-radius: 8px;
   box-shadow: 2px 2px 6px #262525;
+}
+
+@media only screen and (min-width: 768px) {
+  .calculator-body {
+    max-width: 400px;
+    padding: 10px;
+    /* lets us pass content block into mixin */
+  }
 }
 
 .display-container {
@@ -73,6 +88,13 @@ body {
   padding: 5px 0;
 }
 
+@media only screen and (min-width: 768px) {
+  .formula-display {
+    min-height: 40px;
+    /* lets us pass content block into mixin */
+  }
+}
+
 .keypad {
   width: auto;
   margin: auto;
@@ -101,6 +123,14 @@ button {
   text-decoration: none;
   vertical-align: top;
   padding: 5px;
+}
+
+@media only screen and (min-width: 768px) {
+  button {
+    width: 65px;
+    height: 65px;
+    /* lets us pass content block into mixin */
+  }
 }
 
 button:focus, button:hover {
@@ -137,4 +167,11 @@ button:active {
 
 .equals {
   width: 105.5px;
+}
+
+@media only screen and (min-width: 768px) {
+  .equals {
+    width: 142.9px;
+    /* lets us pass content block into mixin */
+  }
 }
