@@ -167,3 +167,19 @@ button:active {
     width: 142.9px;
   }
 }
+
+footer {
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+footer a {
+  color: #007af2;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+footer a:hover, footer a:focus {
+  color: #b45922;
+}

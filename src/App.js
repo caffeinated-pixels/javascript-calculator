@@ -402,22 +402,25 @@ export default class App extends Component {
   // RENDER TIME
   render() {
     return (
-      <main className="calculator-body">
-        <Header />
-        <DisplayContainer
-          currVal={this.state.currVal}
-          formulaDisplay={this.state.formula}
-        />
-        <KeyPad
-          handleNum={this.handleNum}
-          handleDecimal={this.handleDecimal}
-          handleOperator={this.handleOperator}
-          handlePosNeg={this.handlePosNeg}
-          handleEquals={this.handleEquals}
-          handleClear={this.handleClear}
-          handleDel={this.handleDel}
-        />
-      </main>
+      <div>
+        <main className="calculator-body">
+          <Header />
+          <DisplayContainer
+            currVal={this.state.currVal}
+            formulaDisplay={this.state.formula}
+          />
+          <KeyPad
+            handleNum={this.handleNum}
+            handleDecimal={this.handleDecimal}
+            handleOperator={this.handleOperator}
+            handlePosNeg={this.handlePosNeg}
+            handleEquals={this.handleEquals}
+            handleClear={this.handleClear}
+            handleDel={this.handleDel}
+          />
+        </main>
+        <Footer />
+      </div>
     )
   }
 }
@@ -550,5 +553,21 @@ const KeyPad = props => {
         =
       </button>
     </div>
+  )
+}
+
+const Footer = () => {
+  return (
+    <footer>
+      <p>
+        Coded by{' '}
+        <a
+          href="https://steviegill-webportfolio.netlify.app/"
+          title="Stevie's web app portofolio page"
+        >
+          Stevie Gill
+        </a>
+      </p>
+    </footer>
   )
 }
