@@ -9,7 +9,7 @@ export default class App extends Component {
     formula: '', // display formula; intFormula + currVal
     intFormula: '', // only updated after operator or equals
     prevAns: '', // store answer for starting new calculation
-    calcDone: false // has user clicked equals key?
+    calcDone: false // was last input equals key?
   }
 
   componentDidMount = () => {
@@ -24,7 +24,7 @@ export default class App extends Component {
 
   handleNum = input => {
     // check if num of digits >= 21; maxDigitLimit returns boolean
-    // pass in empty string to reset formula if entering new num when currVal is answer
+    // pass in empty string to reset formula if entering new num when calcDone = true
     if (this.maxDigitLimit('')) return
 
     this.setState(prevState => {
@@ -299,7 +299,7 @@ export default class App extends Component {
 
   // HELPER FUNCTIONS
   maxDigitLimit = input => {
-    /* get number of digits (remove decimal point for counting);
+    /* get number of digits (remove "." & "," for counting);
     JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
     const checkLength = this.state.currVal.replace(/\.|,/g, '').length >= 21
 
@@ -314,17 +314,17 @@ export default class App extends Component {
           calcDone: false
         }
       })
-      return false
+      return false // return false for maxDigitLimit
     }
 
-    // if warning alread display we can return true
+    // if warning already displayed we can return true
     if (this.state.currVal === 'Max Digits Reached!') return true
 
     // if < 21 we can return false and continue adding digits
     if (!checkLength) return false
 
     this.setState(prevState => {
-      // make a copy of currVal to be restored after limit message
+      // make a copy of currVal (avoids pass by ref) to be restored after limit message
       const storeMe = prevState.currVal.slice()
       return {
         ...prevState,
@@ -343,8 +343,7 @@ export default class App extends Component {
         }),
       600
     )
-
-    return true
+    return true // return true for maxDigitLimit
   }
 
   commaSeparation = input => {
