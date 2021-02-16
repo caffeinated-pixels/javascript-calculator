@@ -74,7 +74,8 @@ export default class App extends Component {
       // check to prevent operator followed by decimal point, eg 2+.
       const endsInOperator = /[+\-*/]$/.test(prevState.formula)
 
-      if (endsInOperator) {
+      if (!prevState.formula || endsInOperator) {
+        // if very 1st input, or if last input was operator
         return {
           ...prevState,
           currVal: '0.',
