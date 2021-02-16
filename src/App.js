@@ -50,16 +50,7 @@ export default class App extends Component {
           formula: input,
           intFormula: ''
         }
-      }
-      // else if (isOperator) {
-      //   // for creating new num following operator
-      //   return {
-      //     ...prevState,
-      //     currVal: input,
-      //     formula: prevState.intFormula + input
-      //   }
-      // }
-      else {
+      } else {
         // for adding to previous digit (expand num)
         return {
           ...prevState,
@@ -72,7 +63,7 @@ export default class App extends Component {
 
   handleDecimal = () => {
     // check if num of digits >= 21; maxDigitLimit returns boolean
-    // pass in '0' to reset formula if entering new float when currVal is answer
+    // pass in '0' to reset formula if entering new float when calcDone = true
     if (this.maxDigitLimit('0')) return
 
     this.setState(prevState => {
@@ -102,22 +93,24 @@ export default class App extends Component {
 
   handleOperator = input => {
     // need to check if previous calculation has been performed
-    if (this.state.calcDone) {
-      this.setState(prevState => {
+    this.setState(prevState => {
+      if (prevState.calcDone) {
         return {
+          ...prevState,
           currVal: '0',
           formula: '' + prevState.prevAns,
           intFormula: '' + prevState.prevAns,
           calcDone: false
         }
-      })
-    } else if (!this.state.formula) {
-      this.setState(prevState => {
+      } else if (!prevState.formula) {
         return {
+          ...prevState,
           formula: '0'
         }
-      })
-    }
+      } else {
+        return
+      }
+    })
 
     this.setState(prevState => {
       let newFormula // initialize variable
