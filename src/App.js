@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 
-// TODO: save regex to variables?
 export default class App extends Component {
   state = {
     currVal: '0', // display value; appended to formula
@@ -12,6 +11,7 @@ export default class App extends Component {
     calcDone: false // was last input equals key?
   }
 
+  // LIFECYCLE METHODS
   componentDidMount = () => {
     // add event listener for keypresses
     document.addEventListener('keydown', this.handleKeyPress)
@@ -22,6 +22,7 @@ export default class App extends Component {
     document.removeEventListener('keydown', this.handleKeyPress)
   }
 
+  // EVENT HANDLERS
   handleNum = input => {
     // check if num of digits >= 21; maxDigitLimit returns boolean
     // pass in empty string to reset formula if entering new num when calcDone = true
@@ -247,10 +248,9 @@ export default class App extends Component {
   }
 
   handleDel = () => {
-    // console.log('del clicked')
     this.setState(prevState => {
       const endsInOperator = /[+\-*/]$/.test(prevState.formula)
-      // do nothing if last input operator or currVal is answer
+      // do nothing if last input operator or currVal is an answer
       if (endsInOperator || prevState.calcDone) return { ...prevState }
 
       const singleNegDigit = /-\d$|^\d$/.test(prevState.currVal)
@@ -340,7 +340,7 @@ export default class App extends Component {
 
   commaSeparation = input => {
     // see https://stackoverflow.com/a/2901298/8958062 for explanation of the regex
-    // we remove the decimal places and stick back on at the end
+    // we remove the decimal places before using .replace() and stick back on after
     const parts = input
       .replace(/,/g, '')
       .toString()
@@ -352,33 +352,37 @@ export default class App extends Component {
   evaluateFormula = input => {
     // return String(eval(input))
     const regArr = ['*/', '+-'] // for building regexes below
-
     let output // for storing output of iterations
+
     for (let i = 0; i < regArr.length; i++) {
       // loop through regexes: 1st iteration = mult/div; 2nd iteration = add/sub
 
       const re = new RegExp(
-        // '(-?\\d+\\.?\\d*)([\\' + regArr[i] + '])(-?\\d+\\.?\\d*)'
         '(-?\\d+\\.*\\d*e\\+\\d+|-?\\d+\\.?\\d*)([\\' +
           regArr[i] +
           '])(-?\\d+\\.?\\d*)'
       )
-      // Regular Expression to look for operators between floating numbers, integers or exponentials (1e+24)
-      // Blackslashes are the escape character in strings so we need to escape them with a double blackslash (\\)!
+      // regex looks for operators between floats, integers or exponentials (1e+24)
+      // Blackslashes are the escape character in strings so we need to escape them with a double blackslash (\\)
 
       while (input.match(re)) {
-        const match = input.match(re)
-        output = calculate(Number(match[1]), match[2], Number(match[3])) // send matches to function below
+        // stops when no more matching operations; so we do all the mult/div operations first, then back to the for loop above to start the add/sub operations
 
-        if (isNaN(output) || !isFinite(output)) return output // exit early if not a number
+        const match = input.match(re) // for access to capture groups
+
+        // send matched operations to function below
+        output = calculate(Number(match[1]), match[2], Number(match[3]))
+
+        if (isNaN(output) || !isFinite(output)) return output // exit early if NaN or ∞
         input = input.replace(re, output) // replace matched operation for output result
       }
     }
 
-    // if output falsy, return the input (covers incomplete formula, eg 2+)
+    // if output falsy, return the input (covers incomplete formula, eg "2+")
     return output ? output : input
 
     function calculate(a, op, b) {
+      // perform the correct operation
       switch (op) {
         case '+':
           return a + b
@@ -424,9 +428,9 @@ const Header = () => {
 class DisplayContainer extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.formulaDisplay !== this.props.formulaDisplay) {
-      // only fires if formulaDisplay updates!!!
+      // only fires if formulaDisplay updates, otherwise the below would prevent scrolling left
       const { scrollbars } = this.refs
-      // scrolls formula display to right so that we can see the previous input
+      // automatically scrolls formula display to right so that we can always see the latest input
       scrollbars.scrollToRight()
     }
   }
@@ -439,6 +443,7 @@ class DisplayContainer extends Component {
         </p>
         <hr />
         <div className="formula-container">
+          {/* need to specify autoHeight to prevent component having no height! */}
           <Scrollbars
             autoHeight
             autoHeightMin={35}
@@ -525,7 +530,7 @@ const KeyPad = props => {
         -
       </button>
 
-      {/* THIRD ROW */}
+      {/* FOURTH ROW */}
       <button id="zero" onClick={() => props.handleNum('0')}>
         0
       </button>
