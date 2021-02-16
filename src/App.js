@@ -451,7 +451,7 @@ class DisplayContainer extends Component {
           <Scrollbars
             autoHeight
             autoHeightMin={35}
-            autoHeightMax={35}
+            autoHeightMax={45}
             ref="scrollbars"
           >
             <p id="formula-display" className="formula-display">
