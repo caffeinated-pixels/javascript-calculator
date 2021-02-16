@@ -292,9 +292,9 @@ export default class App extends Component {
 
   // HELPER FUNCTIONS
   maxDigitLimit = input => {
-    /* get number of digits (remove "." & "," for counting);
+    /* get number of digits (remove "-", "." & "," before counting);
     JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
-    const checkLength = this.state.currVal.replace(/\.|,/g, '').length >= 21
+    const checkLength = this.state.currVal.replace(/-|\.|,/g, '').length >= 21
 
     // need to reset state if creating new num after answer
     if (this.state.calcDone) {
