@@ -2,6 +2,8 @@
 
 My React-based app for the [Build a JavaScript Calculator](https://www.freecodecamp.org/learn/front-end-libraries/front-end-libraries-projects/build-a-javascript-calculator) freeCodeCamp project. I setup this version using create-react-app.
 
+You can [see the app in action](https://mercenary-calculator.netlify.app/) here.
+
 I found this project quite challenging and time consuming, as there are many permutations when it comes to processing the inputs and outputs. Particularly as I decided to add in functionality beyond what the FCC brief required and wanted to complete the project without using `eval()`.
 
 So, I spent a lot of time fixing various bugs and I'm sure they're still some I've missed. However, it was great refresher for using regex and `replace()`.
