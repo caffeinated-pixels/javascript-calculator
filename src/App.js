@@ -11,7 +11,7 @@ export default class App extends Component {
     formula: '', // display formula; intFormula + currVal
     intFormula: '', // only updated after operator or equals
     prevAns: '', // store answer for starting new calculation
-    calcDone: false // was last input equals key?
+    calcDone: false, // was last input equals key?
   }
 
   // LIFECYCLE METHODS
@@ -26,12 +26,12 @@ export default class App extends Component {
   }
 
   // EVENT HANDLERS
-  handleNum = input => {
+  handleNum = (input) => {
     // check if num of digits >= 21; maxDigitLimit returns boolean
     // pass in empty string to reset formula if entering new num when calcDone = true
     if (this.maxDigitLimit('')) return
 
-    this.setState(prevState => {
+    this.setState((prevState) => {
       // test whether previous input was operator
       const isOperator = /[+\-*/]$/.test(prevState.formula)
 
@@ -44,7 +44,7 @@ export default class App extends Component {
         return {
           ...prevState,
           currVal: input,
-          formula: prevState.intFormula + input
+          formula: prevState.intFormula + input,
         }
       } else if (prevState.currVal === '0') {
         // for very first input when key press is 0 and intFormula empty
@@ -52,14 +52,14 @@ export default class App extends Component {
           ...prevState,
           currVal: input,
           formula: input,
-          intFormula: ''
+          intFormula: '',
         }
       } else {
         // for adding to previous digit (expand num)
         return {
           ...prevState,
           currVal: newCurrVal,
-          formula: prevState.intFormula + newCurrVal
+          formula: prevState.intFormula + newCurrVal,
         }
       }
     })
@@ -70,7 +70,7 @@ export default class App extends Component {
     // pass in '0' to reset formula if entering new float when calcDone = true
     if (this.maxDigitLimit('0')) return
 
-    this.setState(prevState => {
+    this.setState((prevState) => {
       // check to prevent sequential decimal points, ie 2..
       const containsDecimal = /\./.test(prevState.currVal)
 
@@ -82,7 +82,7 @@ export default class App extends Component {
         return {
           ...prevState,
           currVal: '0.',
-          formula: prevState.formula + '0.'
+          formula: prevState.formula + '0.',
         }
       }
 
@@ -90,34 +90,34 @@ export default class App extends Component {
         return {
           ...prevState,
           currVal: prevState.currVal + '.',
-          formula: prevState.formula + '.'
+          formula: prevState.formula + '.',
         }
       }
     })
   }
 
-  handleOperator = input => {
+  handleOperator = (input) => {
     // need to check if previous calculation has been performed
-    this.setState(prevState => {
+    this.setState((prevState) => {
       if (prevState.calcDone) {
         return {
           ...prevState,
           currVal: '0',
           formula: '' + prevState.prevAns,
           intFormula: '' + prevState.prevAns,
-          calcDone: false
+          calcDone: false,
         }
       } else if (!prevState.formula) {
         return {
           ...prevState,
-          formula: '0'
+          formula: '0',
         }
       } else {
         return
       }
     })
 
-    this.setState(prevState => {
+    this.setState((prevState) => {
       let newFormula // initialize variable
 
       if (input !== '-') {
@@ -140,13 +140,13 @@ export default class App extends Component {
       return {
         currVal: input,
         formula: newFormula,
-        intFormula: newFormula
+        intFormula: newFormula,
       }
     })
   }
 
   handlePosNeg = () => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       // is currVal an operator?
       const isOperator = /[+\-*/]$/.test(prevState.currVal)
       // is last value in intFormula an operator followed by minus eg "2+-"
@@ -170,7 +170,7 @@ export default class App extends Component {
           currVal: posNegVal,
           formula: posNegVal,
           intFormula: '',
-          calcDone: false
+          calcDone: false,
         }
       } else if (multipleOp) {
         // remove minus symbol at end of formula so we don't end up with "2+--"
@@ -179,27 +179,27 @@ export default class App extends Component {
         return {
           ...prevState,
           intFormula: newFormula,
-          formula: newFormula + prevState.currVal
+          formula: newFormula + prevState.currVal,
         }
       } else {
         return {
           ...prevState,
           currVal: posNegVal,
-          formula: prevState.intFormula + posNegVal
+          formula: prevState.intFormula + posNegVal,
         }
       }
     })
   }
 
   handleEquals = () => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       if (prevState.calcDone) {
         // deal with spamming equals button
         return {
           ...prevState,
           currVal: '' + prevState.currVal,
           formula: '' + prevState.currVal,
-          calcDone: true
+          calcDone: true,
         }
       }
 
@@ -235,7 +235,7 @@ export default class App extends Component {
         currVal: answerCommas,
         prevAns: answerCommas,
         formula: newFormula,
-        calcDone: true
+        calcDone: true,
       }
     })
   }
@@ -247,12 +247,12 @@ export default class App extends Component {
       formula: '',
       intFormula: '',
       prevAns: '',
-      calcDone: false
+      calcDone: false,
     })
   }
 
   handleDel = () => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       const endsInOperator = /[+\-*/]$/.test(prevState.formula)
       // do nothing if last input operator or currVal is an answer
       if (endsInOperator || prevState.calcDone) return { ...prevState }
@@ -263,7 +263,7 @@ export default class App extends Component {
         return {
           ...prevState,
           currVal: '0',
-          formula: prevState.intFormula
+          formula: prevState.intFormula,
         }
 
       const trimCurrVal = prevState.currVal.replace(/\.$|\d$/, '')
@@ -271,13 +271,13 @@ export default class App extends Component {
       return {
         ...prevState,
         currVal: trimCurrValCommas,
-        formula: prevState.intFormula + trimCurrValCommas
+        formula: prevState.intFormula + trimCurrValCommas,
       }
     })
   }
 
-  handleKeyPress = event => {
-    const testIfNum = /\d/.test(event.key)
+  handleKeyPress = (event) => {
+    const testIfNum = /^\d/.test(event.key)
     const testIfDec = /\./.test(event.key)
     const testIfOp = /[+\-*/]/.test(event.key)
     const testIfEqOrEntr = /enter|=/i.test(event.key)
@@ -294,20 +294,20 @@ export default class App extends Component {
   }
 
   // HELPER FUNCTIONS
-  maxDigitLimit = input => {
+  maxDigitLimit = (input) => {
     /* get number of digits (remove "-", "." & "," before counting);
     JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
     const checkLength = this.state.currVal.replace(/-|\.|,/g, '').length >= 21
 
     // need to reset state if creating new num after answer
     if (this.state.calcDone) {
-      this.setState(prevState => {
+      this.setState((prevState) => {
         return {
           ...prevState,
           currVal: '0',
           formula: input,
           intFormula: '',
-          calcDone: false
+          calcDone: false,
         }
       })
       return false // return false for maxDigitLimit
@@ -319,20 +319,20 @@ export default class App extends Component {
     // if < 21 we can return false and continue adding digits
     if (!checkLength) return false
 
-    this.setState(prevState => {
+    this.setState((prevState) => {
       // make a copy of currVal (avoids pass by ref) to be restored after limit message
       const storeMe = prevState.currVal.slice()
       return {
         ...prevState,
         currVal: 'Max Digits Reached!',
-        storeVal: storeMe
+        storeVal: storeMe,
       }
     })
 
     // restore stored value to currVal after timeout
     setTimeout(
       () =>
-        this.setState(prevState => {
+        this.setState((prevState) => {
           const restoreMe = prevState.storeVal.slice()
 
           return { ...prevState, currVal: restoreMe, storeVal: '' }
@@ -342,18 +342,15 @@ export default class App extends Component {
     return true // return true for maxDigitLimit
   }
 
-  commaSeparation = input => {
+  commaSeparation = (input) => {
     // see https://stackoverflow.com/a/2901298/8958062 for explanation of the regex
     // we remove the decimal places before using .replace() and stick back on after
-    const parts = input
-      .replace(/,/g, '')
-      .toString()
-      .split('.')
+    const parts = input.replace(/,/g, '').toString().split('.')
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     return parts.join('.')
   }
 
-  evaluateFormula = input => {
+  evaluateFormula = (input) => {
     // return String(eval(input))
     const regArr = ['*/', '+-'] // for building regexes below
     let output // for storing output of iterations
