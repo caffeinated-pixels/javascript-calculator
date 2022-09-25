@@ -1,4 +1,4 @@
-const KeyPad = props => {
+export const KeyPad = (props) => {
   return (
     <div className="keypad">
       {/* FIRST ROW */}
@@ -89,5 +89,3 @@ const KeyPad = props => {
     </div>
   )
 }
-
-export default KeyPad

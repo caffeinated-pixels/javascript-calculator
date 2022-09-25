@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 
-class DisplayContainer extends Component {
+export class DisplayContainer extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.formulaDisplay !== this.props.formulaDisplay) {
       // only fires if formulaDisplay updates, otherwise the below would prevent scrolling left
@@ -35,5 +35,3 @@ class DisplayContainer extends Component {
     )
   }
 }
-
-export default DisplayContainer

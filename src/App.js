@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import Header from './Header'
-import DisplayContainer from './DisplayContainer'
-import KeyPad from './KeyPad'
-import Footer from './Footer'
+import { Header, DisplayContainer, KeyPad, Footer } from './components'
 
 export default class App extends Component {
   state = {
