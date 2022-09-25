@@ -1,37 +1,33 @@
-import React, { Component } from 'react'
+import { useEffect, useRef } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 
-export class DisplayContainer extends Component {
-  componentDidUpdate(prevProps) {
-    if (prevProps.formulaDisplay !== this.props.formulaDisplay) {
-      // only fires if formulaDisplay updates, otherwise the below would prevent scrolling left
-      const { scrollbars } = this.refs
-      // automatically scrolls formula display to right so that we can always see the latest input
-      scrollbars.scrollToRight()
-    }
-  }
+export const DisplayContainer = ({ currVal, formulaDisplay }) => {
+  const scrollBarsRef = useRef(null)
 
-  render() {
-    return (
-      <section className="display-container">
-        <p id="display" className="main-display">
-          {this.props.currVal}
-        </p>
-        <hr />
-        <div className="formula-container">
-          {/* need to specify autoHeight to prevent component having no height! */}
-          <Scrollbars
-            autoHeight
-            autoHeightMin={35}
-            autoHeightMax={45}
-            ref="scrollbars"
-          >
-            <p id="formula-display" className="formula-display">
-              {this.props.formulaDisplay}
-            </p>
-          </Scrollbars>
-        </div>
-      </section>
-    )
-  }
+  useEffect(() => {
+    // automatically scrolls formula display to right so that we can always see the latest input
+    scrollBarsRef.current.scrollToRight()
+  }, [formulaDisplay])
+
+  return (
+    <section className="display-container">
+      <p id="display" className="main-display">
+        {currVal}
+      </p>
+      <hr />
+      <div className="formula-container">
+        {/* need to specify autoHeight to prevent component having no height! */}
+        <Scrollbars
+          autoHeight
+          autoHeightMin={35}
+          autoHeightMax={45}
+          ref={scrollBarsRef}
+        >
+          <p id="formula-display" className="formula-display">
+            {formulaDisplay}
+          </p>
+        </Scrollbars>
+      </div>
+    </section>
+  )
 }
