@@ -384,13 +384,13 @@ export default class App extends Component {
       // perform the correct operation
       switch (op) {
         case '+':
-          return a.plus(b).toString()
+          return a.plus(b).sd(21)
         case '-':
-          return a.minus(b).toString()
+          return a.minus(b).sd(21)
         case '/':
-          return a.dividedBy(b).toString()
+          return a.dividedBy(b).sd(21)
         case '*':
-          return a.multipliedBy(b).toString()
+          return a.multipliedBy(b).sd(21)
         default:
           return
       }
