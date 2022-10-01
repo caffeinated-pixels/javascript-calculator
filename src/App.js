@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import Header from './Header'
-import DisplayContainer from './DisplayContainer'
-import KeyPad from './KeyPad'
-import Footer from './Footer'
+import { Header, DisplayContainer, KeyPad, Footer } from './components'
+import BigNumber from 'bignumber.js'
 
 export default class App extends Component {
   state = {
@@ -372,7 +370,7 @@ export default class App extends Component {
         const match = input.match(re) // for access to capture groups
 
         // send matched operations to function below
-        output = calculate(Number(match[1]), match[2], Number(match[3]))
+        output = calculate(BigNumber(match[1]), match[2], BigNumber(match[3]))
 
         if (isNaN(output) || !isFinite(output)) return output // exit early if NaN or ∞
         input = input.replace(re, output) // replace matched operation for output result
@@ -386,13 +384,13 @@ export default class App extends Component {
       // perform the correct operation
       switch (op) {
         case '+':
-          return a + b
+          return a.plus(b).sd(21)
         case '-':
-          return a - b
+          return a.minus(b).sd(21)
         case '/':
-          return a / b
+          return a.dividedBy(b).sd(21)
         case '*':
-          return a * b
+          return a.multipliedBy(b).sd(21)
         default:
           return
       }

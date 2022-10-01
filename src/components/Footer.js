@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <footer>
       <p>
@@ -23,5 +23,3 @@ const Footer = () => {
     </footer>
   )
 }
-
-export default Footer

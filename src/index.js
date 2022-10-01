@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client'
-import './main.scss'
+import './styles/main.scss'
 import '@fontsource/lexend-deca'
 import App from './App'
 
