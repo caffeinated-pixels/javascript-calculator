@@ -2,11 +2,6 @@ import React, { Component } from 'react'
 import { Header, DisplayContainer, KeyPad, Footer } from './components'
 import BigNumber from 'bignumber.js'
 
-const number1 = new BigNumber('100')
-const number2 = new BigNumber('400')
-
-console.log('result', number1.plus(number2).toString())
-
 export default class App extends Component {
   state = {
     currVal: '0', // display value; appended to formula
