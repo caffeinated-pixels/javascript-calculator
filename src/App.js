@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
 import { Header, DisplayContainer, KeyPad, Footer } from './components'
+import BigNumber from 'bignumber.js'
+
+const number1 = new BigNumber('100')
+const number2 = new BigNumber('400')
+
+console.log('result', number1.plus(number2).toString())
 
 export default class App extends Component {
   state = {
@@ -369,7 +375,7 @@ export default class App extends Component {
         const match = input.match(re) // for access to capture groups
 
         // send matched operations to function below
-        output = calculate(Number(match[1]), match[2], Number(match[3]))
+        output = calculate(BigNumber(match[1]), match[2], BigNumber(match[3]))
 
         if (isNaN(output) || !isFinite(output)) return output // exit early if NaN or ∞
         input = input.replace(re, output) // replace matched operation for output result
@@ -383,13 +389,13 @@ export default class App extends Component {
       // perform the correct operation
       switch (op) {
         case '+':
-          return a + b
+          return a.plus(b).toString()
         case '-':
-          return a - b
+          return a.minus(b).toString()
         case '/':
-          return a / b
+          return a.dividedBy(b).toString()
         case '*':
-          return a * b
+          return a.multipliedBy(b).toString()
         default:
           return
       }
