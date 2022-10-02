@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Header, DisplayContainer, KeyPad, Footer } from './components'
 import BigNumber from 'bignumber.js'
+
+import { Header, DisplayContainer, KeyPad, Footer } from './components'
+import { appendOperator } from './helpers'
 
 const initialState = {
   currVal: '0', // display value; appended to formula
@@ -112,33 +114,6 @@ export default function App() {
         return appendOperator(prevState, input)
       }
     })
-
-    const appendOperator = (prevState, input) => {
-      let newFormula // initialize variable
-
-      if (input !== '-') {
-        newFormula = prevState.formula.replace(
-          // /((?<=[^+\-*/.])$)|([+\-*/.]+$)/,
-          /\b$|([+\-*/.]+$)/,
-          input
-          // appends last digit with curr operator (input); or, if ends in operator or decpoint, replace with input
-        )
-      } else {
-        // ie if(input === '-')
-        newFormula = prevState.formula.replace(
-          // /((?<=[^+\-*/.])$)|(?<=\d[+\-*/.]?$)/,
-          /(\d)$|([+\-*/.]?$)/,
-          '$1$2' + input
-          // appends last digit with minus (input); or, appends prev operator (max of 1) with minus eg "2+-" or "2*-"
-        )
-      }
-
-      return {
-        currVal: input,
-        formula: newFormula,
-        intFormula: newFormula,
-      }
-    }
   }
 
   const handlePosNeg = () => {
