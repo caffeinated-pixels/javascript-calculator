@@ -1,40 +1,38 @@
-import React, { Component } from 'react'
+import { useState, useEffect } from 'react'
 import { Header, DisplayContainer, KeyPad, Footer } from './components'
 import BigNumber from 'bignumber.js'
 
-export default class App extends Component {
-  state = {
-    currVal: '0', // display value; appended to formula
-    storeVal: '', // store currVal for displaying max digit warning
-    formula: '', // display formula; intFormula + currVal
-    intFormula: '', // only updated after operator or equals
-    prevAns: '', // store answer for starting new calculation
-    calcDone: false, // was last input equals key?
-  }
+const initialState = {
+  currVal: '0', // display value; appended to formula
+  storeVal: '', // store currVal for displaying max digit warning
+  formula: '', // display formula; intFormula + currVal
+  intFormula: '', // only updated after operator or equals
+  prevAns: '', // store answer for starting new calculation
+  calcDone: false, // was last input equals key?
+}
 
-  // LIFECYCLE METHODS
-  componentDidMount = () => {
+export default function App() {
+  const [state, setState] = useState(initialState)
+
+  useEffect(() => {
     // add event listener for keypresses
-    document.addEventListener('keydown', this.handleKeyPress)
-  }
+    document.addEventListener('keydown', handleKeyPress)
 
-  componentWillUnmount = () => {
-    // clean-up/remove event listeners
-    document.removeEventListener('keydown', this.handleKeyPress)
-  }
+    return document.removeEventListener('keydown', handleKeyPress)
+  })
 
   // EVENT HANDLERS
-  handleNum = (input) => {
+  const handleNum = (input) => {
     // check if num of digits >= 21; maxDigitLimit returns boolean
     // pass in empty string to reset formula if entering new num when calcDone = true
-    if (this.maxDigitLimit('')) return
+    if (maxDigitLimit('')) return
 
-    this.setState((prevState) => {
+    setState((prevState) => {
       // test whether previous input was operator
       const isOperator = /[+\-*/]$/.test(prevState.formula)
 
       // format number with commas
-      const newCurrVal = this.commaSeparation(prevState.currVal + input)
+      const newCurrVal = commaSeparation(prevState.currVal + input)
 
       if ((prevState.currVal === '0' && prevState.formula) || isOperator) {
         // for input following deletion of all digits
@@ -63,12 +61,12 @@ export default class App extends Component {
     })
   }
 
-  handleDecimal = () => {
+  const handleDecimal = () => {
     // check if num of digits >= 21; maxDigitLimit returns boolean
     // pass in '0' to reset formula if entering new float when calcDone = true
-    if (this.maxDigitLimit('0')) return
+    if (maxDigitLimit('0')) return
 
-    this.setState((prevState) => {
+    setState((prevState) => {
       // check to prevent sequential decimal points, ie 2..
       const containsDecimal = /\./.test(prevState.currVal)
 
@@ -94,9 +92,9 @@ export default class App extends Component {
     })
   }
 
-  handleOperator = (input) => {
+  const handleOperator = (input) => {
     // need to check if previous calculation has been performed
-    this.setState((prevState) => {
+    setState((prevState) => {
       if (prevState.calcDone) {
         return {
           ...prevState,
@@ -115,7 +113,7 @@ export default class App extends Component {
       }
     })
 
-    this.setState((prevState) => {
+    setState((prevState) => {
       let newFormula // initialize variable
 
       if (input !== '-') {
@@ -143,8 +141,8 @@ export default class App extends Component {
     })
   }
 
-  handlePosNeg = () => {
-    this.setState((prevState) => {
+  const handlePosNeg = () => {
+    setState((prevState) => {
       // is currVal an operator?
       const isOperator = /[+\-*/]$/.test(prevState.currVal)
       // is last value in intFormula an operator followed by minus eg "2+-"
@@ -189,8 +187,8 @@ export default class App extends Component {
     })
   }
 
-  handleEquals = () => {
-    this.setState((prevState) => {
+  const handleEquals = () => {
+    setState((prevState) => {
       if (prevState.calcDone) {
         // deal with spamming equals button
         return {
@@ -218,12 +216,12 @@ export default class App extends Component {
       // tidy up incomplete formulas for displaying after evaluation
       const tidyFormulaEnd = prevState.formula.replace(/\D+$/, '')
 
-      const answer = this.evaluateFormula(evaluateMe)
+      const answer = evaluateFormula(evaluateMe)
       let answerCommas
 
       // deal with answer = Infinity
       if (isFinite(answer)) {
-        answerCommas = this.commaSeparation(answer.toString())
+        answerCommas = commaSeparation(answer.toString())
       } else {
         answerCommas = 'Infinity'
       }
@@ -238,9 +236,9 @@ export default class App extends Component {
     })
   }
 
-  handleClear = () => {
+  const handleClear = () => {
     // reset state to original values
-    this.setState({
+    setState({
       currVal: '0',
       formula: '',
       intFormula: '',
@@ -249,8 +247,8 @@ export default class App extends Component {
     })
   }
 
-  handleDel = () => {
-    this.setState((prevState) => {
+  const handleDel = () => {
+    setState((prevState) => {
       const endsInOperator = /[+\-*/]$/.test(prevState.formula)
       // do nothing if last input operator or currVal is an answer
       if (endsInOperator || prevState.calcDone) return { ...prevState }
@@ -265,7 +263,7 @@ export default class App extends Component {
         }
 
       const trimCurrVal = prevState.currVal.replace(/\.$|\d$/, '')
-      const trimCurrValCommas = this.commaSeparation(trimCurrVal)
+      const trimCurrValCommas = commaSeparation(trimCurrVal)
       return {
         ...prevState,
         currVal: trimCurrValCommas,
@@ -274,32 +272,32 @@ export default class App extends Component {
     })
   }
 
-  handleKeyPress = (event) => {
+  const handleKeyPress = (event) => {
     const testIfNum = /^\d/.test(event.key)
     const testIfDec = /\./.test(event.key)
     const testIfOp = /[+\-*/]/.test(event.key)
     const testIfEqOrEntr = /enter|=/i.test(event.key)
 
     if (testIfNum) {
-      return this.handleNum(event.key)
+      return handleNum(event.key)
     } else if (testIfDec) {
-      return this.handleDecimal()
+      return handleDecimal()
     } else if (testIfOp) {
-      return this.handleOperator(event.key)
+      return handleOperator(event.key)
     } else if (testIfEqOrEntr) {
-      return this.handleEquals()
+      return handleEquals()
     }
   }
 
   // HELPER FUNCTIONS
-  maxDigitLimit = (input) => {
+  const maxDigitLimit = (input) => {
     /* get number of digits (remove "-", "." & "," before counting);
     JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
-    const checkLength = this.state.currVal.replace(/-|\.|,/g, '').length >= 21
+    const checkLength = state.currVal.replace(/-|\.|,/g, '').length >= 21
 
     // need to reset state if creating new num after answer
-    if (this.state.calcDone) {
-      this.setState((prevState) => {
+    if (state.calcDone) {
+      setState((prevState) => {
         return {
           ...prevState,
           currVal: '0',
@@ -312,12 +310,12 @@ export default class App extends Component {
     }
 
     // if warning already displayed we can return true
-    if (this.state.currVal === 'Max Digits Reached!') return true
+    if (state.currVal === 'Max Digits Reached!') return true
 
     // if < 21 we can return false and continue adding digits
     if (!checkLength) return false
 
-    this.setState((prevState) => {
+    setState((prevState) => {
       // make a copy of currVal (avoids pass by ref) to be restored after limit message
       const storeMe = prevState.currVal.slice()
       return {
@@ -330,7 +328,7 @@ export default class App extends Component {
     // restore stored value to currVal after timeout
     setTimeout(
       () =>
-        this.setState((prevState) => {
+        setState((prevState) => {
           const restoreMe = prevState.storeVal.slice()
 
           return { ...prevState, currVal: restoreMe, storeVal: '' }
@@ -340,7 +338,7 @@ export default class App extends Component {
     return true // return true for maxDigitLimit
   }
 
-  commaSeparation = (input) => {
+  const commaSeparation = (input) => {
     // see https://stackoverflow.com/a/2901298/8958062 for explanation of the regex
     // we remove the decimal places before using .replace() and stick back on after
     const parts = input.replace(/,/g, '').toString().split('.')
@@ -348,7 +346,7 @@ export default class App extends Component {
     return parts.join('.')
   }
 
-  evaluateFormula = (input) => {
+  const evaluateFormula = (input) => {
     // return String(eval(input))
     const regArr = ['*/', '+-'] // for building regexes below
     let output // for storing output of iterations
@@ -397,28 +395,25 @@ export default class App extends Component {
     }
   }
 
-  // RENDER TIME
-  render() {
-    return (
-      <div>
-        <main className="calculator-body">
-          <Header />
-          <DisplayContainer
-            currVal={this.state.currVal}
-            formulaDisplay={this.state.formula}
-          />
-          <KeyPad
-            handleNum={this.handleNum}
-            handleDecimal={this.handleDecimal}
-            handleOperator={this.handleOperator}
-            handlePosNeg={this.handlePosNeg}
-            handleEquals={this.handleEquals}
-            handleClear={this.handleClear}
-            handleDel={this.handleDel}
-          />
-        </main>
-        <Footer />
-      </div>
-    )
-  }
+  return (
+    <>
+      <main className="calculator-body">
+        <Header />
+        <DisplayContainer
+          currVal={state.currVal}
+          formulaDisplay={state.formula}
+        />
+        <KeyPad
+          handleNum={handleNum}
+          handleDecimal={handleDecimal}
+          handleOperator={handleOperator}
+          handlePosNeg={handlePosNeg}
+          handleEquals={handleEquals}
+          handleClear={handleClear}
+          handleDel={handleDel}
+        />
+      </main>
+      <Footer />
+    </>
+  )
 }
