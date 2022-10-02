@@ -109,11 +109,11 @@ export default function App() {
           formula: '0',
         }
       } else {
-        return
+        return appendOperator(prevState, input)
       }
     })
 
-    setState((prevState) => {
+    const appendOperator = (prevState, input) => {
       let newFormula // initialize variable
 
       if (input !== '-') {
@@ -138,7 +138,7 @@ export default function App() {
         formula: newFormula,
         intFormula: newFormula,
       }
-    })
+    }
   }
 
   const handlePosNeg = () => {
