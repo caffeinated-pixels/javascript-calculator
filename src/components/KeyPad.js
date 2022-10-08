@@ -8,7 +8,7 @@ export const KeyPad = ({
   handleEquals,
 }) => {
   return (
-    <div className="keypad">
+    <div className="keypad" data-testid="keypad">
       {/* FIRST ROW */}
       <button id="seven" onClick={() => handleNum('7')}>
         7
@@ -40,6 +40,7 @@ export const KeyPad = ({
         id="multiply"
         className="operator"
         onClick={() => handleOperator('*')}
+        aria-label="multiply"
       >
         ×
       </button>
@@ -47,6 +48,7 @@ export const KeyPad = ({
         id="divide"
         className="operator"
         onClick={() => handleOperator('/')}
+        aria-label="divide"
       >
         ÷
       </button>
@@ -61,13 +63,19 @@ export const KeyPad = ({
       <button id="three" onClick={() => handleNum('3')}>
         3
       </button>
-      <button id="add" className="operator" onClick={() => handleOperator('+')}>
+      <button
+        id="add"
+        className="operator"
+        onClick={() => handleOperator('+')}
+        aria-label="add"
+      >
         +
       </button>
       <button
         id="subtract"
         className="operator"
         onClick={() => handleOperator('-')}
+        aria-label="subtract"
       >
         -
       </button>
@@ -76,14 +84,23 @@ export const KeyPad = ({
       <button id="zero" onClick={() => handleNum('0')}>
         0
       </button>
-      <button id="pos-neg" onClick={handlePosNeg}>
+      <button
+        id="pos-neg"
+        onClick={handlePosNeg}
+        aria-label="toggle postive negative"
+      >
         +/-
       </button>
-      <button id="decimal" onClick={handleDecimal}>
+      <button id="decimal" onClick={handleDecimal} aria-label="decimal point">
         .
       </button>
 
-      <button id="equals" className="equals green-btn" onClick={handleEquals}>
+      <button
+        id="equals"
+        className="equals green-btn"
+        onClick={handleEquals}
+        aria-label="equals"
+      >
         =
       </button>
     </div>
