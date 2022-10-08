@@ -10,7 +10,7 @@ export const DisplayContainer = ({ currVal, formulaDisplay }) => {
   }, [formulaDisplay])
 
   return (
-    <section className="display-container">
+    <section className="display-container" data-testid="calculator-display">
       <p id="display" className="main-display">
         {currVal}
       </p>
