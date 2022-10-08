@@ -9,7 +9,6 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.2",
     "bignumber.js": "^9.1.0",
     "react": "^18.2.0",
@@ -47,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^13.4.0",
     "node-sass": "^7.0.3"
   }
 }
