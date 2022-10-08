@@ -191,14 +191,11 @@ export default function App() {
       const tidyFormulaEnd = prevState.formula.replace(/\D+$/, '')
 
       const answer = evaluateFormula(evaluateMe)
-      let answerCommas
 
       // deal with answer = Infinity
-      if (isFinite(answer)) {
-        answerCommas = commaSeparation(answer.toString())
-      } else {
-        answerCommas = 'Infinity'
-      }
+      const answerCommas = isFinite(answer)
+        ? commaSeparation(answer.toString())
+        : 'Infinity'
 
       const newFormula = tidyFormulaEnd + '=' + answerCommas
       return {
