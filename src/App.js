@@ -19,7 +19,7 @@ export default function App() {
     // add event listener for keypresses
     document.addEventListener('keydown', handleKeyPress)
 
-    return document.removeEventListener('keydown', handleKeyPress)
+    return () => document.removeEventListener('keydown', handleKeyPress)
   })
 
   // EVENT HANDLERS
