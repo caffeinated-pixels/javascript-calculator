@@ -209,14 +209,11 @@ export default function App() {
 
   const handleClear = () => {
     // reset state to original values
-    setState({
-      currVal: '0',
-      formula: '',
-      intFormula: '',
-      prevAns: '',
-      calcDone: false,
-    })
+    setState(initialState)
   }
+
+  console.log('state', state)
+  console.log('initialState', initialState)
 
   const handleDel = () => {
     setState((prevState) => {
