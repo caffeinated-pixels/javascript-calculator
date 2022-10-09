@@ -1,3 +1,21 @@
+const appendNonMinusOperator = (newState, input) => {
+  return newState.formula.replace(
+    /\b$|([+\-*/.]+$)/,
+    input
+    // appends last digit with curr operator (input);
+    // or, if ends in operator or decpoint, replace with input
+  )
+}
+
+const appendMinusOperator = (newState, input) => {
+  return newState.formula.replace(
+    /\b$|([+\-*/.]+$)/,
+    input
+    // appends last digit with curr operator (input);
+    // or, if ends in operator or decpoint, replace with input
+  )
+}
+
 export const appendOperator = (prevState, input) => {
   const newState = prevState.calcDone
     ? {
@@ -9,24 +27,10 @@ export const appendOperator = (prevState, input) => {
       }
     : { ...prevState }
 
-  let newFormula // initialize variable
-
-  if (input !== '-') {
-    newFormula = newState.formula.replace(
-      // /((?<=[^+\-*/.])$)|([+\-*/.]+$)/,
-      /\b$|([+\-*/.]+$)/,
-      input
-      // appends last digit with curr operator (input); or, if ends in operator or decpoint, replace with input
-    )
-  } else {
-    // ie if(input === '-')
-    newFormula = newState.formula.replace(
-      // /((?<=[^+\-*/.])$)|(?<=\d[+\-*/.]?$)/,
-      /(\d)$|([+\-*/.]?$)/,
-      '$1$2' + input
-      // appends last digit with minus (input); or, appends prev operator (max of 1) with minus eg "2+-" or "2*-"
-    )
-  }
+  const newFormula =
+    input !== '-'
+      ? appendNonMinusOperator(newState, input)
+      : appendMinusOperator(newState, input)
 
   return {
     ...newState,
