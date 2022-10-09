@@ -96,22 +96,9 @@ export default function App() {
   const handleOperator = (input) => {
     // need to check if previous calculation has been performed
     setState((prevState) => {
-      if (prevState.calcDone) {
-        return {
-          ...prevState,
-          currVal: '0',
-          formula: '' + prevState.prevAns,
-          intFormula: '' + prevState.prevAns,
-          calcDone: false,
-        }
-      } else if (!prevState.formula) {
-        return {
-          ...prevState,
-          formula: '0',
-        }
-      } else {
-        return appendOperator(prevState, input)
-      }
+      return prevState.calcDone || prevState.formula
+        ? appendOperator(prevState, input)
+        : { ...prevState, formula: '0' }
     })
   }
 

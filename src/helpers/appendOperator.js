@@ -1,8 +1,18 @@
 export const appendOperator = (prevState, input) => {
+  const newState = prevState.calcDone
+    ? {
+        ...prevState,
+        currVal: '0',
+        formula: '' + prevState.prevAns,
+        intFormula: '' + prevState.prevAns,
+        calcDone: false,
+      }
+    : { ...prevState }
+
   let newFormula // initialize variable
 
   if (input !== '-') {
-    newFormula = prevState.formula.replace(
+    newFormula = newState.formula.replace(
       // /((?<=[^+\-*/.])$)|([+\-*/.]+$)/,
       /\b$|([+\-*/.]+$)/,
       input
@@ -10,7 +20,7 @@ export const appendOperator = (prevState, input) => {
     )
   } else {
     // ie if(input === '-')
-    newFormula = prevState.formula.replace(
+    newFormula = newState.formula.replace(
       // /((?<=[^+\-*/.])$)|(?<=\d[+\-*/.]?$)/,
       /(\d)$|([+\-*/.]?$)/,
       '$1$2' + input
@@ -19,7 +29,7 @@ export const appendOperator = (prevState, input) => {
   }
 
   return {
-    ...prevState,
+    ...newState,
     currVal: input,
     formula: newFormula,
     intFormula: newFormula,
