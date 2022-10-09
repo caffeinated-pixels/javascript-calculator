@@ -199,6 +199,7 @@ export default function App() {
 
       const newFormula = tidyFormulaEnd + '=' + answerCommas
       return {
+        ...prevState,
         currVal: answerCommas,
         prevAns: answerCommas,
         formula: newFormula,
@@ -211,9 +212,6 @@ export default function App() {
     // reset state to original values
     setState(initialState)
   }
-
-  console.log('state', state)
-  console.log('initialState', initialState)
 
   const handleDel = () => {
     setState((prevState) => {
