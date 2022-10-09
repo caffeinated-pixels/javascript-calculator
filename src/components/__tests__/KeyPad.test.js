@@ -86,4 +86,57 @@ describe('KeyPad component', () => {
     userEvent.click(screen.getByRole('button', { name: '0' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('0')
   })
+
+  it('should call the handleDecimal function when the decimal button is clicked', () => {
+    renderKeyPad()
+
+    userEvent.click(screen.getByRole('button', { name: 'decimal point' }))
+    expect(keyPadProps.handleDecimal).toHaveBeenCalled()
+  })
+
+  it('should call the handleDel function when the DEL button is clicked', () => {
+    renderKeyPad()
+
+    userEvent.click(screen.getByRole('button', { name: 'DEL' }))
+    expect(keyPadProps.handleDel).toHaveBeenCalled()
+  })
+
+  it('should call the handleClear function when the AC button is clicked', () => {
+    renderKeyPad()
+
+    userEvent.click(screen.getByRole('button', { name: 'AC' }))
+    expect(keyPadProps.handleClear).toHaveBeenCalled()
+  })
+
+  it('should call the handleOperator function when an operator button is clicked', () => {
+    renderKeyPad()
+
+    userEvent.click(screen.getByRole('button', { name: 'multiply' }))
+    expect(keyPadProps.handleOperator).toHaveBeenCalledWith('*')
+
+    userEvent.click(screen.getByRole('button', { name: 'divide' }))
+    expect(keyPadProps.handleOperator).toHaveBeenCalledWith('/')
+
+    userEvent.click(screen.getByRole('button', { name: 'add' }))
+    expect(keyPadProps.handleOperator).toHaveBeenCalledWith('+')
+
+    userEvent.click(screen.getByRole('button', { name: 'subtract' }))
+    expect(keyPadProps.handleOperator).toHaveBeenCalledWith('-')
+  })
+
+  it('should call the handlePosNeg function when the +/- button is clicked', () => {
+    renderKeyPad()
+
+    userEvent.click(
+      screen.getByRole('button', { name: 'toggle postive negative' })
+    )
+    expect(keyPadProps.handlePosNeg).toHaveBeenCalled()
+  })
+
+  it('should call the handleEquals function when the = button is clicked', () => {
+    renderKeyPad()
+
+    userEvent.click(screen.getByRole('button', { name: 'equals' }))
+    expect(keyPadProps.handleEquals).toHaveBeenCalled()
+  })
 })
