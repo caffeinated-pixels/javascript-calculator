@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 import { Header, DisplayContainer, KeyPad, Footer } from './components'
-import { appendOperator, evaluateFormula } from './helpers'
+import { addCommasToNum, appendOperator, evaluateFormula } from './helpers'
 
 const initialState = {
   currVal: '0', // display value; appended to formula
@@ -33,7 +33,7 @@ export default function App() {
       const isOperator = /[+\-*/]$/.test(prevState.formula)
 
       // format number with commas
-      const newCurrVal = commaSeparation(prevState.currVal + input)
+      const newCurrVal = addCommasToNum(prevState.currVal + input)
 
       if ((prevState.currVal === '0' && prevState.formula) || isOperator) {
         // for input following deletion of all digits
@@ -194,7 +194,7 @@ export default function App() {
 
       // deal with answer = Infinity
       const answerCommas = isFinite(answer)
-        ? commaSeparation(answer.toString())
+        ? addCommasToNum(answer.toString())
         : 'Infinity'
 
       const newFormula = tidyFormulaEnd + '=' + answerCommas
@@ -234,7 +234,7 @@ export default function App() {
         }
 
       const trimCurrVal = prevState.currVal.replace(/\.$|\d$/, '')
-      const trimCurrValCommas = commaSeparation(trimCurrVal)
+      const trimCurrValCommas = addCommasToNum(trimCurrVal)
       return {
         ...prevState,
         currVal: trimCurrValCommas,
@@ -307,14 +307,6 @@ export default function App() {
       600
     )
     return true // return true for maxDigitLimit
-  }
-
-  const commaSeparation = (input) => {
-    // see https://stackoverflow.com/a/2901298/8958062 for explanation of the regex
-    // we remove the decimal places before using .replace() and stick back on after
-    const parts = input.replace(/,/g, '').toString().split('.')
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    return parts.join('.')
   }
 
   return (
