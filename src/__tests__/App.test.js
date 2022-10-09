@@ -47,4 +47,12 @@ describe('Calculator keyboard input', () => {
       '1,234,567,8901,234,567,890'
     )
   })
+
+  it('should be able to perform follow-up calculation', () => {
+    render(<App />)
+    userEvent.type(document.body, '2+2=+')
+
+    screen.getByTestId('calculator-display')
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent('+')
+  })
 })
