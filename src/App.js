@@ -174,8 +174,8 @@ export default function App() {
       }
 
       if (!prevState.intFormula) {
-        // deal pressing equals if formula consists of single number
-        return
+        // for when formula consists of single number & no operator
+        return { ...prevState }
       }
 
       const evaluateMe = prevState.formula.replace(
