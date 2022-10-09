@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom'
 import { addCommasToNum } from '../'
 
 /* big number returns an object, presumably JS automatically 
