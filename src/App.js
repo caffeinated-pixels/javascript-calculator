@@ -248,16 +248,15 @@ export default function App() {
     const testIfDec = /\./.test(event.key)
     const testIfOp = /[+\-*/]/.test(event.key)
     const testIfEqOrEntr = /enter|=/i.test(event.key)
+    const testIfBackspace = /backspace/i.test(event.key)
+    const testIfClear = /delete/i.test(event.key)
 
-    if (testIfNum) {
-      return handleNum(event.key)
-    } else if (testIfDec) {
-      return handleDecimal()
-    } else if (testIfOp) {
-      return handleOperator(event.key)
-    } else if (testIfEqOrEntr) {
-      return handleEquals()
-    }
+    if (testIfNum) return handleNum(event.key)
+    if (testIfDec) return handleDecimal()
+    if (testIfOp) return handleOperator(event.key)
+    if (testIfEqOrEntr) return handleEquals()
+    if (testIfBackspace) return handleDel()
+    if (testIfClear) return handleClear()
   }
 
   // HELPER FUNCTIONS
