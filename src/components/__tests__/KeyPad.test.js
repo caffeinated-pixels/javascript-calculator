@@ -3,9 +3,21 @@ import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import { KeyPad } from '../'
 
+const keyPadProps = {
+  handleClear: jest.fn(),
+  handleDecimal: jest.fn(),
+  handleNum: jest.fn(),
+  handleDel: jest.fn(),
+  handleOperator: jest.fn(),
+  handlePosNeg: jest.fn(),
+  handleEquals: jest.fn(),
+}
+
+const renderKeyPad = () => render(<KeyPad {...keyPadProps} />)
+
 describe('KeyPad component', () => {
   it('should render the all the keypad number buttons', () => {
-    render(<KeyPad />)
+    renderKeyPad()
 
     expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '2' })).toBeInTheDocument()
@@ -20,7 +32,7 @@ describe('KeyPad component', () => {
   })
 
   it('should render the all the keypad operator buttons', () => {
-    render(<KeyPad />)
+    renderKeyPad()
 
     expect(
       screen.getByRole('button', { name: 'decimal point' })
