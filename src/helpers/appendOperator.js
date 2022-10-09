@@ -19,6 +19,7 @@ export const appendOperator = (prevState, input) => {
   }
 
   return {
+    ...prevState,
     currVal: input,
     formula: newFormula,
     intFormula: newFormula,
