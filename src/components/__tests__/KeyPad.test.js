@@ -52,4 +52,38 @@ describe('KeyPad component', () => {
     ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'equals' })).toBeInTheDocument()
   })
+
+  it('should call the handleNum function when a number button is clicked', () => {
+    renderKeyPad()
+
+    userEvent.click(screen.getByRole('button', { name: '1' }))
+    expect(keyPadProps.handleNum).toHaveBeenCalledWith('1')
+
+    userEvent.click(screen.getByRole('button', { name: '2' }))
+    expect(keyPadProps.handleNum).toHaveBeenCalledWith('2')
+
+    userEvent.click(screen.getByRole('button', { name: '3' }))
+    expect(keyPadProps.handleNum).toHaveBeenCalledWith('3')
+
+    userEvent.click(screen.getByRole('button', { name: '4' }))
+    expect(keyPadProps.handleNum).toHaveBeenCalledWith('4')
+
+    userEvent.click(screen.getByRole('button', { name: '5' }))
+    expect(keyPadProps.handleNum).toHaveBeenCalledWith('5')
+
+    userEvent.click(screen.getByRole('button', { name: '6' }))
+    expect(keyPadProps.handleNum).toHaveBeenCalledWith('6')
+
+    userEvent.click(screen.getByRole('button', { name: '7' }))
+    expect(keyPadProps.handleNum).toHaveBeenCalledWith('7')
+
+    userEvent.click(screen.getByRole('button', { name: '8' }))
+    expect(keyPadProps.handleNum).toHaveBeenCalledWith('8')
+
+    userEvent.click(screen.getByRole('button', { name: '9' }))
+    expect(keyPadProps.handleNum).toHaveBeenCalledWith('9')
+
+    userEvent.click(screen.getByRole('button', { name: '0' }))
+    expect(keyPadProps.handleNum).toHaveBeenCalledWith('0')
+  })
 })
