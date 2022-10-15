@@ -20,8 +20,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test --watchAll=false",
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
-    "node-sass": "^7.0.3"
+    "node-sass": "^7.0.3",
+    "husky": "^8.0.0"
   }
 }
