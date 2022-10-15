@@ -15,7 +15,7 @@ export const DisplayContainer = ({ currVal, formulaDisplay }) => {
         {currVal}
       </p>
       <hr />
-      <div className="formula-container" data-testid="formula-display">
+      <div className="formula-container">
         {/* need to specify autoHeight to prevent component having no height! */}
         <Scrollbars
           autoHeight
@@ -23,7 +23,11 @@ export const DisplayContainer = ({ currVal, formulaDisplay }) => {
           autoHeightMax={45}
           ref={scrollBarsRef}
         >
-          <p id="formula-display" className="formula-display">
+          <p
+            id="formula-display"
+            className="formula-display"
+            data-testid="formula-display"
+          >
             {formulaDisplay}
           </p>
         </Scrollbars>
