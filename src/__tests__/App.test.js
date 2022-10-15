@@ -10,7 +10,7 @@ import App from '../App'
     - variety of inputs/calculations
 */
 
-describe.skip('Calculator app', () => {
+describe('Calculator app', () => {
   it('should render the main container', () => {
     render(<App />)
     expect(screen.getByRole('main')).toBeInTheDocument()
@@ -40,34 +40,34 @@ describe.skip('Calculator app', () => {
 describe('Calculator keyboard input', () => {
   it('should work for all digits', async () => {
     render(<App />)
-    await userEvent.type(document.body, '1234567890')
+    await userEvent.keyboard('1234567890')
     expect(screen.getByTestId('main-display')).toHaveTextContent(
       '1,234,567,890'
     )
   })
 
   it('Backspace should remove least significant digit', async () => {
-    const user = userEvent.setup()
     render(<App />)
 
-    await user.type(document.body, '1234{backspace}{backspace}')
+    await userEvent.keyboard('1234{backspace}{backspace}')
     expect(screen.getByTestId('main-display')).toHaveTextContent('12')
+    expect(screen.getByTestId('formula-display')).toHaveTextContent('12')
   })
 
   it('DEL should clear the display', async () => {
-    const user = userEvent.setup()
     render(<App />)
 
-    await user.type(document.body, '1234567890{del}')
+    await userEvent.keyboard('1234567890{del}')
     expect(screen.getByTestId('main-display')).toHaveTextContent('0')
-
-    // TODO: figure out why this test is failing
-    // await expect(screen.getByTestId('formula-display')).toHaveTextContent('')
+    // TODO: figure out why this is failing
+    // expect(screen.getByTestId('formula-display')).toHaveTextContent('')
   })
 
   it('should be able to perform follow-up calculation', async () => {
     render(<App />)
-    await userEvent.type(document.body, '2+2=+')
+
+    await userEvent.keyboard('2+2=+')
     expect(screen.getByTestId('main-display')).toHaveTextContent('+')
+    expect(screen.getByTestId('formula-display')).toHaveTextContent('4+')
   })
 })
