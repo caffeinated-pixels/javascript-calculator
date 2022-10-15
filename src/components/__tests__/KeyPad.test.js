@@ -53,90 +53,90 @@ describe('KeyPad component', () => {
     expect(screen.getByRole('button', { name: 'equals' })).toBeInTheDocument()
   })
 
-  it('should call the handleNum function when a number button is clicked', () => {
+  it('should call the handleNum function when a number button is clicked', async () => {
     renderKeyPad()
 
-    userEvent.click(screen.getByRole('button', { name: '1' }))
+    await userEvent.click(screen.getByRole('button', { name: '1' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('1')
 
-    userEvent.click(screen.getByRole('button', { name: '2' }))
+    await userEvent.click(screen.getByRole('button', { name: '2' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('2')
 
-    userEvent.click(screen.getByRole('button', { name: '3' }))
+    await userEvent.click(screen.getByRole('button', { name: '3' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('3')
 
-    userEvent.click(screen.getByRole('button', { name: '4' }))
+    await userEvent.click(screen.getByRole('button', { name: '4' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('4')
 
-    userEvent.click(screen.getByRole('button', { name: '5' }))
+    await userEvent.click(screen.getByRole('button', { name: '5' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('5')
 
-    userEvent.click(screen.getByRole('button', { name: '6' }))
+    await userEvent.click(screen.getByRole('button', { name: '6' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('6')
 
-    userEvent.click(screen.getByRole('button', { name: '7' }))
+    await userEvent.click(screen.getByRole('button', { name: '7' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('7')
 
-    userEvent.click(screen.getByRole('button', { name: '8' }))
+    await userEvent.click(screen.getByRole('button', { name: '8' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('8')
 
-    userEvent.click(screen.getByRole('button', { name: '9' }))
+    await userEvent.click(screen.getByRole('button', { name: '9' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('9')
 
-    userEvent.click(screen.getByRole('button', { name: '0' }))
+    await userEvent.click(screen.getByRole('button', { name: '0' }))
     expect(keyPadProps.handleNum).toHaveBeenCalledWith('0')
   })
 
-  it('should call the handleDecimal function when the decimal button is clicked', () => {
+  it('should call the handleDecimal function when the decimal button is clicked', async () => {
     renderKeyPad()
 
-    userEvent.click(screen.getByRole('button', { name: 'decimal point' }))
+    await userEvent.click(screen.getByRole('button', { name: 'decimal point' }))
     expect(keyPadProps.handleDecimal).toHaveBeenCalled()
   })
 
-  it('should call the handleDel function when the DEL button is clicked', () => {
+  it('should call the handleDel function when the DEL button is clicked', async () => {
     renderKeyPad()
 
-    userEvent.click(screen.getByRole('button', { name: 'DEL' }))
+    await userEvent.click(screen.getByRole('button', { name: 'DEL' }))
     expect(keyPadProps.handleDel).toHaveBeenCalled()
   })
 
-  it('should call the handleClear function when the AC button is clicked', () => {
+  it('should call the handleClear function when the AC button is clicked', async () => {
     renderKeyPad()
 
-    userEvent.click(screen.getByRole('button', { name: 'AC' }))
+    await userEvent.click(screen.getByRole('button', { name: 'AC' }))
     expect(keyPadProps.handleClear).toHaveBeenCalled()
   })
 
-  it('should call the handleOperator function when an operator button is clicked', () => {
+  it('should call the handleOperator function when an operator button is clicked', async () => {
     renderKeyPad()
 
-    userEvent.click(screen.getByRole('button', { name: 'multiply' }))
+    await userEvent.click(screen.getByRole('button', { name: 'multiply' }))
     expect(keyPadProps.handleOperator).toHaveBeenCalledWith('*')
 
-    userEvent.click(screen.getByRole('button', { name: 'divide' }))
+    await userEvent.click(screen.getByRole('button', { name: 'divide' }))
     expect(keyPadProps.handleOperator).toHaveBeenCalledWith('/')
 
-    userEvent.click(screen.getByRole('button', { name: 'add' }))
+    await userEvent.click(screen.getByRole('button', { name: 'add' }))
     expect(keyPadProps.handleOperator).toHaveBeenCalledWith('+')
 
-    userEvent.click(screen.getByRole('button', { name: 'subtract' }))
+    await userEvent.click(screen.getByRole('button', { name: 'subtract' }))
     expect(keyPadProps.handleOperator).toHaveBeenCalledWith('-')
   })
 
-  it('should call the handlePosNeg function when the +/- button is clicked', () => {
+  it('should call the handlePosNeg function when the +/- button is clicked', async () => {
     renderKeyPad()
 
-    userEvent.click(
+    await userEvent.click(
       screen.getByRole('button', { name: 'toggle postive negative' })
     )
     expect(keyPadProps.handlePosNeg).toHaveBeenCalled()
   })
 
-  it('should call the handleEquals function when the = button is clicked', () => {
+  it('should call the handleEquals function when the = button is clicked', async () => {
     renderKeyPad()
 
-    userEvent.click(screen.getByRole('button', { name: 'equals' }))
+    await userEvent.click(screen.getByRole('button', { name: 'equals' }))
     expect(keyPadProps.handleEquals).toHaveBeenCalled()
   })
 })
