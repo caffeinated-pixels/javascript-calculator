@@ -41,18 +41,14 @@ describe('Calculator keyboard input', () => {
   it('should work for all digits', () => {
     render(<App />)
     userEvent.type(document.body, '1234567890')
-
-    screen.getByTestId('calculator-display')
-    expect(screen.getByTestId('calculator-display')).toHaveTextContent(
-      '1,234,567,8901,234,567,890'
+    expect(screen.getByTestId('main-display')).toHaveTextContent(
+      '1,234,567,890'
     )
   })
 
   it('should be able to perform follow-up calculation', () => {
     render(<App />)
     userEvent.type(document.body, '2+2=+')
-
-    screen.getByTestId('calculator-display')
-    expect(screen.getByTestId('calculator-display')).toHaveTextContent('+')
+    expect(screen.getByTestId('main-display')).toHaveTextContent('+')
   })
 })

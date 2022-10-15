@@ -11,11 +11,11 @@ export const DisplayContainer = ({ currVal, formulaDisplay }) => {
 
   return (
     <section className="display-container" data-testid="calculator-display">
-      <p id="display" className="main-display">
+      <p id="display" className="main-display" data-testid="main-display">
         {currVal}
       </p>
       <hr />
-      <div className="formula-container">
+      <div className="formula-container" data-testid="formula-display">
         {/* need to specify autoHeight to prevent component having no height! */}
         <Scrollbars
           autoHeight
