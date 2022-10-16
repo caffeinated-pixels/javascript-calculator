@@ -65,6 +65,39 @@ describe('Calculator keyboard input', () => {
     expect(screen.getByTestId('main-display')).toHaveTextContent('0')
     expect(screen.getByTestId('formula-display')).toHaveTextContent('')
   })
+
+  it('period should add decimal point', async () => {
+    render(<App />)
+
+    await userEvent.keyboard('3.14159')
+
+    expect(screen.getByTestId('main-display')).toHaveTextContent('3.14159')
+    expect(screen.getByTestId('formula-display')).toHaveTextContent('3.14159')
+  })
+
+  it('operator keys should work', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard('10')
+
+    await userEvent.keyboard('+')
+    expect(mainDisplay).toHaveTextContent('+')
+    expect(formulaDisplay).toHaveTextContent('10+')
+
+    await userEvent.keyboard('-')
+    expect(mainDisplay).toHaveTextContent('-')
+    expect(formulaDisplay).toHaveTextContent('10-')
+
+    await userEvent.keyboard('*')
+    expect(mainDisplay).toHaveTextContent('*')
+    expect(formulaDisplay).toHaveTextContent('10*')
+
+    await userEvent.keyboard('/')
+    expect(mainDisplay).toHaveTextContent('/')
+    expect(formulaDisplay).toHaveTextContent('10/')
+  })
 })
 
 describe('Calculations and display behaviour', () => {
