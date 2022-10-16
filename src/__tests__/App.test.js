@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import App from '../App'
@@ -46,6 +46,7 @@ describe('Calculator keyboard input', () => {
     )
   })
 
+  // backspace key === DEL button, del key === AC button
   it('Backspace should remove least significant digit', async () => {
     render(<App />)
 
@@ -54,13 +55,15 @@ describe('Calculator keyboard input', () => {
     expect(screen.getByTestId('formula-display')).toHaveTextContent('12')
   })
 
-  it('DEL should clear the display', async () => {
+  it('AC should clear the display', async () => {
     render(<App />)
 
-    await userEvent.keyboard('1234567890{del}')
+    await userEvent.keyboard('1234567890')
+    // have to use fireEvent because userEvent doesn't support DEL
+    fireEvent.keyDown(document.body, { key: 'Delete' })
+
     expect(screen.getByTestId('main-display')).toHaveTextContent('0')
-    // TODO: figure out why this is failing
-    // expect(screen.getByTestId('formula-display')).toHaveTextContent('')
+    expect(screen.getByTestId('formula-display')).toHaveTextContent('')
   })
 
   it('should be able to perform follow-up calculation', async () => {
