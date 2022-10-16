@@ -65,12 +65,28 @@ describe('Calculator keyboard input', () => {
     expect(screen.getByTestId('main-display')).toHaveTextContent('0')
     expect(screen.getByTestId('formula-display')).toHaveTextContent('')
   })
+})
 
+describe('Calculations and display behaviour', () => {
   it('should be able to perform follow-up calculation', async () => {
     render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
 
     await userEvent.keyboard('2+2=+')
-    expect(screen.getByTestId('main-display')).toHaveTextContent('+')
-    expect(screen.getByTestId('formula-display')).toHaveTextContent('4+')
+    expect(mainDisplay).toHaveTextContent('+')
+    expect(formulaDisplay).toHaveTextContent('4+')
+
+    await userEvent.keyboard('=')
+    expect(mainDisplay).toHaveTextContent('4')
+    expect(formulaDisplay).toHaveTextContent('4=4')
+
+    await userEvent.keyboard('+2')
+    expect(mainDisplay).toHaveTextContent('2')
+    expect(formulaDisplay).toHaveTextContent('4+2')
+
+    await userEvent.keyboard('=')
+    expect(mainDisplay).toHaveTextContent('6')
+    expect(formulaDisplay).toHaveTextContent('4+2=6')
   })
 })
