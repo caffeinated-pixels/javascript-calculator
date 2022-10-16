@@ -10,8 +10,8 @@ export const DisplayContainer = ({ currVal, formulaDisplay }) => {
   }, [formulaDisplay])
 
   return (
-    <section className="display-container">
-      <p id="display" className="main-display">
+    <section className="display-container" data-testid="calculator-display">
+      <p id="display" className="main-display" data-testid="main-display">
         {currVal}
       </p>
       <hr />
@@ -23,7 +23,11 @@ export const DisplayContainer = ({ currVal, formulaDisplay }) => {
           autoHeightMax={45}
           ref={scrollBarsRef}
         >
-          <p id="formula-display" className="formula-display">
+          <p
+            id="formula-display"
+            className="formula-display"
+            data-testid="formula-display"
+          >
             {formulaDisplay}
           </p>
         </Scrollbars>

@@ -1,88 +1,105 @@
-export const KeyPad = (props) => {
+export const KeyPad = ({
+  handleClear,
+  handleDecimal,
+  handleNum,
+  handleDel,
+  handleOperator,
+  handlePosNeg,
+  handleEquals,
+}) => {
   return (
-    <div className="keypad">
+    <div className="keypad" data-testid="keypad">
       {/* FIRST ROW */}
-      <button id="seven" onClick={() => props.handleNum('7')}>
+      <button id="seven" onClick={() => handleNum('7')}>
         7
       </button>
-      <button id="eight" onClick={() => props.handleNum('8')}>
+      <button id="eight" onClick={() => handleNum('8')}>
         8
       </button>
-      <button id="nine" onClick={() => props.handleNum('9')}>
+      <button id="nine" onClick={() => handleNum('9')}>
         9
       </button>
-      <button id="del" className="red-btn" onClick={props.handleDel}>
+      <button id="del" className="red-btn" onClick={handleDel}>
         DEL
       </button>
-      <button id="clear" className="red-btn" onClick={props.handleClear}>
+      <button id="clear" className="red-btn" onClick={handleClear}>
         AC
       </button>
 
       {/* SECOND ROW */}
-      <button id="four" onClick={() => props.handleNum('4')}>
+      <button id="four" onClick={() => handleNum('4')}>
         4
       </button>
-      <button id="five" onClick={() => props.handleNum('5')}>
+      <button id="five" onClick={() => handleNum('5')}>
         5
       </button>
-      <button id="six" onClick={() => props.handleNum('6')}>
+      <button id="six" onClick={() => handleNum('6')}>
         6
       </button>
       <button
         id="multiply"
         className="operator"
-        onClick={() => props.handleOperator('*')}
+        onClick={() => handleOperator('*')}
+        aria-label="multiply"
       >
         ×
       </button>
       <button
         id="divide"
         className="operator"
-        onClick={() => props.handleOperator('/')}
+        onClick={() => handleOperator('/')}
+        aria-label="divide"
       >
         ÷
       </button>
 
       {/* THIRD ROW */}
-      <button id="one" onClick={() => props.handleNum('1')}>
+      <button id="one" onClick={() => handleNum('1')}>
         1
       </button>
-      <button id="two" onClick={() => props.handleNum('2')}>
+      <button id="two" onClick={() => handleNum('2')}>
         2
       </button>
-      <button id="three" onClick={() => props.handleNum('3')}>
+      <button id="three" onClick={() => handleNum('3')}>
         3
       </button>
       <button
         id="add"
         className="operator"
-        onClick={() => props.handleOperator('+')}
+        onClick={() => handleOperator('+')}
+        aria-label="add"
       >
         +
       </button>
       <button
         id="subtract"
         className="operator"
-        onClick={() => props.handleOperator('-')}
+        onClick={() => handleOperator('-')}
+        aria-label="subtract"
       >
         -
       </button>
 
       {/* FOURTH ROW */}
-      <button id="zero" onClick={() => props.handleNum('0')}>
+      <button id="zero" onClick={() => handleNum('0')}>
         0
       </button>
-      <button id="pos-neg" onClick={props.handlePosNeg}>
+      <button
+        id="pos-neg"
+        onClick={handlePosNeg}
+        aria-label="toggle postive negative"
+      >
         +/-
       </button>
-      <button id="decimal" onClick={props.handleDecimal}>
+      <button id="decimal" onClick={handleDecimal} aria-label="decimal point">
         .
       </button>
 
       <button
         id="equals"
         className="equals green-btn"
-        onClick={props.handleEquals}
+        onClick={handleEquals}
+        aria-label="equals"
       >
         =
       </button>
