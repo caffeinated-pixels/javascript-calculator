@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import App from '../App'
@@ -121,5 +121,21 @@ describe('Calculations and display behaviour', () => {
     await userEvent.keyboard('=')
     expect(mainDisplay).toHaveTextContent('6')
     expect(formulaDisplay).toHaveTextContent('4+2=6')
+  })
+
+  it('should display warning if input > 21 digits', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard('5'.repeat(25))
+
+    expect(mainDisplay).toHaveTextContent('Max Digits Reached!')
+    expect(formulaDisplay).toHaveTextContent('555,555,555,555,555,555,555')
+
+    // number should reappear after 600ms
+    await waitFor(() =>
+      expect(mainDisplay).toHaveTextContent('555,555,555,555,555,555,555')
+    )
   })
 })
