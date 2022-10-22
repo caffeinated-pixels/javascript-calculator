@@ -252,28 +252,22 @@ export default function App() {
     }
 
     // if warning already displayed we can return true
-    if (state.currVal === MAX_DIGIT_WARNING) return true
+    if (state.isMaxDigits) return true
 
     // if < 21 we can return false and continue adding digits
     if (!isNumTooLong) return false
 
     setState((prevState) => {
-      // make a copy of currVal (avoids pass by ref) to be restored after limit message
-      const storeMe = prevState.currVal.slice()
       return {
         ...prevState,
-        currVal: MAX_DIGIT_WARNING,
-        storeVal: storeMe,
+        isMaxDigits: true,
       }
     })
 
-    // restore stored value to currVal after timeout
     setTimeout(
       () =>
         setState((prevState) => {
-          const restoreMe = prevState.storeVal.slice()
-
-          return { ...prevState, currVal: restoreMe, storeVal: '' }
+          return { ...prevState, isMaxDigits: false }
         }),
       600
     )
@@ -285,7 +279,7 @@ export default function App() {
       <main className="calculator-body">
         <Header />
         <DisplayContainer
-          currVal={state.currVal}
+          currVal={state.isMaxDigits ? MAX_DIGIT_WARNING : state.currVal}
           formulaDisplay={state.formula}
         />
         <KeyPad
