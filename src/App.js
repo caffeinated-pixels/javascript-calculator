@@ -235,9 +235,7 @@ export default function App() {
 
   // HELPER FUNCTIONS
   const maxDigitLimit = (input) => {
-    /* get number of digits (remove "-", "." & "," before counting);
-    JS switches to scientific notation at 22 digits (ie 1e+21), so limit set to 21 */
-    const checkLength = state.currVal.replace(/-|\.|,/g, '').length >= 21
+    const isNumTooLong = state.currVal.replace(/-|\.|,/g, '').length >= 21
 
     // need to reset state if creating new num after answer
     if (state.calcDone) {
@@ -257,7 +255,7 @@ export default function App() {
     if (state.currVal === 'Max Digits Reached!') return true
 
     // if < 21 we can return false and continue adding digits
-    if (!checkLength) return false
+    if (!isNumTooLong) return false
 
     setState((prevState) => {
       // make a copy of currVal (avoids pass by ref) to be restored after limit message
