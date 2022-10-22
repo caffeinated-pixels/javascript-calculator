@@ -2,15 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { Header, DisplayContainer, KeyPad, Footer } from './components'
 import { addCommasToNum, appendOperator, evaluateFormula } from './helpers'
-
-const initialState = {
-  currVal: '0', // display value; appended to formula
-  storeVal: '', // store currVal for displaying max digit warning
-  formula: '', // display formula; intFormula + currVal
-  intFormula: '', // only updated after operator or equals
-  prevAns: '', // store answer for starting new calculation
-  calcDone: false, // was last input equals key?
-}
+import { initialState } from './constants/initialState'
 
 export default function App() {
   const [state, setState] = useState(initialState)
