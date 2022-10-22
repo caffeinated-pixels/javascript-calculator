@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { Header, DisplayContainer, KeyPad, Footer } from './components'
 import { addCommasToNum, appendOperator, evaluateFormula } from './helpers'
-import { initialState } from './constants/initialState'
+import { initialState, MAX_DIGIT_WARNING } from './constants'
 
 export default function App() {
   const [state, setState] = useState(initialState)
@@ -252,7 +252,7 @@ export default function App() {
     }
 
     // if warning already displayed we can return true
-    if (state.currVal === 'Max Digits Reached!') return true
+    if (state.currVal === MAX_DIGIT_WARNING) return true
 
     // if < 21 we can return false and continue adding digits
     if (!isNumTooLong) return false
@@ -262,7 +262,7 @@ export default function App() {
       const storeMe = prevState.currVal.slice()
       return {
         ...prevState,
-        currVal: 'Max Digits Reached!',
+        currVal: MAX_DIGIT_WARNING,
         storeVal: storeMe,
       }
     })

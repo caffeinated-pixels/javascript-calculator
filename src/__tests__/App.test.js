@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import App from '../App'
+import { MAX_DIGIT_WARNING } from '../constants'
 
 /* things to test:
     - keyboard input
@@ -130,7 +131,7 @@ describe('Calculations and display behaviour', () => {
 
     await userEvent.keyboard('5'.repeat(25))
 
-    expect(mainDisplay).toHaveTextContent('Max Digits Reached!')
+    expect(mainDisplay).toHaveTextContent(MAX_DIGIT_WARNING)
     expect(formulaDisplay).toHaveTextContent('555,555,555,555,555,555,555')
 
     // number should reappear after 600ms
