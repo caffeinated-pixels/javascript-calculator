@@ -15,4 +15,10 @@ describe('evaluateFormula function', () => {
 
     expect(result).toStrictEqual('0.1')
   })
+
+  it('should follow BODMAS order for calculations', () => {
+    expect(evaluateFormula('6+2*7').toJSON()).toStrictEqual('20') // not 50!
+    expect(evaluateFormula('6+2*7/2').toJSON()).toStrictEqual('13') // not 28!
+    expect(evaluateFormula('5-2+6/3').toJSON()).toStrictEqual('5') // not 3 or 1!
+  })
 })
