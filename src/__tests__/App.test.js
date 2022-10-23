@@ -189,6 +189,24 @@ describe('Input and display behaviour', () => {
     expect(formulaDisplay).toHaveTextContent('1.5+2.5=4')
   })
 
+  it('should prefix decimal points without a whole number with a 0', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard('0.+.2')
+    expect(mainDisplay).toHaveTextContent('0.2')
+    expect(formulaDisplay).toHaveTextContent('0+0.2')
+
+    await userEvent.keyboard('+.3')
+    expect(mainDisplay).toHaveTextContent('0.3')
+    expect(formulaDisplay).toHaveTextContent('0+0.2+0.3')
+
+    await userEvent.keyboard('=')
+    expect(mainDisplay).toHaveTextContent('0.5')
+    expect(formulaDisplay).toHaveTextContent('0+0.2+0.3=0.5')
+  })
+
   it('should perform 0.3-0.2 accurately', async () => {
     render(<App />)
     const mainDisplay = screen.getByTestId('main-display')
@@ -232,6 +250,4 @@ describe('Input and display behaviour', () => {
   // TODO: If 2 or more operators are entered consecutively, the operation performed should be the last operator entered (excluding the negative (-) sign.await userEvent.keyboard('00001')
 
   // TODO: Pressing an operator immediately following "=" should start a new calculation that operates on the result of the previous evaluation
-
-  // TODO: test decimals getting prefixed with 0
 })
