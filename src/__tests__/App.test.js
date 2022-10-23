@@ -247,7 +247,13 @@ describe('Input and display behaviour', () => {
     expect(formulaDisplay).toHaveTextContent('5-2+6/3=5')
   })
 
-  // TODO: If 2 or more operators are entered consecutively, the operation performed should be the last operator entered (excluding the negative (-) sign.await userEvent.keyboard('00001')
+  it('should use the last operator if multiple operators entered consecutively,', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
 
-  // TODO: Pressing an operator immediately following "=" should start a new calculation that operates on the result of the previous evaluation
+    await userEvent.keyboard('2+-/*2=')
+    expect(mainDisplay).toHaveTextContent('4')
+    expect(formulaDisplay).toHaveTextContent('2*2=4')
+  })
 })
