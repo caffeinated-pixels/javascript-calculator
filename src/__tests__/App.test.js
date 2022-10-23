@@ -139,4 +139,23 @@ describe('Calculations and display behaviour', () => {
       expect(mainDisplay).toHaveTextContent('555,555,555,555,555,555,555')
     )
   })
+
+  it('should switch to scientific notation when result exceeds 21 digits', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard(`${'9'.repeat(21)}*10=`)
+
+    expect(mainDisplay).toHaveTextContent('9.99999999999999999999e+21')
+    expect(formulaDisplay).toHaveTextContent(
+      '999,999,999,999,999,999,999*10=9.99999999999999999999e+21'
+    )
+
+    await userEvent.keyboard('/1000000=')
+    expect(mainDisplay).toHaveTextContent('9,999,999,999,999,999.99999')
+    expect(formulaDisplay).toHaveTextContent(
+      '9.99999999999999999999e+21/1,000,000=9,999,999,999,999,999.99999'
+    )
+  })
 })
