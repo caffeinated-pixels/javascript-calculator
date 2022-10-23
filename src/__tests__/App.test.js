@@ -75,6 +75,15 @@ describe('Calculator keyboard input', () => {
     expect(screen.getByTestId('main-display')).toHaveTextContent('3.14159')
     expect(screen.getByTestId('formula-display')).toHaveTextContent('3.14159')
   })
+  // TODO: fix multiple decimal point bug
+  it.skip('should not allow multiple decimal points', async () => {
+    render(<App />)
+
+    await userEvent.keyboard('3.14.15.9')
+
+    expect(screen.getByTestId('main-display')).toHaveTextContent('3.14159')
+    expect(screen.getByTestId('formula-display')).toHaveTextContent('3.14159')
+  })
 
   it('operator keys should work', async () => {
     render(<App />)
@@ -158,4 +167,29 @@ describe('Calculations and display behaviour', () => {
       '9.99999999999999999999e+21/1,000,000=9,999,999,999,999,999.99999'
     )
   })
+
+  it('should not allow a number to begin with multiple zeros', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard('00001')
+
+    expect(mainDisplay).toHaveTextContent('1')
+    expect(formulaDisplay).toHaveTextContent('1')
+  })
+
+  it('should be able to perform any operation on numbers containing decimal points', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard('1.5+2.5=')
+    expect(mainDisplay).toHaveTextContent('4')
+    expect(formulaDisplay).toHaveTextContent('1.5+2.5=4')
+  })
+
+  // TODO: If 2 or more operators are entered consecutively, the operation performed should be the last operator entered (excluding the negative (-) sign.await userEvent.keyboard('00001')
+
+  // TODO: Pressing an operator immediately following "=" should start a new calculation that operates on the result of the previous evaluation
 })
