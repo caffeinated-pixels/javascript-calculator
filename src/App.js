@@ -257,20 +257,22 @@ export default function App() {
     // if < 21 we can return false and continue adding digits
     if (!isNumTooLong) return false
 
+    const timerId = setTimeout(
+      () =>
+        setState((prevState) => {
+          return { ...prevState, isMaxDigits: false, maxDigitTimerId: null }
+        }),
+      600
+    )
+
     setState((prevState) => {
       return {
         ...prevState,
         isMaxDigits: true,
+        maxDigitTimerId: timerId,
       }
     })
 
-    setTimeout(
-      () =>
-        setState((prevState) => {
-          return { ...prevState, isMaxDigits: false }
-        }),
-      600
-    )
     return true // return true for maxDigitLimit
   }
 

@@ -5,4 +5,5 @@ export const INITIAL_STATE = {
   prevAns: '', // store answer for starting new calculation
   calcDone: false, // was last input equals key?
   isMaxDigits: false, // is currVal at max digits?
+  maxDigitTimerId: null, // timer id for max digit warning
 }
