@@ -9,38 +9,28 @@ import {
 } from '../helpers'
 import { INITIAL_STATE } from '../constants'
 
-/* if (state.isMaxDigits && !state.maxDigitTimerId) {
-    const timerId = setTimeout(
-    () =>
-      setState((prevState) => {
-        return { ...prevState, isMaxDigits: false, maxDigitTimerId: null }
-      }),
-    600
-  )
-  setState((prevState) => {
-    return { ...prevState, maxDigitTimerId: timerId }
-  }
-} 
-*/
-
-const reducer = (state, action) => {
-  switch (action.type) {
+const reducer = (state, { type, payload }) => {
+  switch (type) {
     case 'PROCESS_NUM':
-      return processNumInput(state, action.payload)
+      return processNumInput(state, payload)
     case 'PROCESS_DECIMAL_POINT':
       return processDecimalPointInput(state)
     case 'PROCESS_OPERATOR':
-      return processOperatorInput(state, action.payload)
+      return processOperatorInput(state, payload)
     case 'PROCESS_POS_NEG':
-      return processPosNegInput(state, action.payload)
+      return processPosNegInput(state, payload)
     case 'PROCESS_EQUALS':
       return processEqualsInput(state)
     case 'PROCESS_CLEAR':
       return INITIAL_STATE
     case 'PROCESS_DEL':
       return processDelInput(state)
+    case 'SET_MAX_DIGIT_TIMER_ID':
+      return { ...state, maxDigitTimerId: payload }
+    case 'CLEAR_MAX_DIGIT_WARNING':
+      return { ...state, isMaxDigits: false, maxDigitTimerId: null }
     default:
-      throw new Error(`Unhandled action type: ${action.type}`)
+      throw new Error(`Unhandled action type: ${type}`)
   }
 }
 

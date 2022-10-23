@@ -3,7 +3,7 @@ import { isMaxDigitLimit } from './isMaxDigitLimit'
 export const processDecimalPointInput = (state) => {
   // check if num of digits >= 21; maxDigitLimit returns boolean
   // pass in '0' to reset formula if entering new float when calcDone = true
-  if (isMaxDigitLimit(state.currVal)) return
+  if (isMaxDigitLimit(state.currVal)) return state
 
   // check to prevent sequential decimal points, ie 2..
   const containsDecimal = /\./.test(state.currVal)

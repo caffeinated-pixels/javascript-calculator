@@ -1,7 +1,6 @@
 import { addCommasToNum, isMaxDigitLimit } from '.'
 
 export const processNumInput = (state, input) => {
-  // processDecimalPointInput may need access to this logic?
   if (state.calcDone)
     return {
       ...state,
@@ -10,6 +9,8 @@ export const processNumInput = (state, input) => {
       intFormula: '',
       calcDone: false,
     }
+
+  if (state.isMaxDigits) return { ...state }
 
   if (isMaxDigitLimit(state.currVal) && !state.isMaxDigits) {
     return {

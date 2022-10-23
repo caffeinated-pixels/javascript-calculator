@@ -132,8 +132,8 @@ describe('Input and display behaviour', () => {
     expect(mainDisplay).toHaveTextContent('6')
     expect(formulaDisplay).toHaveTextContent('4+2=6')
   })
-  // TODO: fix max digit warning
-  it.skip('should display warning if input > 21 digits', async () => {
+
+  it('should display warning if input > 21 digits', async () => {
     render(<App />)
     const mainDisplay = screen.getByTestId('main-display')
     const formulaDisplay = screen.getByTestId('formula-display')
@@ -147,6 +147,19 @@ describe('Input and display behaviour', () => {
     await waitFor(() =>
       expect(mainDisplay).toHaveTextContent('555,555,555,555,555,555,555')
     )
+  })
+
+  it('should allow follow-up calculation if answer has 21 digits', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard(`${'5'.repeat(21)}*10=`)
+    expect(mainDisplay).toHaveTextContent('5.55555555555555555555e+21')
+
+    await userEvent.keyboard('5')
+    expect(mainDisplay).toHaveTextContent('0')
+    expect(formulaDisplay).toHaveTextContent('5')
   })
 
   it('should switch to scientific notation when result exceeds 21 digits', async () => {
