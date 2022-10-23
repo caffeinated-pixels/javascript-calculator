@@ -75,6 +75,15 @@ describe('Calculator keyboard input', () => {
     expect(screen.getByTestId('formula-display')).toHaveTextContent('3.14159')
   })
 
+  it('should not allow multiple decimal points', async () => {
+    render(<App />)
+
+    await userEvent.keyboard('3.14.15.9')
+
+    expect(screen.getByTestId('main-display')).toHaveTextContent('3.14159')
+    expect(screen.getByTestId('formula-display')).toHaveTextContent('3.14159')
+  })
+
   it('operator keys should work', async () => {
     render(<App />)
     const mainDisplay = screen.getByTestId('main-display')

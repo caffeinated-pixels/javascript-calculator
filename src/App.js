@@ -70,6 +70,7 @@ export default function App() {
     setState((prevState) => {
       // check to prevent sequential decimal points, ie 2..
       const containsDecimal = /\./.test(prevState.currVal)
+      if (containsDecimal) return prevState
 
       // check to prevent operator followed by decimal point, eg 2+.
       const endsInOperator = /[+\-*/]$/.test(prevState.formula)
@@ -83,12 +84,11 @@ export default function App() {
         }
       }
 
-      if (!containsDecimal) {
-        return {
-          ...prevState,
-          currVal: prevState.currVal + '.',
-          formula: prevState.formula + '.',
-        }
+      // else add decimal to currVal
+      return {
+        ...prevState,
+        currVal: prevState.currVal + '.',
+        formula: prevState.formula + '.',
       }
     })
   }
