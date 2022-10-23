@@ -1,4 +1,4 @@
-export const initialState = {
+export const INITIAL_STATE = {
   currVal: '0', // display value; appended to formula
   formula: '', // display formula; intFormula + currVal
   intFormula: '', // only updated after operator or equals

@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 
 import { Header, DisplayContainer, KeyPad, Footer } from './components'
 import { addCommasToNum, appendOperator, evaluateFormula } from './helpers'
-import { initialState, MAX_DIGIT_WARNING } from './constants'
+import { INITIAL_STATE, MAX_DIGIT_WARNING } from './constants'
 
 export default function App() {
-  const [state, setState] = useState(initialState)
+  const [state, setState] = useState(INITIAL_STATE)
 
   useEffect(() => {
     // add event listener for keypresses
@@ -189,7 +189,7 @@ export default function App() {
 
   const handleClear = () => {
     // reset state to original values
-    setState(initialState)
+    setState(INITIAL_STATE)
   }
 
   const handleDel = () => {
