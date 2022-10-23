@@ -9,7 +9,7 @@ describe('evaluateFormula function', () => {
     expect(result).toBe('4')
     expect(typeof result).toBe('string')
   })
-  // TODO: also add these tests to App.test.js
+
   it('should perform 0.3-0.2 accurately', () => {
     const result = evaluateFormula('0.3-0.2').toJSON()
 

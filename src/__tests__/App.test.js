@@ -110,7 +110,7 @@ describe('Calculator keyboard input', () => {
   })
 })
 
-describe('Calculations and display behaviour', () => {
+describe('Input and display behaviour', () => {
   it('should be able to perform follow-up calculation', async () => {
     render(<App />)
     const mainDisplay = screen.getByTestId('main-display')
@@ -189,7 +189,49 @@ describe('Calculations and display behaviour', () => {
     expect(formulaDisplay).toHaveTextContent('1.5+2.5=4')
   })
 
+  it('should perform 0.3-0.2 accurately', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard('0.3-0.2=')
+
+    expect(mainDisplay).toHaveTextContent('0.1')
+    expect(formulaDisplay).toHaveTextContent('0.3-0.2=0.1')
+  })
+
+  it('should perform 2/7 accurately', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard('2/7=')
+
+    expect(mainDisplay).toHaveTextContent('0.28571428571428571429')
+    expect(formulaDisplay).toHaveTextContent('2/7=0.28571428571428571429')
+  })
+
+  it('should follow BODMAS order for calculations', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard('6+2*7=')
+    expect(mainDisplay).toHaveTextContent('20')
+    expect(formulaDisplay).toHaveTextContent('6+2*7=20')
+
+    await userEvent.keyboard('6+2*7/2=')
+    expect(mainDisplay).toHaveTextContent('13')
+    expect(formulaDisplay).toHaveTextContent('6+2*7/2=13')
+
+    await userEvent.keyboard('5-2+6/3=')
+    expect(mainDisplay).toHaveTextContent('5')
+    expect(formulaDisplay).toHaveTextContent('5-2+6/3=5')
+  })
+
   // TODO: If 2 or more operators are entered consecutively, the operation performed should be the last operator entered (excluding the negative (-) sign.await userEvent.keyboard('00001')
 
   // TODO: Pressing an operator immediately following "=" should start a new calculation that operates on the result of the previous evaluation
+
+  // TODO: test decimals getting prefixed with 0
 })
