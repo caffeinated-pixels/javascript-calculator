@@ -8,22 +8,18 @@ export default function App() {
   const [state, dispatch] = useAppState(INITIAL_STATE)
 
   useEffect(() => {
-    // add event listener for keypresses
     document.addEventListener('keydown', handleKeyPress)
 
     return () => document.removeEventListener('keydown', handleKeyPress)
   })
 
-  useEffect(() => {
-    if (state.isMaxDigits && !state.maxDigitTimerId) {
-      const timerId = setTimeout(() => {
-        dispatch({ type: 'CLEAR_MAX_DIGIT_WARNING' })
-      }, 600)
-      dispatch({ type: 'SET_MAX_DIGIT_TIMER_ID', payload: timerId })
-    }
-  }, [state.isMaxDigits, state.maxDigitTimerId, dispatch])
+  if (state.isMaxDigits && !state.maxDigitTimerId) {
+    const timerId = setTimeout(() => {
+      dispatch({ type: 'CLEAR_MAX_DIGIT_WARNING' })
+    }, 600)
+    dispatch({ type: 'SET_MAX_DIGIT_TIMER_ID', payload: timerId })
+  }
 
-  // EVENT HANDLERS
   const handleNum = (input) => {
     dispatch({ type: 'PROCESS_NUM', payload: input })
   }
