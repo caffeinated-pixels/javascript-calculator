@@ -124,13 +124,31 @@ describe('Input and display behaviour', () => {
     expect(mainDisplay).toHaveTextContent('4')
     expect(formulaDisplay).toHaveTextContent('4=4')
 
-    await userEvent.keyboard('+2')
-    expect(mainDisplay).toHaveTextContent('2')
-    expect(formulaDisplay).toHaveTextContent('4+2')
+    await userEvent.keyboard('+20')
+    expect(mainDisplay).toHaveTextContent('20')
+    expect(formulaDisplay).toHaveTextContent('4+20')
 
     await userEvent.keyboard('=')
-    expect(mainDisplay).toHaveTextContent('6')
-    expect(formulaDisplay).toHaveTextContent('4+2=6')
+    expect(mainDisplay).toHaveTextContent('24')
+    expect(formulaDisplay).toHaveTextContent('4+20=24')
+  })
+
+  it('should be able to perform new calculation following equals', async () => {
+    render(<App />)
+    const mainDisplay = screen.getByTestId('main-display')
+    const formulaDisplay = screen.getByTestId('formula-display')
+
+    await userEvent.keyboard('5*25=')
+    expect(mainDisplay).toHaveTextContent('125')
+    expect(formulaDisplay).toHaveTextContent('5*25=125')
+
+    await userEvent.keyboard('100/5=')
+    expect(mainDisplay).toHaveTextContent('20')
+    expect(formulaDisplay).toHaveTextContent('100/5=20')
+
+    await userEvent.keyboard('1.0253-.0253=')
+    expect(mainDisplay).toHaveTextContent('1')
+    expect(formulaDisplay).toHaveTextContent('1.0253-0.0253=1')
   })
 
   it('should display warning if input > 21 digits', async () => {
@@ -158,7 +176,7 @@ describe('Input and display behaviour', () => {
     expect(mainDisplay).toHaveTextContent('5.55555555555555555555e+21')
 
     await userEvent.keyboard('5')
-    expect(mainDisplay).toHaveTextContent('0')
+    expect(mainDisplay).toHaveTextContent('5')
     expect(formulaDisplay).toHaveTextContent('5')
   })
 

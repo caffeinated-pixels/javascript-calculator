@@ -4,7 +4,7 @@ export const processNumInput = (state, input) => {
   if (state.calcDone)
     return {
       ...state,
-      currVal: '0',
+      currVal: input,
       formula: input,
       intFormula: '',
       calcDone: false,
