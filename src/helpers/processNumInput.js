@@ -12,7 +12,7 @@ export const processNumInput = (state, input) => {
 
   if (state.isMaxDigits) return { ...state }
 
-  if (isMaxDigitLimit(state.currVal) && !state.isMaxDigits) {
+  if (isMaxDigitLimit(state.currVal)) {
     return {
       ...state,
       isMaxDigits: true,
