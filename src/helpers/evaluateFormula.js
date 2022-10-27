@@ -17,7 +17,6 @@ const calculate = (a, op, b) => {
 }
 
 export const evaluateFormula = (input) => {
-  // return String(eval(input))
   const regArr = ['*/', '+-'] // for building regexes below
   let output // for storing output of iterations
 
