@@ -13,13 +13,13 @@ export const processPosNegInput = (state) => {
     if (match === p2) return '' // remove prefix
   })
 
-  if (state.calcDone) {
+  if (state.isCalcDone) {
     return {
       ...state,
       currVal: posNegVal,
       formula: posNegVal,
       intFormula: '',
-      calcDone: false,
+      isCalcDone: false,
     }
   } else if (multipleOp) {
     // remove minus symbol at end of formula so we don't end up with "2+--"

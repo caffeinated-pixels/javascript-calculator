@@ -1,13 +1,13 @@
 import { addCommasToNum, isMaxDigitLimit } from '.'
 
 export const processNumInput = (state, input) => {
-  if (state.calcDone)
+  if (state.isCalcDone)
     return {
       ...state,
       currVal: input,
       formula: input,
       intFormula: '',
-      calcDone: false,
+      isCalcDone: false,
     }
 
   if (state.isMaxDigits) return { ...state }

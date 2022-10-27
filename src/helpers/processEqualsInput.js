@@ -1,13 +1,13 @@
 import { evaluateFormula, addCommasToNum } from './'
 
 export const processEqualsInput = (state) => {
-  if (state.calcDone) {
+  if (state.isCalcDone) {
     // deal with spamming equals button
     return {
       ...state,
       currVal: '' + state.currVal,
       formula: '' + state.currVal,
-      calcDone: true,
+      isCalcDone: true,
     }
   }
 
@@ -41,6 +41,6 @@ export const processEqualsInput = (state) => {
     currVal: answerCommas,
     prevAns: answerCommas,
     formula: newFormula,
-    calcDone: true,
+    isCalcDone: true,
   }
 }
