@@ -1,10 +1,6 @@
 export const processPosNegInput = (state) => {
   // is currVal an operator?
   const isOperator = /[+\-*/]$/.test(state.currVal)
-  // is last value in intFormula an operator followed by minus eg "2+-"
-  const multipleOp = /[+\-*/]-$/.test(state.intFormula)
-
-  let newFormula // initialize for below
 
   if (isOperator || state.currVal === '0') return state
 
@@ -20,16 +16,6 @@ export const processPosNegInput = (state) => {
       formula: posNegVal,
       intFormula: '',
       isCalcDone: false,
-    }
-  } else if (multipleOp) {
-    // TODO: is an input of "2+--" actually possible?
-    // remove minus symbol at end of formula so we don't end up with "2+--"
-    newFormula = state.intFormula.replace(/([+\-*/])-$/, '$1')
-
-    return {
-      ...state,
-      intFormula: newFormula,
-      formula: newFormula + state.currVal,
     }
   } else {
     return {
