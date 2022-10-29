@@ -16,16 +16,16 @@ const appendMinusOperator = (newState, input) => {
   )
 }
 
-export const appendOperator = (prevState, input) => {
-  const newState = prevState.calcDone
+export const appendOperator = (state, input) => {
+  const newState = state.isCalcDone
     ? {
-        ...prevState,
+        ...state,
         currVal: '0',
-        formula: '' + prevState.prevAns,
-        intFormula: '' + prevState.prevAns,
-        calcDone: false,
+        formula: '' + state.prevAns,
+        intFormula: '' + state.prevAns,
+        isCalcDone: false,
       }
-    : { ...prevState }
+    : { ...state }
 
   const newFormula =
     input !== '-'
