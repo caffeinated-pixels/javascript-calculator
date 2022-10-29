@@ -16,7 +16,7 @@ export const processEqualsInput = (state) => {
     return { ...state }
   }
 
-  const evaluateMe = state.formula.replace(
+  const cleanedFormula = state.formula.replace(
     // remove commas, convert (--) to (+)
     /(\D+$)|(,)|(--)/g,
     (match, p1, p2, p3) => {
@@ -28,7 +28,7 @@ export const processEqualsInput = (state) => {
   // tidy up incomplete formulas for displaying after evaluation
   const tidyFormulaEnd = state.formula.replace(/\D+$/, '')
 
-  const answer = evaluateFormula(evaluateMe)
+  const answer = evaluateFormula(cleanedFormula)
 
   // deal with answer = Infinity
   const answerCommas = isFinite(answer)
