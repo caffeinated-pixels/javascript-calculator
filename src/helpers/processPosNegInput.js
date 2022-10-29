@@ -6,7 +6,7 @@ export const processPosNegInput = (state) => {
 
   let newFormula // initialize for below
 
-  if (isOperator || state.currVal === '0') return // do nothing
+  if (isOperator || state.currVal === '0') return state
 
   const posNegVal = state.currVal.replace(/(^\b)|(^-)/, (match, p1, p2) => {
     if (match === p1) return '-' // prefix with minus
@@ -22,6 +22,7 @@ export const processPosNegInput = (state) => {
       isCalcDone: false,
     }
   } else if (multipleOp) {
+    // TODO: is an input of "2+--" actually possible?
     // remove minus symbol at end of formula so we don't end up with "2+--"
     newFormula = state.intFormula.replace(/([+\-*/])-$/, '$1')
 
