@@ -7,30 +7,43 @@ import {
   processEqualsInput,
   processDelInput,
 } from '../helpers'
+
 import { INITIAL_STATE, AppState } from '../constants'
+
+export enum ActionTypes {
+  NUMBER = 'PROCESS_NUM',
+  DECIMAL = 'PROCESS_DECIMAL_POINT',
+  OPERATOR = 'PROCESS_OPERATOR',
+  POS_NEG = 'PROCESS_POS_NEG',
+  EQUALS = 'PROCESS_EQUALS',
+  CLEAR = 'PROCESS_CLEAR',
+  DEL = 'PROCESS_DEL',
+  TIMER_ID = 'SET_MAX_DIGIT_TIMER_ID',
+  CLEAR_WARNING = 'CLEAR_MAX_DIGIT_WARNING',
+}
 
 const reducer = (
   state: AppState,
-  { type, payload }: { type: string; payload: any }
+  { type, payload }: { type: string; payload?: any }
 ) => {
   switch (type) {
-    case 'PROCESS_NUM':
+    case ActionTypes.NUMBER:
       return processNumInput(state, payload)
-    case 'PROCESS_DECIMAL_POINT':
+    case ActionTypes.DECIMAL:
       return processDecimalPointInput(state)
-    case 'PROCESS_OPERATOR':
+    case ActionTypes.OPERATOR:
       return processOperatorInput(state, payload)
-    case 'PROCESS_POS_NEG':
+    case ActionTypes.POS_NEG:
       return processPosNegInput(state)
-    case 'PROCESS_EQUALS':
+    case ActionTypes.EQUALS:
       return processEqualsInput(state)
-    case 'PROCESS_CLEAR':
+    case ActionTypes.CLEAR:
       return INITIAL_STATE
-    case 'PROCESS_DEL':
+    case ActionTypes.DEL:
       return processDelInput(state)
-    case 'SET_MAX_DIGIT_TIMER_ID':
+    case ActionTypes.TIMER_ID:
       return { ...state, maxDigitTimerId: payload }
-    case 'CLEAR_MAX_DIGIT_WARNING':
+    case ActionTypes.CLEAR_WARNING:
       return { ...state, isMaxDigits: false, maxDigitTimerId: null }
     default:
       throw new Error(`Unhandled action type: ${type}`)
@@ -40,7 +53,7 @@ const reducer = (
 export const useAppState = (initialState: AppState) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  return [state, dispatch]
+  return { state, dispatch }
 }
 
 // dispatch({ type: 'SET_PAGE_LENGTH', payload: pageLength })

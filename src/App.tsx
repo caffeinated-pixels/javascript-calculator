@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import { useAppState } from './hooks/useAppState'
+import { useAppState, ActionTypes } from './hooks/useAppState'
 import { Header, DisplayContainer, KeyPad, Footer } from './components'
 
 import { INITIAL_STATE, MAX_DIGIT_WARNING } from './constants'
 
 export default function App() {
-  const [state, dispatch] = useAppState(INITIAL_STATE)
+  const { state, dispatch } = useAppState(INITIAL_STATE)
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
@@ -15,37 +15,37 @@ export default function App() {
 
   if (state.isMaxDigits && !state.maxDigitTimerId) {
     const timerId = setTimeout(() => {
-      dispatch({ type: 'CLEAR_MAX_DIGIT_WARNING' })
+      dispatch({ type: ActionTypes.CLEAR_WARNING })
     }, 600)
-    dispatch({ type: 'SET_MAX_DIGIT_TIMER_ID', payload: timerId })
+    dispatch({ type: ActionTypes.TIMER_ID, payload: timerId })
   }
 
   const handleNum = (input) => {
-    dispatch({ type: 'PROCESS_NUM', payload: input })
+    dispatch({ type: ActionTypes.NUMBER, payload: input })
   }
 
   const handleDecimal = () => {
-    dispatch({ type: 'PROCESS_DECIMAL_POINT' })
+    dispatch({ type: ActionTypes.DECIMAL })
   }
 
   const handleOperator = (input) => {
-    dispatch({ type: 'PROCESS_OPERATOR', payload: input })
+    dispatch({ type: ActionTypes.OPERATOR, payload: input })
   }
 
   const handlePosNeg = () => {
-    dispatch({ type: 'PROCESS_POS_NEG' })
+    dispatch({ type: ActionTypes.POS_NEG })
   }
 
   const handleEquals = () => {
-    dispatch({ type: 'PROCESS_EQUALS' })
+    dispatch({ type: ActionTypes.EQUALS })
   }
 
   const handleClear = () => {
-    dispatch({ type: 'PROCESS_CLEAR' })
+    dispatch({ type: ActionTypes.CLEAR })
   }
 
   const handleDel = () => {
-    dispatch({ type: 'PROCESS_DEL' })
+    dispatch({ type: ActionTypes.DEL })
   }
 
   const handleKeyPress = (event) => {
