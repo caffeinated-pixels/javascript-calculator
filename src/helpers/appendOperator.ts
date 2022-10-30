@@ -1,5 +1,7 @@
-const appendNonMinusOperator = (newState, input) => {
-  return newState.formula.replace(
+import { AppState } from '../constants'
+
+const appendNonMinusOperator = (formula: string, input: string) => {
+  return formula.replace(
     /\b$|([+\-*/.]+$)/,
     input
     // appends last digit with curr operator (input);
@@ -7,8 +9,8 @@ const appendNonMinusOperator = (newState, input) => {
   )
 }
 
-const appendMinusOperator = (newState, input) => {
-  return newState.formula.replace(
+const appendMinusOperator = (formula: string, input: string) => {
+  return formula.replace(
     /\b$|([+\-*/.]+$)/,
     input
     // appends last digit with curr operator (input);
@@ -16,7 +18,7 @@ const appendMinusOperator = (newState, input) => {
   )
 }
 
-export const appendOperator = (state, input) => {
+export const appendOperator = (state: AppState, input: string): AppState => {
   const newState = state.isCalcDone
     ? {
         ...state,
@@ -29,8 +31,8 @@ export const appendOperator = (state, input) => {
 
   const newFormula =
     input !== '-'
-      ? appendNonMinusOperator(newState, input)
-      : appendMinusOperator(newState, input)
+      ? appendNonMinusOperator(newState.formula, input)
+      : appendMinusOperator(newState.formula, input)
 
   return {
     ...newState,
