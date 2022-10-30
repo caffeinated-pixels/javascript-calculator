@@ -1,4 +1,6 @@
-export const processPosNegInput = (state) => {
+import { AppState } from '../constants'
+
+export const processPosNegInput = (state: AppState) => {
   // is currVal an operator?
   const isOperator = /[+\-*/]$/.test(state.currVal)
 

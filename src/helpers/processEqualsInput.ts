@@ -1,6 +1,7 @@
 import { evaluateFormula, addCommasToNum } from './'
+import { AppState } from '../constants'
 
-export const processEqualsInput = (state) => {
+export const processEqualsInput = (state: AppState) => {
   if (state.isCalcDone) {
     // deal with spamming equals button
     return {
@@ -31,7 +32,7 @@ export const processEqualsInput = (state) => {
   const answer = evaluateFormula(cleanedFormula)
 
   // deal with answer = Infinity
-  const answerCommas = isFinite(answer)
+  const answerCommas = isFinite(Number(answer))
     ? addCommasToNum(answer.toString())
     : 'Infinity'
 
