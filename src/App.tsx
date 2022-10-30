@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useAppState, ActionTypes } from './hooks/useAppState'
+import { useAppState, Actions } from './hooks/useAppState'
 import { Header, DisplayContainer, KeyPad, Footer } from './components'
 
 import { INITIAL_STATE, MAX_DIGIT_WARNING } from './constants'
@@ -15,37 +15,37 @@ export default function App() {
 
   if (state.isMaxDigits && !state.maxDigitTimerId) {
     const timerId = setTimeout(() => {
-      dispatch({ type: ActionTypes.CLEAR_WARNING })
+      dispatch({ type: Actions.CLEAR_WARNING })
     }, 600)
-    dispatch({ type: ActionTypes.TIMER_ID, payload: timerId })
+    dispatch({ type: Actions.TIMER_ID, payload: timerId })
   }
 
   const handleNum = (input) => {
-    dispatch({ type: ActionTypes.NUMBER, payload: input })
+    dispatch({ type: Actions.NUMBER, payload: input })
   }
 
   const handleDecimal = () => {
-    dispatch({ type: ActionTypes.DECIMAL })
+    dispatch({ type: Actions.DECIMAL })
   }
 
   const handleOperator = (input) => {
-    dispatch({ type: ActionTypes.OPERATOR, payload: input })
+    dispatch({ type: Actions.OPERATOR, payload: input })
   }
 
   const handlePosNeg = () => {
-    dispatch({ type: ActionTypes.POS_NEG })
+    dispatch({ type: Actions.POS_NEG })
   }
 
   const handleEquals = () => {
-    dispatch({ type: ActionTypes.EQUALS })
+    dispatch({ type: Actions.EQUALS })
   }
 
   const handleClear = () => {
-    dispatch({ type: ActionTypes.CLEAR })
+    dispatch({ type: Actions.CLEAR })
   }
 
   const handleDel = () => {
-    dispatch({ type: ActionTypes.DEL })
+    dispatch({ type: Actions.DEL })
   }
 
   const handleKeyPress = (event) => {

@@ -10,7 +10,7 @@ import {
 
 import { INITIAL_STATE, AppState } from '../constants'
 
-export enum ActionTypes {
+export enum Actions {
   NUMBER = 'PROCESS_NUM',
   DECIMAL = 'PROCESS_DECIMAL_POINT',
   OPERATOR = 'PROCESS_OPERATOR',
@@ -22,31 +22,39 @@ export enum ActionTypes {
   CLEAR_WARNING = 'CLEAR_MAX_DIGIT_WARNING',
 }
 
-const reducer = (
-  state: AppState,
-  { type, payload }: { type: string; payload?: any }
-) => {
-  switch (type) {
-    case ActionTypes.NUMBER:
-      return processNumInput(state, payload)
-    case ActionTypes.DECIMAL:
+type ACTIONTYPES =
+  | { type: Actions.NUMBER; payload: string }
+  | { type: Actions.OPERATOR; payload: string }
+  | { type: Actions.TIMER_ID; payload: NodeJS.Timeout }
+  | { type: Actions.CLEAR_WARNING }
+  | { type: Actions.DECIMAL }
+  | { type: Actions.POS_NEG }
+  | { type: Actions.EQUALS }
+  | { type: Actions.CLEAR }
+  | { type: Actions.DEL }
+
+const reducer = (state: AppState, action: ACTIONTYPES) => {
+  switch (action.type) {
+    case Actions.NUMBER:
+      return processNumInput(state, action.payload)
+    case Actions.DECIMAL:
       return processDecimalPointInput(state)
-    case ActionTypes.OPERATOR:
-      return processOperatorInput(state, payload)
-    case ActionTypes.POS_NEG:
+    case Actions.OPERATOR:
+      return processOperatorInput(state, action.payload)
+    case Actions.POS_NEG:
       return processPosNegInput(state)
-    case ActionTypes.EQUALS:
+    case Actions.EQUALS:
       return processEqualsInput(state)
-    case ActionTypes.CLEAR:
+    case Actions.CLEAR:
       return INITIAL_STATE
-    case ActionTypes.DEL:
+    case Actions.DEL:
       return processDelInput(state)
-    case ActionTypes.TIMER_ID:
-      return { ...state, maxDigitTimerId: payload }
-    case ActionTypes.CLEAR_WARNING:
+    case Actions.TIMER_ID:
+      return { ...state, maxDigitTimerId: action.payload }
+    case Actions.CLEAR_WARNING:
       return { ...state, isMaxDigits: false, maxDigitTimerId: null }
     default:
-      throw new Error(`Unhandled action type: ${type}`)
+      throw new Error(`Unhandled action type`)
   }
 }
 
