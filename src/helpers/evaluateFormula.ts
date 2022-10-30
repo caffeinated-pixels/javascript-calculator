@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js'
 
-const calculate = (a, op, b) => {
-  // perform the correct operation
+const calculate = (a: BigNumber, op: string, b: BigNumber) => {
   switch (op) {
     case '+':
       return a.plus(b).sd(21)
@@ -16,9 +15,9 @@ const calculate = (a, op, b) => {
   }
 }
 
-export const evaluateFormula = (input) => {
+export const evaluateFormula = (input: string) => {
   const regArr = ['*/', '+-'] // for building regexes below
-  let output // for storing output of iterations
+  let output: string // for storing output of iterations
 
   for (let i = 0; i < regArr.length; i++) {
     // loop through regexes: 1st iteration = mult/div; 2nd iteration = add/sub
@@ -37,13 +36,18 @@ export const evaluateFormula = (input) => {
       const match = input.match(re) // for access to capture groups
 
       // send matched operations to function below
-      output = calculate(BigNumber(match[1]), match[2], BigNumber(match[3]))
+      output = calculate(
+        BigNumber(match[1]),
+        match[2],
+        BigNumber(match[3])
+      ).toString()
+      const outputAsNum = Number(output)
 
-      if (isNaN(output) || !isFinite(output)) return output // exit early if NaN or ∞
+      if (isNaN(outputAsNum) || !isFinite(outputAsNum)) return output // exit early if NaN or ∞
       input = input.replace(re, output) // replace matched operation for output result
     }
   }
 
-  // if output falsy, return the input (covers incomplete formula, eg "2+")
+  // covers incomplete formula, eg "2+" or "2+2*"
   return output ? output : input
 }
