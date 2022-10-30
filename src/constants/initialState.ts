@@ -1,4 +1,4 @@
-type AppState = {
+export type AppState = {
   currVal: string // display value; appended to formula
   formula: string // display formula; intFormula + currVal
   intFormula: string // only updated after operator or equals
