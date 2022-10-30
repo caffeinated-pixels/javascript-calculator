@@ -7,9 +7,12 @@ import {
   processEqualsInput,
   processDelInput,
 } from '../helpers'
-import { INITIAL_STATE } from '../constants'
+import { INITIAL_STATE, AppState } from '../constants'
 
-const reducer = (state, { type, payload }) => {
+const reducer = (
+  state: AppState,
+  { type, payload }: { type: string; payload: any }
+) => {
   switch (type) {
     case 'PROCESS_NUM':
       return processNumInput(state, payload)
@@ -18,7 +21,7 @@ const reducer = (state, { type, payload }) => {
     case 'PROCESS_OPERATOR':
       return processOperatorInput(state, payload)
     case 'PROCESS_POS_NEG':
-      return processPosNegInput(state, payload)
+      return processPosNegInput(state)
     case 'PROCESS_EQUALS':
       return processEqualsInput(state)
     case 'PROCESS_CLEAR':
@@ -34,7 +37,7 @@ const reducer = (state, { type, payload }) => {
   }
 }
 
-export const useAppState = (initialState) => {
+export const useAppState = (initialState: AppState) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   return [state, dispatch]
