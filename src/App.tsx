@@ -20,7 +20,7 @@ export default function App() {
     dispatch({ type: Actions.TIMER_ID, payload: timerId })
   }
 
-  const handleNum = (input) => {
+  const handleNum = (input: string) => {
     dispatch({ type: Actions.NUMBER, payload: input })
   }
 
@@ -28,7 +28,7 @@ export default function App() {
     dispatch({ type: Actions.DECIMAL })
   }
 
-  const handleOperator = (input) => {
+  const handleOperator = (input: string) => {
     dispatch({ type: Actions.OPERATOR, payload: input })
   }
 
@@ -48,7 +48,7 @@ export default function App() {
     dispatch({ type: Actions.DEL })
   }
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress = (event: KeyboardEvent) => {
     const testIfNum = /^\d/.test(event.key)
     const testIfDec = /\./.test(event.key)
     const testIfOp = /[+\-*/]/.test(event.key)
