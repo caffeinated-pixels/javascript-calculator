@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { Dispatch, useReducer } from 'react'
 import {
   processNumInput,
   processDecimalPointInput,
@@ -58,10 +58,12 @@ const reducer = (state: AppState, action: ACTIONTYPES) => {
   }
 }
 
-export const useAppState = (initialState: AppState) => {
+export const useAppState = (
+  initialState: AppState
+): [AppState, Dispatch<ACTIONTYPES>] => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  return { state, dispatch }
+  return [state, dispatch]
 }
 
 // dispatch({ type: 'SET_PAGE_LENGTH', payload: pageLength })

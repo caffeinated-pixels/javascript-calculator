@@ -5,7 +5,7 @@ import { Header, DisplayContainer, KeyPad, Footer } from './components'
 import { INITIAL_STATE, MAX_DIGIT_WARNING } from './constants'
 
 export default function App() {
-  const { state, dispatch } = useAppState(INITIAL_STATE)
+  const [state, dispatch] = useAppState(INITIAL_STATE)
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
