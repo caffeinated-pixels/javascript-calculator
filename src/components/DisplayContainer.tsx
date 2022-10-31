@@ -1,12 +1,22 @@
 import { useEffect, useRef } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 
-export const DisplayContainer = ({ currVal, formulaDisplay }) => {
-  const scrollBarsRef = useRef(null)
+import { AppState } from '../constants'
+
+type DisplayContainerProps = {
+  currVal: AppState['currVal']
+  formulaDisplay: AppState['formula']
+}
+
+export const DisplayContainer = ({
+  currVal,
+  formulaDisplay,
+}: DisplayContainerProps) => {
+  const scrollBarsRef = useRef<Scrollbars & HTMLDivElement>(null)
 
   useEffect(() => {
     // automatically scrolls formula display to right so that we can always see the latest input
-    scrollBarsRef.current.scrollToRight()
+    scrollBarsRef?.current?.scrollToRight()
   }, [formulaDisplay])
 
   return (
