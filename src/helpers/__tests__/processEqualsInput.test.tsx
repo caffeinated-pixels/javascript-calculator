@@ -1,18 +1,21 @@
 import { processEqualsInput, evaluateFormula } from '../'
+import { INITIAL_STATE } from '../../constants'
 
 jest.mock('../evaluateFormula')
 
-const mockEvaluateFormula = evaluateFormula
+const mockEvaluateFormula = evaluateFormula as jest.Mock
 
 describe('processEqualsInput', () => {
   it('should return state if isCalcDone is true', () => {
     const state = {
+      ...INITIAL_STATE,
       isCalcDone: true,
       currVal: '4',
       formula: '2+2=4',
     }
 
     const expectedResult = {
+      ...INITIAL_STATE,
       isCalcDone: true,
       currVal: '4',
       formula: '4',
@@ -24,6 +27,7 @@ describe('processEqualsInput', () => {
 
   it('should return state if intFormula is falsy', () => {
     const state = {
+      ...INITIAL_STATE,
       isCalcDone: false,
       intFormula: '',
       currVal: '2',
@@ -37,6 +41,7 @@ describe('processEqualsInput', () => {
 
   it('should call evaluate formula with cleaned up formula', () => {
     const state = {
+      ...INITIAL_STATE,
       isCalcDone: false,
       intFormula: '2+',
       currVal: '2',
@@ -50,6 +55,7 @@ describe('processEqualsInput', () => {
 
   it('should convert double minus to plus', () => {
     const state = {
+      ...INITIAL_STATE,
       isCalcDone: false,
       intFormula: '2-',
       currVal: '-2',
@@ -63,6 +69,7 @@ describe('processEqualsInput', () => {
 
   it('should return state with update values', () => {
     const state = {
+      ...INITIAL_STATE,
       isCalcDone: false,
       intFormula: '2+',
       currVal: '2',
@@ -85,6 +92,7 @@ describe('processEqualsInput', () => {
 
   it('should be able to return Infinity', () => {
     const state = {
+      ...INITIAL_STATE,
       isCalcDone: false,
       intFormula: '50/',
       currVal: '0',

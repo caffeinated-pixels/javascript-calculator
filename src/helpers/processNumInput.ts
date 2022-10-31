@@ -1,6 +1,7 @@
 import { addCommasToNum, isMaxDigitLimit } from '.'
+import { AppState } from '../constants'
 
-export const processNumInput = (state, input) => {
+export const processNumInput = (state: AppState, input: string): AppState => {
   if (state.isCalcDone)
     return {
       ...state,

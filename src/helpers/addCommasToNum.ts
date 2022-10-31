@@ -1,4 +1,4 @@
-export const addCommasToNum = (input) => {
+export const addCommasToNum = (input: string) => {
   const parts = input.replace(/,/g, '').toString().split('.')
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   return parts.join('.')

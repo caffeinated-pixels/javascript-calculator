@@ -1,3 +1,13 @@
+type KeyPadProps = {
+  handleNum: (input: string) => void
+  handleDecimal: () => void
+  handleOperator: (input: string) => void
+  handlePosNeg: () => void
+  handleEquals: () => void
+  handleClear: () => void
+  handleDel: () => void
+}
+
 export const KeyPad = ({
   handleClear,
   handleDecimal,
@@ -6,7 +16,7 @@ export const KeyPad = ({
   handleOperator,
   handlePosNeg,
   handleEquals,
-}) => {
+}: KeyPadProps) => {
   return (
     <div className="keypad" data-testid="keypad">
       {/* FIRST ROW */}

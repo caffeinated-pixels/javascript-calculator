@@ -1,6 +1,7 @@
-import { isMaxDigitLimit } from './isMaxDigitLimit'
+import { isMaxDigitLimit } from './'
+import { AppState } from '../constants'
 
-export const processDecimalPointInput = (state) => {
+export const processDecimalPointInput = (state: AppState) => {
   // check if num of digits >= 21; maxDigitLimit returns boolean
   // pass in '0' to reset formula if entering new float when isCalcDone === true
   if (isMaxDigitLimit(state.currVal)) return state

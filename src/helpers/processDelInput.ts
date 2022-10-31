@@ -1,6 +1,7 @@
-import { addCommasToNum } from './addCommasToNum'
+import { addCommasToNum } from './'
+import { AppState } from '../constants'
 
-export const processDelInput = (state) => {
+export const processDelInput = (state: AppState) => {
   const endsInOperator = /[+\-*/]$/.test(state.formula)
   // do nothing if last input operator or currVal is an answer
   if (endsInOperator || state.isCalcDone) return { ...state }
