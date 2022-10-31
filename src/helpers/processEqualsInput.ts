@@ -21,8 +21,7 @@ export const processEqualsInput = (state: AppState) => {
     // remove commas, convert (--) to (+)
     /(\D+$)|(,)|(--)/g,
     (match, p1, p2, p3) => {
-      if (p1 || p2 === match) return ''
-      if (p3 === match) return '+'
+      return p3 === match ? '+' : ''
     }
   )
 

@@ -6,9 +6,9 @@ export const processPosNegInput = (state: AppState) => {
 
   if (isOperator || state.currVal === '0') return state
 
-  const posNegVal = state.currVal.replace(/(^\b)|(^-)/, (match, p1, p2) => {
-    if (match === p1) return '-' // prefix with minus
-    if (match === p2) return '' // remove prefix
+  const posNegVal = state.currVal.replace(/(^\b)|(^-)/, (match, p1) => {
+    // either prefix with minus or remove minus
+    return match === p1 ? '-' : ''
   })
 
   if (state.isCalcDone) {
