@@ -1,0 +1,11 @@
+// SCSS VARIABLES
+$dark-grey: #262525;
+$box-shadow: 1px 1px 3px $dark-grey;
+$border-default: 1px solid black;
+
+// MIXINS
+@mixin mq($size) {
+  @media only screen and (min-width: $size) {
+    @content; // lets us pass content block into mixin
+  }
+}
