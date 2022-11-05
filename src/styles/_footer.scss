@@ -1,0 +1,16 @@
+footer {
+  margin-top: 0.6rem;
+
+  font-size: 0.8rem;
+  text-align: center;
+
+  a {
+    color: #007af2;
+    font-weight: 600;
+    text-decoration: none;
+    &:hover,
+    &:focus {
+      color: #b45922;
+    }
+  }
+}
