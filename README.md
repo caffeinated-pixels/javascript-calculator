@@ -10,12 +10,22 @@ So, I spent a lot of time fixing various bugs and I'm sure they're still some I'
 
 Extra features I added include:
 
-- formula display with customised scrollbar (I used the [react-custom-scrollbars library](https://github.com/malte-wessel/react-custom-scrollbars))
+- formula display with customized scrollbar (I used the [react-custom-scrollbars library](https://github.com/malte-wessel/react-custom-scrollbars))
 - comma separation of digits
 - a del/backspace button
 - a proper pos/neg button (as opposed to just using the subtract key)
 - limited max digits to 21
 - keyboard controls
+
+I revisited my calculator app in autumn 2022 to make some significant improvements, including:
+
+- converting class-based components to functional components with hooks
+- converting to TypeScript
+- updating to dart sass and splitting into sass modules
+- using the [bignumber.js library](https://github.com/MikeMcl/bignumber.js/) to improve number precision
+- adding jest/react-test-library unit, integration and snapshot tests
+- adding [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged) to automate linting and type checking prior to committing
+- general bug fixing and refactoring
 
 ## Notes
 
@@ -28,10 +38,6 @@ I initially used several regex Lookbehinds. However, these are still not support
 I fell down a bit of a rabbit hole trying to implement comma-separated digits for the display. I originally opted for `toLocalString()` but this was rounding very large numbers (16+ digits), so I borrowed a regex from a [Stack Overflow post](https://stackoverflow.com/a/2901298/8958062).
 
 To deal with the decimals, we need to remove and store them first using `split(".")` and then add then back later using `join(".")`.
-
-### Digit limit
-
-I opted for a digit limit of 21 as after this JS switches to scientific notation (ie 1e+21). However, when converting to a string, large numbers starting getting rounded after 16 significant digits! So perhaps there's not really much point going beyond 16?
 
 ### eval() alternative
 
