@@ -1,17 +1,16 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import renderer from 'react-test-renderer'
 import '@testing-library/jest-dom'
 import App from '../App'
 import { MAX_DIGIT_WARNING } from '../constants'
 
-/* things to test:
-    - keyboard input
-    - mouse input
-    - component rendering
-    - variety of inputs/calculations
-*/
-
 describe('Calculator app', () => {
+  it('Matches DOM tree snapshot', () => {
+    const domTree = renderer.create(<App />).toJSON()
+    expect(domTree).toMatchSnapshot()
+  })
+
   it('should render the main container', () => {
     render(<App />)
     expect(screen.getByRole('main')).toBeInTheDocument()
